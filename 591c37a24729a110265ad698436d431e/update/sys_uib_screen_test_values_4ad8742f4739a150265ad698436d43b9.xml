@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_uib_screen_test_values">
+    <sys_uib_screen_test_values action="INSERT_OR_UPDATE">
+        <macroponent_config>{
+  "table" : "task",
+  "sysId" : "123124124",
+  "task" : "table",
+  "ui" : "v2"
+}</macroponent_config>
+        <screen display_value="Home - Simple list">ced8742f4739a150265ad698436d43b6</screen>
+        <sys_class_name>sys_uib_screen_test_values</sys_class_name>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-03-31 13:02:21</sys_created_on>
+        <sys_id>4ad8742f4739a150265ad698436d43b9</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_uib_screen_test_values_4ad8742f4739a150265ad698436d43b9</sys_update_name>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-05-16 16:57:23</sys_updated_on>
+    </sys_uib_screen_test_values>
+</record_update>

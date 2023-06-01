@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_lib_source_script">
+    <sys_ux_lib_source_script action="INSERT_OR_UPDATE">
+        <config_option/>
+        <engine>6</engine>
+        <externals/>
+        <inner_components/>
+        <name>@employbridge/my-component</name>
+        <script><![CDATA[var __TECTONIC__$employbridge_my_component=function(e){var n={};function t(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,t),o.l=!0,o.exports}return t.m=e,t.c=n,t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:r})},t.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,n){if(1&n&&(e=t(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(t.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var o in e)t.d(r,o,function(n){return e[n]}.bind(null,o));return r},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},t.p="",t(t.s=8)}([function(e,n){e.exports=__TECTONIC__$servicenow_ui_renderer_snabbdom},function(e,n){e.exports=__TECTONIC__$servicenow_now_button},function(e,n,t){"use strict";e.exports=function(e){var n=[];return n.toString=function(){return this.map(function(n){var t=function(e,n){var t=e[1]||"",r=e[3];if(!r)return t;if(n&&"function"==typeof btoa){var o=function(e){return"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(e))))+" */"}(r),i=r.sources.map(function(e){return"/*# sourceURL="+r.sourceRoot+e+" */"});return[t].concat(i).concat([o]).join("\n")}return[t].join("\n")}(n,e);return n[2]?"@media "+n[2]+"{"+t+"}":t}).join("")},n.i=function(e,t){"string"==typeof e&&(e=[[null,e,""]]);for(var r={},o=0;o<this.length;o++){var i=this[o][0];"number"==typeof i&&(r[i]=!0)}for(o=0;o<e.length;o++){var u=e[o];"number"==typeof u[0]&&r[u[0]]||(t&&!u[2]?u[2]=t:t&&(u[2]="("+u[2]+") and ("+t+")"),n.push(u))}},n}},function(e,n,t){(e.exports=t(2)(!1)).push([e.i,':host{box-sizing:border-box;line-height:var(--now-line-height,1.25);font-family:var(--now-font-family,"Source Sans Pro",sans-serif)}:host([hidden]){display:none}*,:after,:before{box-sizing:border-box}',""])},function(e,n,t){var r=t(3);e.exports="string"==typeof r?r:r.toString()},function(e,n){e.exports=__TECTONIC__$servicenow_ui_core},function(e,n,t){"use strict";t(0);var r=t(0),o=a(r),i=t(5),u=a(t(4));function a(e){return e&&e.__esModule?e:{default:e}}t(1);(0,i.createCustomElement)("ebh-my-component",{renderer:{type:o.default},view:function(e,n){n.updateState;return(0,r.createElement)("div",null,(0,r.createElement)("now-button",{label:"Save Record",variant:"primary",size:"md",icon:"","config-aria":{},"tooltip-content":""},"asds"))},styles:u.default})},function(e,n,t){"use strict";t(6)},function(e,n,t){e.exports=t(7)}]);]]></script>
+        <script_link/>
+        <sys_class_name>sys_ux_lib_source_script</sys_class_name>
+        <sys_created_by>vscode.user</sys_created_by>
+        <sys_created_on>2023-03-24 22:34:20</sys_created_on>
+        <sys_id>46ba287a002ff91f4af234eb3eb6992d</sys_id>
+        <sys_mod_count>466584</sys_mod_count>
+        <sys_name>@employbridge/my-component</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_lib_source_script_46ba287a002ff91f4af234eb3eb6992d</sys_update_name>
+        <sys_updated_by>vscode.user</sys_updated_by>
+        <sys_updated_on>2023-03-24 23:57:28</sys_updated_on>
+        <type>script</type>
+    </sys_ux_lib_source_script>
+</record_update>

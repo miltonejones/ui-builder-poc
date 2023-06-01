@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="u_deduction_type1" table="x_ebh_voluntary_0_deductions" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>u_deduction_type1</element>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-17 17:40:02</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>u_deduction_type1</sys_name>
+            <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+            <sys_update_name>sys_choice_x_ebh_voluntary_0_deductions_u_deduction_type1</sys_update_name>
+            <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-17 17:40:02</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_deduction_type1</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VADV - Temp Advance</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-17 17:40:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-17 17:40:02</sys_updated_on>
+            <value>vadv</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_deduction_type1</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VPHY - Physical</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-17 17:40:03</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-17 17:40:03</sys_updated_on>
+            <value>vphy</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>u_deduction_type1</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VSCF - Screening Fee</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-17 17:40:03</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-17 17:40:03</sys_updated_on>
+            <value>vscf</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

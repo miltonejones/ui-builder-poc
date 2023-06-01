@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-04-27 19:45:23</sys_created_on>
+        <sys_id>01085150c3a6615011971d4ce0013170</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_ebh_voluntary_0_deduction_type_list.x_ebh_voluntary_0.user</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_security_acl display_value="x_ebh_voluntary_0_deduction_type_list">05085150c3a6615011971d4ce001316d</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_01085150c3a6615011971d4ce0013170</sys_update_name>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-04-27 19:45:23</sys_updated_on>
+        <sys_user_role display_value="x_ebh_voluntary_0.user" name="x_ebh_voluntary_0.user">e11c37a24729a110265ad698436d4336</sys_user_role>
+        <transaction_id/>
+    </sys_security_acl_role>
+</record_update>

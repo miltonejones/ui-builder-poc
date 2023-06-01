@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="c059f158477de510265ad698436d43cc" sys_domain="global" table="x_ebh_voluntary_0_deductions" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>Bryan.Rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-03-21 15:23:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>4459f158477de510265ad698436d43cf</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_ebh_voluntary_0_deductions" name="x_ebh_voluntary_0_deductions" sys_domain="global" view="Default view">c059f158477de510265ad698436d43cc</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="x_ebh_voluntary_0_deductions" sys_domain="global" view="Default view">d2b805b2472da110265ad698436d4392</sys_ui_section>
+            <sys_updated_by>Bryan.Rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-03-21 15:23:45</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-27 14:49:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c4341858c3a2615011971d4ce00131e2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_ebh_voluntary_0_deductions" name="x_ebh_voluntary_0_deductions" sys_domain="global" view="Default view">c059f158477de510265ad698436d43cc</sys_ui_form>
+            <sys_ui_section caption="Details" display_value="Details" name="x_ebh_voluntary_0_deductions" sys_domain="global" view="Default view">04341858c3a2615011971d4ce00131b8</sys_ui_section>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-27 14:49:02</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_ebh_voluntary_0_deductions</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>Bryan.Rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-03-21 15:23:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c059f158477de510265ad698436d43cc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_ebh_voluntary_0_deductions</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+            <sys_update_name>sys_ui_form_sections_c059f158477de510265ad698436d43cc</sys_update_name>
+            <sys_updated_by>Bryan.Rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-03-21 15:23:45</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

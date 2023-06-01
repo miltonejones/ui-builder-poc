@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_macroponent">
+    <sys_ux_macroponent action="DELETE">
+        <associated_types/>
+        <category>page</category>
+        <component_dependencies/>
+        <composition>[ {
+  "elementId" : "attachment_1",
+  "elementLabel" : "Attachment 1",
+  "propertyValues" : {
+    "table" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "table" ],
+        "category" : "props"
+      }
+    },
+    "sysId" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "sysId" ],
+        "category" : "props"
+      }
+    },
+    "isAttachmentUploadDisabled" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "isReadOnly" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "mode" : {
+      "type" : "JSON_LITERAL",
+      "value" : "full"
+    },
+    "recordDisplayValue" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    }
+  },
+  "eventMappings" : [ ],
+  "slot" : "default-slot",
+  "definition" : {
+    "id" : "0e238931bce36c9fe3b52475c69c85a3",
+    "type" : "MACROPONENT"
+  },
+  "overrides" : null,
+  "isHidden" : {
+    "type" : "JSON_LITERAL",
+    "value" : ""
+  },
+  "isNonDestructive" : false,
+  "styles" : { }
+} ]</composition>
+        <da_relay_models/>
+        <data>[ ]</data>
+        <description/>
+        <dispatched_events/>
+        <ext_controller_dep/>
+        <extends display_value="Page Template">19be392623033300f4b4c50947bf65ba</extends>
+        <handled_events/>
+        <interactions/>
+        <interfaces/>
+        <internal_event_mappings>{ }</internal_event_mappings>
+        <layout>{
+  "default" : {
+    "children" : null,
+    "items" : [{"slotName":"default-slot","styles":{"flex-direction":"column","margin-top":"1.5rem"}}],
+    "root" : null,
+    "rules" : {"flex-direction":"column"},
+    "styles" : null,
+    "templateId" : null,
+    "type" : "flex"
+  }
+}</layout>
+        <macroponent_dependencies/>
+        <name>Attachment</name>
+        <output_prop_mapping/>
+        <props>[ {
+  "name" : "sysId",
+  "label" : "sysId",
+  "fieldType" : "string",
+  "typeMetadata" : null,
+  "valueType" : "string",
+  "mandatory" : false,
+  "defaultValue" : null,
+  "description" : null,
+  "readOnly" : false,
+  "selectable" : false
+}, {
+  "name" : "table",
+  "label" : "table",
+  "fieldType" : "string",
+  "typeMetadata" : null,
+  "valueType" : "string",
+  "mandatory" : false,
+  "defaultValue" : null,
+  "description" : null,
+  "readOnly" : false,
+  "selectable" : false
+} ]</props>
+        <required_translations>[]</required_translations>
+        <root_component/>
+        <root_component_config>{ }</root_component_config>
+        <root_component_definition/>
+        <schema_version>1.0.0</schema_version>
+        <state_properties>[ ]</state_properties>
+        <sys_class_name>sys_ux_macroponent</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-03-16 14:34:56</sys_created_on>
+        <sys_id>272effe2ce29a1107607693aadbe007d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Attachment</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_macroponent_272effe2ce29a1107607693aadbe007d</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2023-03-16 14:34:56</sys_updated_on>
+    </sys_ux_macroponent>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</application>
+        <file_path/>
+        <instance_id>83ce67badb169190b847ac44d4961903</instance_id>
+        <instance_name>employbridgedev</instance_name>
+        <name>sys_ux_macroponent_272effe2ce29a1107607693aadbe007d</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_macroponent"><sys_ux_macroponent action="INSERT_OR_UPDATE"><associated_types/><category>page</category><component_dependencies/><composition>[ {
+  "elementId" : "attachment_1",
+  "elementLabel" : "Attachment 1",
+  "propertyValues" : {
+    "table" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "table" ],
+        "category" : "props"
+      }
+    },
+    "sysId" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "sysId" ],
+        "category" : "props"
+      }
+    },
+    "isAttachmentUploadDisabled" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "isReadOnly" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "mode" : {
+      "type" : "JSON_LITERAL",
+      "value" : "full"
+    },
+    "recordDisplayValue" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    }
+  },
+  "eventMappings" : [ ],
+  "slot" : "default-slot",
+  "definition" : {
+    "id" : "0e238931bce36c9fe3b52475c69c85a3",
+    "type" : "MACROPONENT"
+  },
+  "overrides" : null,
+  "isHidden" : {
+    "type" : "JSON_LITERAL",
+    "value" : ""
+  },
+  "isNonDestructive" : false,
+  "styles" : { }
+} ]</composition><da_relay_models/><data>[ ]</data><description/><dispatched_events/><ext_controller_dep/><extends display_value="Page Template">19be392623033300f4b4c50947bf65ba</extends><handled_events/><interactions/><interfaces/><internal_event_mappings>{ }</internal_event_mappings><layout>{
+  "default" : {
+    "children" : null,
+    "items" : [{"slotName":"default-slot","styles":{"flex-direction":"column","margin-top":"1.5rem"}}],
+    "root" : null,
+    "rules" : {"flex-direction":"column"},
+    "styles" : null,
+    "templateId" : null,
+    "type" : "flex"
+  }
+}</layout><macroponent_dependencies/><name>Attachment</name><output_prop_mapping/><props>[ {
+  "name" : "sysId",
+  "label" : "sysId",
+  "fieldType" : "string",
+  "typeMetadata" : null,
+  "valueType" : "string",
+  "mandatory" : false,
+  "defaultValue" : null,
+  "description" : null,
+  "readOnly" : false,
+  "selectable" : false
+}, {
+  "name" : "table",
+  "label" : "table",
+  "fieldType" : "string",
+  "typeMetadata" : null,
+  "valueType" : "string",
+  "mandatory" : false,
+  "defaultValue" : null,
+  "description" : null,
+  "readOnly" : false,
+  "selectable" : false
+} ]</props><required_translations>[]</required_translations><root_component/><root_component_config>{ }</root_component_config><root_component_definition/><schema_version>1.0.0</schema_version><state_properties>[ ]</state_properties><sys_class_name>sys_ux_macroponent</sys_class_name><sys_created_by>system</sys_created_by><sys_created_on>2023-03-16 14:34:56</sys_created_on><sys_id>272effe2ce29a1107607693aadbe007d</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Attachment</sys_name><sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package><sys_policy/><sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope><sys_update_name>sys_ux_macroponent_272effe2ce29a1107607693aadbe007d</sys_update_name><sys_updated_by>system</sys_updated_by><sys_updated_on>2023-03-16 14:34:56</sys_updated_on></sys_ux_macroponent></record_update>]]></payload>
+        <payload_hash>2351073</payload_hash>
+        <record_name>Attachment</record_name>
+        <reverted_from/>
+        <source>c0311903c311211011971d4ce0013135</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by/>
+        <sys_created_on>2023-03-05 05:00:20</sys_created_on>
+        <sys_id>5e98f6154775e910265ad698436d431f</sys_id>
+        <sys_mod_count/>
+        <sys_recorded_at>186b02462a00000000</sys_recorded_at>
+        <sys_updated_by/>
+        <sys_updated_on/>
+        <type>UX Macroponent Definition</type>
+        <update_guid>1e98f615d475e9106411864af312931f</update_guid>
+        <update_guid_history>1e98f615d475e9106411864af312931f:2351073</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>vscode.user</sys_created_by>
+        <sys_created_on>2023-03-24 22:34:11</sys_created_on>
+        <sys_db_object display_value="" name="sys_ux_macroponent">sys_ux_macroponent</sys_db_object>
+        <sys_id>1b2d3464da3d401e8370a49705b02804</sys_id>
+        <sys_metadata>272effe2ce29a1107607693aadbe007d</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Attachment</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_scope_delete display_value="">9010b0fe4941481f931beec4cfddca89</sys_scope_delete>
+        <sys_update_name>sys_ux_macroponent_272effe2ce29a1107607693aadbe007d</sys_update_name>
+        <sys_update_version display_value="sys_ux_macroponent_272effe2ce29a1107607693aadbe007d">5e98f6154775e910265ad698436d431f</sys_update_version>
+        <sys_updated_by>vscode.user</sys_updated_by>
+        <sys_updated_on>2023-03-24 22:34:11</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

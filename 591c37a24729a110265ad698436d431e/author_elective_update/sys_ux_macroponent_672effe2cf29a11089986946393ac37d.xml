@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_macroponent">
+    <sys_ux_macroponent action="DELETE">
+        <associated_types/>
+        <category>page</category>
+        <component_dependencies/>
+        <composition>[ {
+  "elementId" : "activity_stream_compose_1",
+  "elementLabel" : "Activity Stream Compose 1",
+  "propertyValues" : {
+    "title" : {
+      "type" : "TRANSLATION_LITERAL",
+      "value" : {
+        "message" : "Compose",
+        "comment" : ""
+      }
+    },
+    "table" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "table" ],
+        "category" : "props"
+      }
+    },
+    "sysId" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "sysId" ],
+        "category" : "props"
+      }
+    },
+    "isNewRecord" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "fields" : {
+      "type" : "JSON_LITERAL",
+      "value" : {
+        "comments" : {
+          "name" : "comments",
+          "label" : "Additional comments (Customer Visible)",
+          "sys_readonly" : false,
+          "readonly" : false,
+          "visible" : true,
+          "type" : "journal_input",
+          "maxLength" : 1000
+        }
+      }
+    }
+  },
+  "eventMappings" : [ ],
+  "slot" : "Row 1",
+  "definition" : {
+    "id" : "77cb9632116e67049295c7c35d6a6147",
+    "type" : "MACROPONENT"
+  },
+  "overrides" : null,
+  "isHidden" : {
+    "type" : "JSON_LITERAL",
+    "value" : ""
+  },
+  "isNonDestructive" : false,
+  "styles" : { }
+}, {
+  "elementId" : "activity_stream_1",
+  "elementLabel" : "Activity Stream 1",
+  "propertyValues" : {
+    "title" : {
+      "type" : "TRANSLATION_LITERAL",
+      "value" : {
+        "message" : "Activity",
+        "comment" : ""
+      }
+    },
+    "table" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "table" ],
+        "category" : "props"
+      }
+    },
+    "sysId" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "sysId" ],
+        "category" : "props"
+      }
+    },
+    "isNewRecord" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "showConversationFilter" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "showTileAvatars" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "showTileIcons" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "view" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
+    "events" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "supplemental" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "ambChannels" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "userReferences" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "filterOptions" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "timestamp" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    }
+  },
+  "eventMappings" : [ ],
+  "slot" : "Row 1",
+  "definition" : {
+    "id" : "821dfc11da1d0fb007579ccb53738fd5",
+    "type" : "MACROPONENT"
+  },
+  "overrides" : null,
+  "isHidden" : {
+    "type" : "JSON_LITERAL",
+    "value" : ""
+  },
+  "isNonDestructive" : false,
+  "styles" : { }
+} ]</composition>
+        <da_relay_models/>
+        <data>[ ]</data>
+        <description/>
+        <dispatched_events/>
+        <ext_controller_dep/>
+        <extends display_value="Page Template">19be392623033300f4b4c50947bf65ba</extends>
+        <handled_events/>
+        <interactions/>
+        <interfaces/>
+        <internal_event_mappings>{ }</internal_event_mappings>
+        <layout>{
+  "default" : {
+    "children" : null,
+    "items" : [{"slotName":"Row 1","rules":{"grid-area":"row1"},"styles":{"display":"flex","flex-direction":"column","margin-top":"1.5rem"}}],
+    "root" : null,
+    "rules" : {"grid-template-rows":"1fr","grid-template-columns":"100%","grid-template-areas":"\"row1\"","height":"100%"},
+    "styles" : null,
+    "templateId" : "1afa9dc153c31010e6bcddeeff7b1280",
+    "type" : "grid"
+  }
+}</layout>
+        <macroponent_dependencies/>
+        <name>Activity</name>
+        <output_prop_mapping/>
+        <props>[ {
+  "name" : "sysId",
+  "label" : "sysId",
+  "fieldType" : "string",
+  "typeMetadata" : null,
+  "valueType" : "string",
+  "mandatory" : false,
+  "defaultValue" : null,
+  "description" : null,
+  "readOnly" : false,
+  "selectable" : false
+}, {
+  "name" : "table",
+  "label" : "table",
+  "fieldType" : "string",
+  "typeMetadata" : null,
+  "valueType" : "string",
+  "mandatory" : false,
+  "defaultValue" : null,
+  "description" : null,
+  "readOnly" : false,
+  "selectable" : false
+} ]</props>
+        <required_translations>[{"message":"Compose","comment":""},{"message":"Activity","comment":""},{"message":"Additional comments (Customer Visible)","comment":""}]</required_translations>
+        <root_component/>
+        <root_component_config>{ }</root_component_config>
+        <root_component_definition/>
+        <schema_version>1.0.0</schema_version>
+        <state_properties>[ ]</state_properties>
+        <sys_class_name>sys_ux_macroponent</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-03-16 14:34:55</sys_created_on>
+        <sys_id>672effe2cf29a11089986946393ac37d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Activity</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_macroponent_672effe2cf29a11089986946393ac37d</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2023-03-16 14:34:55</sys_updated_on>
+    </sys_ux_macroponent>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</application>
+        <file_path/>
+        <instance_id>83ce67badb169190b847ac44d4961903</instance_id>
+        <instance_name>employbridgedev</instance_name>
+        <name>sys_ux_macroponent_672effe2cf29a11089986946393ac37d</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_macroponent"><sys_ux_macroponent action="INSERT_OR_UPDATE"><associated_types/><category>page</category><component_dependencies/><composition>[ {
+  "elementId" : "activity_stream_compose_1",
+  "elementLabel" : "Activity Stream Compose 1",
+  "propertyValues" : {
+    "title" : {
+      "type" : "TRANSLATION_LITERAL",
+      "value" : {
+        "message" : "Compose",
+        "comment" : ""
+      }
+    },
+    "table" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "table" ],
+        "category" : "props"
+      }
+    },
+    "sysId" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "sysId" ],
+        "category" : "props"
+      }
+    },
+    "isNewRecord" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "fields" : {
+      "type" : "JSON_LITERAL",
+      "value" : {
+        "comments" : {
+          "name" : "comments",
+          "label" : "Additional comments (Customer Visible)",
+          "sys_readonly" : false,
+          "readonly" : false,
+          "visible" : true,
+          "type" : "journal_input",
+          "maxLength" : 1000
+        }
+      }
+    }
+  },
+  "eventMappings" : [ ],
+  "slot" : "Row 1",
+  "definition" : {
+    "id" : "77cb9632116e67049295c7c35d6a6147",
+    "type" : "MACROPONENT"
+  },
+  "overrides" : null,
+  "isHidden" : {
+    "type" : "JSON_LITERAL",
+    "value" : ""
+  },
+  "isNonDestructive" : false,
+  "styles" : { }
+}, {
+  "elementId" : "activity_stream_1",
+  "elementLabel" : "Activity Stream 1",
+  "propertyValues" : {
+    "title" : {
+      "type" : "TRANSLATION_LITERAL",
+      "value" : {
+        "message" : "Activity",
+        "comment" : ""
+      }
+    },
+    "table" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "table" ],
+        "category" : "props"
+      }
+    },
+    "sysId" : {
+      "type" : "CONTEXT_BINDING",
+      "binding" : {
+        "address" : [ "sysId" ],
+        "category" : "props"
+      }
+    },
+    "isNewRecord" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "showConversationFilter" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "showTileAvatars" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "showTileIcons" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "view" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
+    "events" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "supplemental" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "ambChannels" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "userReferences" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "filterOptions" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "timestamp" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    }
+  },
+  "eventMappings" : [ ],
+  "slot" : "Row 1",
+  "definition" : {
+    "id" : "821dfc11da1d0fb007579ccb53738fd5",
+    "type" : "MACROPONENT"
+  },
+  "overrides" : null,
+  "isHidden" : {
+    "type" : "JSON_LITERAL",
+    "value" : ""
+  },
+  "isNonDestructive" : false,
+  "styles" : { }
+} ]</composition><da_relay_models/><data>[ ]</data><description/><dispatched_events/><ext_controller_dep/><extends display_value="Page Template">19be392623033300f4b4c50947bf65ba</extends><handled_events/><interactions/><interfaces/><internal_event_mappings>{ }</internal_event_mappings><layout>{
+  "default" : {
+    "children" : null,
+    "items" : [{"slotName":"Row 1","rules":{"grid-area":"row1"},"styles":{"display":"flex","flex-direction":"column","margin-top":"1.5rem"}}],
+    "root" : null,
+    "rules" : {"grid-template-rows":"1fr","grid-template-columns":"100%","grid-template-areas":"\"row1\"","height":"100%"},
+    "styles" : null,
+    "templateId" : "1afa9dc153c31010e6bcddeeff7b1280",
+    "type" : "grid"
+  }
+}</layout><macroponent_dependencies/><name>Activity</name><output_prop_mapping/><props>[ {
+  "name" : "sysId",
+  "label" : "sysId",
+  "fieldType" : "string",
+  "typeMetadata" : null,
+  "valueType" : "string",
+  "mandatory" : false,
+  "defaultValue" : null,
+  "description" : null,
+  "readOnly" : false,
+  "selectable" : false
+}, {
+  "name" : "table",
+  "label" : "table",
+  "fieldType" : "string",
+  "typeMetadata" : null,
+  "valueType" : "string",
+  "mandatory" : false,
+  "defaultValue" : null,
+  "description" : null,
+  "readOnly" : false,
+  "selectable" : false
+} ]</props><required_translations>[{"message":"Compose","comment":""},{"message":"Activity","comment":""},{"message":"Additional comments (Customer Visible)","comment":""}]</required_translations><root_component/><root_component_config>{ }</root_component_config><root_component_definition/><schema_version>1.0.0</schema_version><state_properties>[ ]</state_properties><sys_class_name>sys_ux_macroponent</sys_class_name><sys_created_by>system</sys_created_by><sys_created_on>2023-03-16 14:34:55</sys_created_on><sys_id>672effe2cf29a11089986946393ac37d</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Activity</sys_name><sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package><sys_policy/><sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope><sys_update_name>sys_ux_macroponent_672effe2cf29a11089986946393ac37d</sys_update_name><sys_updated_by>system</sys_updated_by><sys_updated_on>2023-03-16 14:34:55</sys_updated_on></sys_ux_macroponent></record_update>]]></payload>
+        <payload_hash>1921093201</payload_hash>
+        <record_name>Activity</record_name>
+        <reverted_from/>
+        <source>c0311903c311211011971d4ce0013135</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by/>
+        <sys_created_on>2023-03-05 05:00:20</sys_created_on>
+        <sys_id>fa98b2554775e910265ad698436d436e</sys_id>
+        <sys_mod_count/>
+        <sys_recorded_at>186b02462a00000000</sys_recorded_at>
+        <sys_updated_by/>
+        <sys_updated_on/>
+        <type>UX Macroponent Definition</type>
+        <update_guid>ba98b2558575e9100367548528f69b6e</update_guid>
+        <update_guid_history>ba98b2558575e9100367548528f69b6e:1921093201</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>vscode.user</sys_created_by>
+        <sys_created_on>2023-03-24 22:34:13</sys_created_on>
+        <sys_db_object display_value="" name="sys_ux_macroponent">sys_ux_macroponent</sys_db_object>
+        <sys_id>2186b1defd034c8584c04adc0539d1e9</sys_id>
+        <sys_metadata>672effe2cf29a11089986946393ac37d</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Activity</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_scope_delete display_value="">9010b0fe4941481f931beec4cfddca89</sys_scope_delete>
+        <sys_update_name>sys_ux_macroponent_672effe2cf29a11089986946393ac37d</sys_update_name>
+        <sys_update_version display_value="sys_ux_macroponent_672effe2cf29a11089986946393ac37d">fa98b2554775e910265ad698436d436e</sys_update_version>
+        <sys_updated_by>vscode.user</sys_updated_by>
+        <sys_updated_on>2023-03-24 22:34:13</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

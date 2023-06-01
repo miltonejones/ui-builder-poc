@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="e7f79d10c3a6615011971d4ce00131de" label="Deduction Type List" max_length="40" name="x_ebh_voluntary_0_deduction_type_list" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Label" max_length="40" name="label" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Value" max_length="40" name="value" type="string"/>
+    </element>
+</database>

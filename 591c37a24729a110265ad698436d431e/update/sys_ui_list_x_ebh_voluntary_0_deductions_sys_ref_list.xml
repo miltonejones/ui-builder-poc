@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="x_ebh_voluntary_0_deductions" version="2" view="sys_ref_list">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>number</element>
+            <list_id display_value="x_ebh_voluntary_0_deductions" element="NULL" name="x_ebh_voluntary_0_deductions" parent="NULL" relationship="NULL" sys_domain="global" view="6821b37247121110265ad698436d43ea">692060d0c3e2615011971d4ce00131b3</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-27 15:41:17</sys_created_on>
+            <sys_id>292060d0c3e2615011971d4ce00131b4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-27 15:41:17</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-27 15:41:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>692060d0c3e2615011971d4ce00131b3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_ebh_voluntary_0_deductions</sys_name>
+            <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+            <sys_update_name>sys_ui_list_x_ebh_voluntary_0_deductions_sys_ref_list</sys_update_name>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-27 15:41:17</sys_updated_on>
+            <sys_user/>
+            <view display_value="Reference List" name="sys_ref_list">6821b37247121110265ad698436d43ea</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

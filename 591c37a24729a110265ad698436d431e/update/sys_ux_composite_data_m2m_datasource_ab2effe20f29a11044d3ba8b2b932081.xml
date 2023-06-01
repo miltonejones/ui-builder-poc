@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_composite_data_m2m_datasource">
+    <sys_ux_composite_data_m2m_datasource action="INSERT_OR_UPDATE">
+        <dataset display_value="Custom Portal Catalog Item page - Related Items dataset">ef2effe28429a11043abc83e79fb7f81</dataset>
+        <datasource display_value="Custom Portal Catalog Item page - Related Items Datasource">272effe2b129a110d62ee65632ffe581</datasource>
+        <sys_class_name>sys_ux_composite_data_m2m_datasource</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-03-16 14:34:57</sys_created_on>
+        <sys_id>ab2effe20f29a11044d3ba8b2b932081</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_composite_data_m2m_datasource_ab2effe20f29a11044d3ba8b2b932081</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2023-03-16 14:34:57</sys_updated_on>
+    </sys_ux_composite_data_m2m_datasource>
+</record_update>

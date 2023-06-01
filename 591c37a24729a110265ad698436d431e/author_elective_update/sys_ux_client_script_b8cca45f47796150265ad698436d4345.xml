@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="DELETE">
+        <includes/>
+        <macroponent display_value="New Deduction default">77170ba64779ed10265ad698436d431f</macroponent>
+        <name>select_1/selectedItem</name>
+        <preset/>
+        <required_translations>[ ]</required_translations>
+        <script><![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({api, helpers}) {
+  const index = api.item.index;
+	return api.state.deductions[index]["deduction_type"];
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-03-30 17:31:05</sys_created_on>
+        <sys_id>b8cca45f47796150265ad698436d4345</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>select_1/selectedItem</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_client_script_b8cca45f47796150265ad698436d4345</sys_update_name>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-03-30 17:32:54</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</application>
+        <file_path/>
+        <instance_id>83ce67badb169190b847ac44d4961903</instance_id>
+        <instance_name>employbridgedev</instance_name>
+        <name>sys_ux_client_script_b8cca45f47796150265ad698436d4345</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_ux_client_script"&gt;&lt;sys_ux_client_script action="INSERT_OR_UPDATE"&gt;&lt;includes/&gt;&lt;macroponent display_value="New Deduction default"&gt;77170ba64779ed10265ad698436d431f&lt;/macroponent&gt;&lt;name&gt;select_1/selectedItem&lt;/name&gt;&lt;preset/&gt;&lt;required_translations&gt;[ ]&lt;/required_translations&gt;&lt;script&gt;&lt;![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({api, helpers}) {
+  const index = api.item.index;
+	return api.state.deductions[index]["deduction_type"];
+}]]&gt;&lt;/script&gt;&lt;script_api_version&gt;2.0.0&lt;/script_api_version&gt;&lt;sys_class_name&gt;sys_ux_client_script&lt;/sys_class_name&gt;&lt;sys_created_by&gt;bryan.rodriguez@employbridge.com&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2023-03-30 17:31:05&lt;/sys_created_on&gt;&lt;sys_id&gt;b8cca45f47796150265ad698436d4345&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;select_1/selectedItem&lt;/sys_name&gt;&lt;sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0"&gt;591c37a24729a110265ad698436d431e&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Voluntary Deductions"&gt;591c37a24729a110265ad698436d431e&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ux_client_script_b8cca45f47796150265ad698436d4345&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;bryan.rodriguez@employbridge.com&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2023-03-30 17:32:54&lt;/sys_updated_on&gt;&lt;target&gt;macroponent&lt;/target&gt;&lt;type&gt;transform&lt;/type&gt;&lt;/sys_ux_client_script&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1077973492</payload_hash>
+        <record_name>select_1/selectedItem</record_name>
+        <reverted_from/>
+        <source>991c37a24729a110265ad698436d4320</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-03-30 17:32:55</sys_created_on>
+        <sys_id>3f2d689f47796150265ad698436d435f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>187339462890000001</sys_recorded_at>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-03-30 17:32:55</sys_updated_on>
+        <type>UX Client Script</type>
+        <update_guid>f32d689fcb7961506b2e2eee65193c5f</update_guid>
+        <update_guid_history>f32d689fcb7961506b2e2eee65193c5f:-1077973492,30cca09f8e79615018b47ff14b821024:-265757444</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-03-30 18:11:07</sys_created_on>
+        <sys_db_object display_value="" name="sys_ux_client_script">sys_ux_client_script</sys_db_object>
+        <sys_id>59290e9c86b24e40acf513c48be70010</sys_id>
+        <sys_metadata>b8cca45f47796150265ad698436d4345</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>select_1/selectedItem</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_scope_delete display_value="">9010b0fe4941481f931beec4cfddca89</sys_scope_delete>
+        <sys_update_name>sys_ux_client_script_b8cca45f47796150265ad698436d4345</sys_update_name>
+        <sys_update_version display_value="sys_ux_client_script_b8cca45f47796150265ad698436d4345">3f2d689f47796150265ad698436d435f</sys_update_version>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-03-30 18:11:07</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

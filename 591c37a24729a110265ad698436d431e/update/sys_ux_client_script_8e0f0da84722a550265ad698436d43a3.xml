@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <includes/>
+        <macroponent display_value="Default">08285e72c386611011971d4ce0013118</macroponent>
+        <name>Populate deduction</name>
+        <preset/>
+        <required_translations>[ ]</required_translations>
+        <script><![CDATA[// Populate deduction
+function handler({ api, event, helpers, imports }) {
+	const g_form = api.data.glide_form_1.nowRecordFormBlob.gForm;
+	const sysId = event.payload.data.output.data.GlideRecord_Mutation.insert_x_ebh_voluntary_0_deductions.sys_id.value;
+  	const payload =     {
+	  "sysId": sysId,
+      "deduction_type": null,
+      "deduction_amount": null,
+      "validation": null,
+      "deduction_label": null
+    };
+	const value = [...api.state.deductions, payload];
+
+  	// Extract sysId from competitor data
+  	const deduction_sysId = value.map(({sysId}) => sysId).join(",");
+
+	"asjhdfgdasjhfgkjashdgfasdfjgha, kajsdfkajshdflkjahsdlkfjhaslkdjfh"
+
+	// Populate into the form
+  	g_form.setValue("deductions", deduction_sysId);
+    api.setState("deductions", value);
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-04-28 13:44:36</sys_created_on>
+        <sys_id>8e0f0da84722a550265ad698436d43a3</sys_id>
+        <sys_mod_count>23</sys_mod_count>
+        <sys_name>Populate deduction</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_client_script_8e0f0da84722a550265ad698436d43a3</sys_update_name>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-05-18 18:16:21</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Name 1" section_id="16bd85c7c37e291011971d4ce0013163" sys_domain="global" table="x_ebh_voluntary_0_deduction_tickets" version="3" view="Custom_preview">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>deductions</element>
+            <position>0</position>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-05-18 18:21:01</sys_created_on>
+            <sys_id>0e1e0dc7c37e291011971d4ce0013143</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Name 1" display_value="Name 1" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="52bd85c7c37e291011971d4ce001315f">16bd85c7c37e291011971d4ce0013163</sys_ui_section>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-05-18 18:21:01</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Name 1</caption>
+            <header>false</header>
+            <name>x_ebh_voluntary_0_deduction_tickets</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-05-18 18:19:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>16bd85c7c37e291011971d4ce0013163</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>x_ebh_voluntary_0_deduction_tickets</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+            <sys_update_name>sys_ui_section_16bd85c7c37e291011971d4ce0013163</sys_update_name>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-05-18 18:21:01</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Custom preview" name="Custom_preview">52bd85c7c37e291011971d4ce001315f</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

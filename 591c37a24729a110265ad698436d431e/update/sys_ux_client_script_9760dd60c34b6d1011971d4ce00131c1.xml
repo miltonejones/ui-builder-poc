@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <includes/>
+        <macroponent display_value="New Deduction default">897f4d20c34b6d1011971d4ce00131bc</macroponent>
+        <name>button_1/disabled</name>
+        <preset/>
+        <required_translations>[ ]</required_translations>
+        <script><![CDATA[/**
+ * Evaluates if all necessary properties are present in the given api state.
+ * @param {Object} params - The parameters for the function.
+ * @param {Object} params.api - The api state object.
+ * @param {Object} params.helpers - The TransformApiHelpers object.
+ * @returns {Boolean} - Whether all necessary properties are present.
+ */
+function evaluateProperty({ api, helpers }) {
+  // Destructure required properties from api state
+  const { user_selected, deduction_eff_date, deductions } = api.state;
+
+  console.log( { user_selected, deduction_eff_date, deductions } )
+
+  // Check if each deduction has a type and amount
+  const req = deductions.map(({ deduction_type, deduction_value }) => {
+    return Boolean(deduction_type) && Boolean(deduction_value);
+  });
+
+  // Add other required properties to the array
+  req.push(Boolean(user_selected));
+  req.push(Boolean(deduction_eff_date));
+  req.push(Boolean(api.state.deductions.length));
+
+  console.log ({ req });
+
+  // Return whether all required properties are present
+  return !req.every(Boolean);
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-05-23 10:22:05</sys_created_on>
+        <sys_id>9760dd60c34b6d1011971d4ce00131c1</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>button_1/disabled</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_client_script_9760dd60c34b6d1011971d4ce00131c1</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-05-26 17:21:30</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>
