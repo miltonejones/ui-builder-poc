@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="c9a88db2472da110265ad698436d4399" label="Deductions" max_length="40" name="x_ebh_voluntary_0_deductions" type="collection">
+        <element label="Created By" max_length="40" name="created_by" read_only="true" type="string"/>
+        <element label="Created On" max_length="40" name="created_on" type="string"/>
+        <element label="Deduction Amount" max_length="40" name="deduction_amount" type="integer"/>
+        <element label="Deduction Amount Formatted" max_length="40" name="deduction_amount_formatted" type="string"/>
+        <element label="Deduction Ticket ID" max_length="32" name="deduction_ticket_id" reference="x_ebh_voluntary_0_deduction_tickets" type="reference"/>
+        <element choice="1" label="Deduction Type" max_length="40" name="deduction_type" type="string">
+            <choice>
+                <element inactive_on_update="false" label="UWAY - United Way" sequence="0" value="UWAY"/>
+                <element inactive_on_update="false" label="VADV - Temp Advance" sequence="1" value="VADV"/>
+                <element inactive_on_update="false" label="VBDG - Badge Deduction" sequence="2" value="VBDG"/>
+                <element inactive_on_update="false" label="VBPR - Beeper Charge" sequence="3" value="VBPR"/>
+                <element inactive_on_update="false" label="VCRM - Criminal Background Check" sequence="4" value="VCRM"/>
+                <element inactive_on_update="false" label="VDRG - Drug Screen" sequence="5" value="VDRG"/>
+                <element inactive_on_update="false" label="VGFT - Gift Bonus Reversal" sequence="6" value="VGFT"/>
+                <element inactive_on_update="false" label="VMIS - Miscellaneous Deduction" sequence="7" value="VMIS"/>
+                <element inactive_on_update="false" label="VPHO - Phone Deduction" sequence="8" value="VPHO"/>
+                <element inactive_on_update="false" label="VPHY - Physical" sequence="9" value="VPHY"/>
+                <element inactive_on_update="false" label="VSAF - Safety Equipment" sequence="10" value="VSAF"/>
+                <element inactive_on_update="false" label="VSCF - Screening Fee" sequence="11" value="VSCF"/>
+                <element inactive_on_update="false" label="VSTP - Stop Payment Fee" sequence="12" value="VSTP"/>
+                <element inactive_on_update="false" label="VUNI - Uniform Deduction" sequence="13" value="VUNI"/>
+            </choice>
+        </element>
+        <element label="Deduction Value" max_length="40" name="deduction_value" type="currency"/>
+        <element display="true" formula="CONCATENATE(deduction_type, &quot; : $&quot; , deduction_amount)" label="Display Value" max_length="40" name="display_value" type="string" virtual="true" virtual_type="formula"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Deduction ID" max_length="40" name="number" read_only="true" type="string"/>
+        <element label="(Ref) Created By" max_length="32" name="ref_created_by" reference="sys_user" type="reference"/>
+        <element label="(Ref) Employee" max_length="32" name="ref_employee" reference="sys_user" type="reference"/>
+        <index name="index">
+            <element name="ref_created_by"/>
+        </index>
+        <index name="index2">
+            <element name="ref_employee"/>
+        </index>
+    </element>
+</database>

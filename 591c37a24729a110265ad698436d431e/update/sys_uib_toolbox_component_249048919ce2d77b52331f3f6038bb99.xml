@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_uib_toolbox_component">
+    <sys_uib_toolbox_component action="INSERT_OR_UPDATE">
+        <component_config/>
+        <config_layout/>
+        <description>A description of my component</description>
+        <external_configuration_sources/>
+        <group/>
+        <group_category/>
+        <group_icon/>
+        <icon>document-outline</icon>
+        <image_icon/>
+        <internal_component>false</internal_component>
+        <label>My Component</label>
+        <macroponent/>
+        <order>0</order>
+        <scripted_config_policy/>
+        <sys_class_name>sys_uib_toolbox_component</sys_class_name>
+        <sys_created_by>vscode.user</sys_created_by>
+        <sys_created_on>2023-03-24 23:57:28</sys_created_on>
+        <sys_id>249048919ce2d77b52331f3f6038bb99</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>My Component</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_uib_toolbox_component_249048919ce2d77b52331f3f6038bb99</sys_update_name>
+        <sys_updated_by>vscode.user</sys_updated_by>
+        <sys_updated_on>2023-03-24 23:57:28</sys_updated_on>
+    </sys_uib_toolbox_component>
+    <sys_translated_text action="delete_multiple" query="documentkey=249048919ce2d77b52331f3f6038bb99"/>
+</record_update>

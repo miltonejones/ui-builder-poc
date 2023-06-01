@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ux_screen">
+    <sys_ux_screen action="DELETE">
+        <active>true</active>
+        <app_config display_value="Voluntary Deductions Config">9f2effe24729a110265ad698436d435e</app_config>
+        <description/>
+        <event_mappings>[ {
+  "eventMappingId" : "ckfmaaairddaaaaffjddhhhdiwqbkiwr",
+  "isConfiguration" : false,
+  "offRowStorageId" : null,
+  "sourceEventApiName" : "x_ebh_voluntary_0.NOW_UXF_PAGE#ADD_NOTIFICATIONS_RELAY_232effe2f629a1101f52edd56e53b97e",
+  "sourceEventDefinition" : {
+    "apiName" : "x_ebh_voluntary_0.NOW_UXF_PAGE#ADD_NOTIFICATIONS_RELAY_232effe2f629a1101f52edd56e53b97e",
+    "id" : null,
+    "type" : "UXEVENT"
+  },
+  "sourceEventSysId" : null,
+  "targets" : [ {
+    "broker" : null,
+    "clientScript" : null,
+    "declarativeAction" : null,
+    "event" : {
+      "apiName" : "sn_uxf_page.NOW_UXF_PAGE#ADD_NOTIFICATIONS",
+      "payload" : {
+        "type" : "MAP_CONTAINER",
+        "container" : {
+          "items" : {
+            "type" : "EVENT_PAYLOAD_BINDING",
+            "binding" : {
+              "address" : [ "items" ]
+            }
+          }
+        }
+      },
+      "sysId" : "49fe7d575f983bb3f8eea3fa8d40694c"
+    },
+    "operation" : null,
+    "targetId" : "ckfmaaairddaaaaffiddhhhdoiasehhlj",
+    "type" : "EVENT"
+  } ]
+} ]</event_mappings>
+        <macroponent/>
+        <macroponent_config>{
+  "label" : "",
+  "bare" : true,
+  "scrollable" : "none",
+  "headerLevel" : "2",
+  "interceptNotifications" : false,
+  "propagateNotifications" : false
+}</macroponent_config>
+        <name>Preferences Default</name>
+        <order>0</order>
+        <parent_macroponent/>
+        <required_translations>[]</required_translations>
+        <rollback_screen/>
+        <screen_condition/>
+        <screen_type display_value="Preferences">af2effe2e829a11034b7f5b5b796e686</screen_type>
+        <sys_class_name>sys_ux_screen</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-03-16 14:34:56</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>2f2effe2d229a110b7a7b6e8dae3067a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Preferences Default</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_screen_2f2effe2d229a110b7a7b6e8dae3067a</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2023-03-16 14:34:56</sys_updated_on>
+    </sys_ux_screen>
+    <sys_translated_text action="DELETE" query="documentkey=2f2effe2d229a110b7a7b6e8dae3067a"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</application>
+        <file_path/>
+        <instance_id>83ce67badb169190b847ac44d4961903</instance_id>
+        <instance_name>employbridgedev</instance_name>
+        <name>sys_ux_screen_2f2effe2d229a110b7a7b6e8dae3067a</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ux_screen"><sys_ux_screen action="INSERT_OR_UPDATE"><active>true</active><app_config display_value="Voluntary Deductions Config">9f2effe24729a110265ad698436d435e</app_config><description/><event_mappings>[ {
+  "eventMappingId" : "ckfmaaairddaaaaffjddhhhdiwqbkiwr",
+  "isConfiguration" : false,
+  "offRowStorageId" : null,
+  "sourceEventApiName" : "x_ebh_voluntary_0.NOW_UXF_PAGE#ADD_NOTIFICATIONS_RELAY_232effe2f629a1101f52edd56e53b97e",
+  "sourceEventDefinition" : {
+    "apiName" : "x_ebh_voluntary_0.NOW_UXF_PAGE#ADD_NOTIFICATIONS_RELAY_232effe2f629a1101f52edd56e53b97e",
+    "id" : null,
+    "type" : "UXEVENT"
+  },
+  "sourceEventSysId" : null,
+  "targets" : [ {
+    "broker" : null,
+    "clientScript" : null,
+    "declarativeAction" : null,
+    "event" : {
+      "apiName" : "sn_uxf_page.NOW_UXF_PAGE#ADD_NOTIFICATIONS",
+      "payload" : {
+        "type" : "MAP_CONTAINER",
+        "container" : {
+          "items" : {
+            "type" : "EVENT_PAYLOAD_BINDING",
+            "binding" : {
+              "address" : [ "items" ]
+            }
+          }
+        }
+      },
+      "sysId" : "49fe7d575f983bb3f8eea3fa8d40694c"
+    },
+    "operation" : null,
+    "targetId" : "ckfmaaairddaaaaffiddhhhdoiasehhlj",
+    "type" : "EVENT"
+  } ]
+} ]</event_mappings><macroponent/><macroponent_config>{
+  "label" : "",
+  "bare" : true,
+  "scrollable" : "none",
+  "headerLevel" : "2",
+  "interceptNotifications" : false,
+  "propagateNotifications" : false
+}</macroponent_config><name>Preferences Default</name><order>0</order><parent_macroponent/><required_translations>[]</required_translations><rollback_screen/><screen_condition/><screen_type display_value="Preferences">af2effe2e829a11034b7f5b5b796e686</screen_type><sys_class_name>sys_ux_screen</sys_class_name><sys_created_by>system</sys_created_by><sys_created_on>2023-03-16 14:34:56</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>2f2effe2d229a110b7a7b6e8dae3067a</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Preferences Default</sys_name><sys_overrides/><sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package><sys_policy/><sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope><sys_update_name>sys_ux_screen_2f2effe2d229a110b7a7b6e8dae3067a</sys_update_name><sys_updated_by>system</sys_updated_by><sys_updated_on>2023-03-16 14:34:56</sys_updated_on></sys_ux_screen><sys_translated_text action="delete_multiple" query="documentkey=2f2effe2d229a110b7a7b6e8dae3067a"/></record_update>]]></payload>
+        <payload_hash>-905611650</payload_hash>
+        <record_name>Preferences Default</record_name>
+        <reverted_from/>
+        <source>d615b7f647921110265ad698436d43d9</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>vscode.user</sys_created_by>
+        <sys_created_on>2023-03-24 22:34:12</sys_created_on>
+        <sys_id>a2983651c3b5ad1011971d4ce001319b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18715c20ffc0000001</sys_recorded_at>
+        <sys_updated_by>vscode.user</sys_updated_by>
+        <sys_updated_on>2023-03-24 22:34:12</sys_updated_on>
+        <type>UX Screen</type>
+        <update_guid>ee98365147b5ad10c84d2bff39c9d29a</update_guid>
+        <update_guid_history>ee98365147b5ad10c84d2bff39c9d29a:0,1a98b2559f75e9102770dcacb7c19832:-1163444014</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-03-27 16:25:12</sys_created_on>
+        <sys_db_object display_value="" name="sys_ux_screen">sys_ux_screen</sys_db_object>
+        <sys_id>bba9fa025df544f896311e2b216aaf44</sys_id>
+        <sys_metadata>2f2effe2d229a110b7a7b6e8dae3067a</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Preferences Default</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_scope_delete display_value="">9010b0fe4941481f931beec4cfddca89</sys_scope_delete>
+        <sys_update_name>sys_ux_screen_2f2effe2d229a110b7a7b6e8dae3067a</sys_update_name>
+        <sys_update_version display_value="sys_ux_screen_2f2effe2d229a110b7a7b6e8dae3067a">a2983651c3b5ad1011971d4ce001319b</sys_update_version>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-03-27 16:25:12</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

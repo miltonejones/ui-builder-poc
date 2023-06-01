@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <includes/>
+        <macroponent display_value="Default">08285e72c386611011971d4ce0013118</macroponent>
+        <name>Submit form</name>
+        <preset/>
+        <required_translations>[ ]</required_translations>
+        <script><![CDATA[// Submit form
+function handler({
+    api,
+    event,
+    helpers,
+    imports
+}) {
+    console.log(">>> Initializing 'Save Deduction' task ...");
+    const {
+        gForm: g_form,
+        sysId
+    } = api.data.glide_form_1.nowRecordFormBlob;
+
+    g_form.setValue("talent_user", api.state.user_selected.sys_id.value);
+    g_form.setValue("talent_id", api.state.user_selected.rowData.value.get("employee_number").columnData.value);
+    g_form.setValue("effective_date", api.state.deduction_eff_date);
+    "deductions are beign saved already"; // <----
+    g_form.setValue("notes", api.state.deduction_notes);
+
+    console.log(`Submitting sysID:${sysId}`);
+
+    g_form.save();
+
+    api.setState("form_sys_id", null);
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-05-16 17:43:01</sys_created_on>
+        <sys_id>8232be9ac3faa51011971d4ce00131dd</sys_id>
+        <sys_mod_count>43</sys_mod_count>
+        <sys_name>Submit form</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_client_script_8232be9ac3faa51011971d4ce00131dd</sys_update_name>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-05-18 18:16:21</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

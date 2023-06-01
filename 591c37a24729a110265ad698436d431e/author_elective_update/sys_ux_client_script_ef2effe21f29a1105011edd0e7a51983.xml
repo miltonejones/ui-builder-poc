@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="DELETE">
+        <includes/>
+        <macroponent display_value="">ef2effe2ad29a1103b5e8874b67d0084</macroponent>
+        <name>Create knowledge feedback</name>
+        <preset/>
+        <required_translations>[ ]</required_translations>
+        <script><![CDATA[function handler({
+    api,
+    helpers,
+    event,
+    imports
+}) {
+    const {
+        context,
+        data,
+        state,
+        setState,
+        emit
+    } = api;
+    const {
+        modal
+    } = helpers;
+    const insertRecord = function(table, fields, type) {
+        setState("currentFeedbackAction", type);
+        data.create_record_1.execute({
+            table,
+            templateFields: fields,
+            useSetDisplayValue: ''
+        });
+    };
+    var articleSysId = context.props.sysId;
+    var templateFields = "article=" + articleSysId + "^";
+    var articleData = data.get_article_details_1.articleDetails;
+    var yesMessage = "Thank you for your feedback";
+    var noMessage = "We'll improve the article based on your feedback.";
+    const feedbackAction = state.currentFeedbackAction;
+
+    if (event.elementId == "kb_star_rating") {
+        setState('currentFeedbackAction', "rating");
+        templateFields += "rating=" + event.payload.rating;
+        if (articleData.enableActionableFeedbackForRating >= event.payload.rating) {
+            setState('userRating', event.payload.rating);
+            modal.open("[component-id$='custom_1']");
+        } else {
+            insertRecord('kb_feedback', templateFields, "rating");
+        }
+    }
+
+    if (event.elementId == "boolean_feedback_no") {
+        var showModal = (articleData.showFeedbackOptions || articleData.showFeedbackComments) && articleData.enableActionableFeedbackForHelpful;
+        setState("currentFeedbackAction", "boolean_feedback");
+        if (showModal) {
+            setState('additionalDetails', null);
+            setState("selectedReason", ["4"]);
+            modal.open("[component-id$='custom_1']");
+        } else {
+            templateFields += "useful=no";
+            setState('booleanFeedbackMessage', noMessage);
+            setState('booleanFeedbackIcon', 'thumbs-down-outline');
+            setState("isBooleanFeedbackButtonsHidden", true);
+            insertRecord('kb_feedback', templateFields, "boolean_feedback");
+        }
+    } else if (event.elementId == "boolean_feedback_yes") {
+        setState("currentFeedbackAction", "boolean_feedback");
+        templateFields += "useful=yes";
+        setState('booleanFeedbackMessage', yesMessage);
+        setState('booleanFeedbackIcon', 'thumbs-up-outline');
+        setState("isBooleanFeedbackButtonsHidden", true);
+        insertRecord('kb_feedback', templateFields, "boolean_feedback");
+        const usefulYesCount = articleData.usefulYesCount+1;
+        const totalUsefulCount = articleData.totalUsefulCount+1;
+        var helpPercent = (usefulYesCount && totalUsefulCount) ? 
+            Math.round(usefulYesCount / totalUsefulCount *100) : 0;
+        const helpPercentMessage = (helpPercent) ? helpPercent+'% found this helpful':'';
+        setState('helpPercentMessage',helpPercentMessage);
+        setState('isHelpPercentInfoHidden', false);
+    } else if (event.elementId == "boolean_feedback_no_ignore") {
+
+        modal.close("[component-id$='custom_1']");
+        if (feedbackAction != "rating") {
+            setState('booleanFeedbackMessage', noMessage);
+            setState('booleanFeedbackIcon', 'thumbs-down-outline');
+            setState("isBooleanFeedbackButtonsHidden", true);
+            templateFields += "reason=4^useful=no";
+        }
+        if (feedbackAction == "rating") {
+            templateFields += "reason=4^rating=" + state.userRating;
+        }
+        insertRecord('kb_feedback', templateFields,feedbackAction);
+
+    } else if (event.elementId == "boolean_feedback_no_submit") {
+        modal.close("[component-id$='custom_1']");
+        if ((state.selectedReason)[0] != null)
+            templateFields += "reason=" + (state.selectedReason)[0] + "^";
+        if (state.additionalDetails != null)
+            templateFields += "comments=" + state.additionalDetails + "^";
+        if (feedbackAction != "rating") {
+            setState('booleanFeedbackMessage', noMessage);
+            setState('booleanFeedbackIcon', 'thumbs-down-outline');
+            setState("isBooleanFeedbackButtonsHidden", true);
+            templateFields += "useful=no";
+        }
+        if (feedbackAction == "rating") {
+            templateFields += "rating=" + state.userRating;
+        }
+        insertRecord('kb_feedback', templateFields,feedbackAction);
+    } else if (event.elementId == "flag_article") {
+        modal.close("[component-id$='custom_2']");
+        var comments = state.flagArticleContent.replaceAll("\n", "\\n").replaceAll("^", "&#94;");
+        templateFields += "flagged=true^comments=" + comments;
+        setState('flagArticleContent', comments);
+        if (articleData.enableActionableFeedbackForFlag)
+            templateFields += "^reason=Flagged";
+        insertRecord('kb_feedback', templateFields, "flag_article");
+    }
+
+    if (event.elementId == "create_record_1") {
+        var items = [];
+        var requestFailed = false;
+		
+        if (event.name == "DATA_OP_SUCCEEDED") {
+            var output = event.payload.data.output.data.GlideRecord_Mutation.insert_kb_feedback;
+            if (output == null) {
+                requestFailed = true;
+            } else {
+                if (state.currentFeedbackAction == "flag_article") {
+                    items.push({
+                        id: "flagArticleSuccess",
+                        status: "info",
+                        icon: "info-circle-outline",
+                        content: "Article has been flagged",
+                        action: {
+                            type: "dismiss"
+                        }
+                    });
+                }
+                if (state.currentFeedbackAction == "rating") {
+                    items.push({
+                        id: "ratingArticleSuccess",
+                        status: "info",
+                        icon: "info-circle-outline",
+                        content: "Feedback submitted.",
+                        action: {
+                            type: "dismiss"
+                        }
+                    });
+                }
+
+                if (state.currentFeedbackAction == "boolean_feedback") {
+                    items.push({
+                        id: "booleanFeedbackSuccess",
+                        status: "info",
+                        icon: "info-circle-outline",
+                        content: "Feedback submitted.",
+                        action: {
+                            type: "dismiss"
+                        }
+                    });
+                }
+            }
+        }
+        
+        if (event.name == "DATA_OP_FAILED" || requestFailed) {
+            items.push({
+                id: "flagArticleFailure",
+                status: "critical",
+                icon: "info-circle-outline",
+                content: "You have reached the daily limit for feedback posted by a user.",
+                action: {
+                    type: "dismiss"
+                }
+            });
+        }
+        if (items.length > 0) {
+            emit("NOW_UXF_PAGE#ADD_NOTIFICATIONS", {
+                items
+            });
+        }
+        setState('currentFeedbackAction', "");
+    }
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-03-16 14:34:57</sys_created_on>
+        <sys_id>ef2effe21f29a1105011edd0e7a51983</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Create knowledge feedback</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_client_script_ef2effe21f29a1105011edd0e7a51983</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2023-03-16 14:34:57</sys_updated_on>
+        <target/>
+        <type/>
+    </sys_ux_client_script>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</application>
+        <file_path/>
+        <instance_id>83ce67badb169190b847ac44d4961903</instance_id>
+        <instance_name>employbridgedev</instance_name>
+        <name>sys_ux_client_script_ef2effe21f29a1105011edd0e7a51983</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_ux_client_script"&gt;&lt;sys_ux_client_script action="INSERT_OR_UPDATE"&gt;&lt;includes/&gt;&lt;macroponent display_value=""&gt;ef2effe2ad29a1103b5e8874b67d0084&lt;/macroponent&gt;&lt;name&gt;Create knowledge feedback&lt;/name&gt;&lt;preset/&gt;&lt;required_translations&gt;[ ]&lt;/required_translations&gt;&lt;script&gt;&lt;![CDATA[function handler({
+    api,
+    helpers,
+    event,
+    imports
+}) {
+    const {
+        context,
+        data,
+        state,
+        setState,
+        emit
+    } = api;
+    const {
+        modal
+    } = helpers;
+    const insertRecord = function(table, fields, type) {
+        setState("currentFeedbackAction", type);
+        data.create_record_1.execute({
+            table,
+            templateFields: fields,
+            useSetDisplayValue: ''
+        });
+    };
+    var articleSysId = context.props.sysId;
+    var templateFields = "article=" + articleSysId + "^";
+    var articleData = data.get_article_details_1.articleDetails;
+    var yesMessage = "Thank you for your feedback";
+    var noMessage = "We'll improve the article based on your feedback.";
+    const feedbackAction = state.currentFeedbackAction;
+
+    if (event.elementId == "kb_star_rating") {
+        setState('currentFeedbackAction', "rating");
+        templateFields += "rating=" + event.payload.rating;
+        if (articleData.enableActionableFeedbackForRating &gt;= event.payload.rating) {
+            setState('userRating', event.payload.rating);
+            modal.open("[component-id$='custom_1']");
+        } else {
+            insertRecord('kb_feedback', templateFields, "rating");
+        }
+    }
+
+    if (event.elementId == "boolean_feedback_no") {
+        var showModal = (articleData.showFeedbackOptions || articleData.showFeedbackComments) &amp;&amp; articleData.enableActionableFeedbackForHelpful;
+        setState("currentFeedbackAction", "boolean_feedback");
+        if (showModal) {
+            setState('additionalDetails', null);
+            setState("selectedReason", ["4"]);
+            modal.open("[component-id$='custom_1']");
+        } else {
+            templateFields += "useful=no";
+            setState('booleanFeedbackMessage', noMessage);
+            setState('booleanFeedbackIcon', 'thumbs-down-outline');
+            setState("isBooleanFeedbackButtonsHidden", true);
+            insertRecord('kb_feedback', templateFields, "boolean_feedback");
+        }
+    } else if (event.elementId == "boolean_feedback_yes") {
+        setState("currentFeedbackAction", "boolean_feedback");
+        templateFields += "useful=yes";
+        setState('booleanFeedbackMessage', yesMessage);
+        setState('booleanFeedbackIcon', 'thumbs-up-outline');
+        setState("isBooleanFeedbackButtonsHidden", true);
+        insertRecord('kb_feedback', templateFields, "boolean_feedback");
+        const usefulYesCount = articleData.usefulYesCount+1;
+        const totalUsefulCount = articleData.totalUsefulCount+1;
+        var helpPercent = (usefulYesCount &amp;&amp; totalUsefulCount) ? 
+            Math.round(usefulYesCount / totalUsefulCount *100) : 0;
+        const helpPercentMessage = (helpPercent) ? helpPercent+'% found this helpful':'';
+        setState('helpPercentMessage',helpPercentMessage);
+        setState('isHelpPercentInfoHidden', false);
+    } else if (event.elementId == "boolean_feedback_no_ignore") {
+
+        modal.close("[component-id$='custom_1']");
+        if (feedbackAction != "rating") {
+            setState('booleanFeedbackMessage', noMessage);
+            setState('booleanFeedbackIcon', 'thumbs-down-outline');
+            setState("isBooleanFeedbackButtonsHidden", true);
+            templateFields += "reason=4^useful=no";
+        }
+        if (feedbackAction == "rating") {
+            templateFields += "reason=4^rating=" + state.userRating;
+        }
+        insertRecord('kb_feedback', templateFields,feedbackAction);
+
+    } else if (event.elementId == "boolean_feedback_no_submit") {
+        modal.close("[component-id$='custom_1']");
+        if ((state.selectedReason)[0] != null)
+            templateFields += "reason=" + (state.selectedReason)[0] + "^";
+        if (state.additionalDetails != null)
+            templateFields += "comments=" + state.additionalDetails + "^";
+        if (feedbackAction != "rating") {
+            setState('booleanFeedbackMessage', noMessage);
+            setState('booleanFeedbackIcon', 'thumbs-down-outline');
+            setState("isBooleanFeedbackButtonsHidden", true);
+            templateFields += "useful=no";
+        }
+        if (feedbackAction == "rating") {
+            templateFields += "rating=" + state.userRating;
+        }
+        insertRecord('kb_feedback', templateFields,feedbackAction);
+    } else if (event.elementId == "flag_article") {
+        modal.close("[component-id$='custom_2']");
+        var comments = state.flagArticleContent.replaceAll("\n", "\\n").replaceAll("^", "&amp;#94;");
+        templateFields += "flagged=true^comments=" + comments;
+        setState('flagArticleContent', comments);
+        if (articleData.enableActionableFeedbackForFlag)
+            templateFields += "^reason=Flagged";
+        insertRecord('kb_feedback', templateFields, "flag_article");
+    }
+
+    if (event.elementId == "create_record_1") {
+        var items = [];
+        var requestFailed = false;
+		
+        if (event.name == "DATA_OP_SUCCEEDED") {
+            var output = event.payload.data.output.data.GlideRecord_Mutation.insert_kb_feedback;
+            if (output == null) {
+                requestFailed = true;
+            } else {
+                if (state.currentFeedbackAction == "flag_article") {
+                    items.push({
+                        id: "flagArticleSuccess",
+                        status: "info",
+                        icon: "info-circle-outline",
+                        content: "Article has been flagged",
+                        action: {
+                            type: "dismiss"
+                        }
+                    });
+                }
+                if (state.currentFeedbackAction == "rating") {
+                    items.push({
+                        id: "ratingArticleSuccess",
+                        status: "info",
+                        icon: "info-circle-outline",
+                        content: "Feedback submitted.",
+                        action: {
+                            type: "dismiss"
+                        }
+                    });
+                }
+
+                if (state.currentFeedbackAction == "boolean_feedback") {
+                    items.push({
+                        id: "booleanFeedbackSuccess",
+                        status: "info",
+                        icon: "info-circle-outline",
+                        content: "Feedback submitted.",
+                        action: {
+                            type: "dismiss"
+                        }
+                    });
+                }
+            }
+        }
+        
+        if (event.name == "DATA_OP_FAILED" || requestFailed) {
+            items.push({
+                id: "flagArticleFailure",
+                status: "critical",
+                icon: "info-circle-outline",
+                content: "You have reached the daily limit for feedback posted by a user.",
+                action: {
+                    type: "dismiss"
+                }
+            });
+        }
+        if (items.length &gt; 0) {
+            emit("NOW_UXF_PAGE#ADD_NOTIFICATIONS", {
+                items
+            });
+        }
+        setState('currentFeedbackAction', "");
+    }
+}]]&gt;&lt;/script&gt;&lt;script_api_version&gt;2.0.0&lt;/script_api_version&gt;&lt;sys_class_name&gt;sys_ux_client_script&lt;/sys_class_name&gt;&lt;sys_created_by&gt;system&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2023-03-16 14:34:57&lt;/sys_created_on&gt;&lt;sys_id&gt;ef2effe21f29a1105011edd0e7a51983&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Create knowledge feedback&lt;/sys_name&gt;&lt;sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0"&gt;591c37a24729a110265ad698436d431e&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Voluntary Deductions"&gt;591c37a24729a110265ad698436d431e&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ux_client_script_ef2effe21f29a1105011edd0e7a51983&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;system&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2023-03-16 14:34:57&lt;/sys_updated_on&gt;&lt;target/&gt;&lt;type/&gt;&lt;/sys_ux_client_script&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1556240306</payload_hash>
+        <record_name>Create knowledge feedback</record_name>
+        <reverted_from/>
+        <source>c0311903c311211011971d4ce0013135</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by/>
+        <sys_created_on>2023-03-05 05:00:20</sys_created_on>
+        <sys_id>10a836554775e910265ad698436d43b5</sys_id>
+        <sys_mod_count/>
+        <sys_recorded_at>186b02462a00000000</sys_recorded_at>
+        <sys_updated_by/>
+        <sys_updated_on/>
+        <type>UX Client Script</type>
+        <update_guid>dca83655e275e9104c78b73632ff1ab4</update_guid>
+        <update_guid_history>dca83655e275e9104c78b73632ff1ab4:-1556240306</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>vscode.user</sys_created_by>
+        <sys_created_on>2023-03-24 22:34:19</sys_created_on>
+        <sys_db_object display_value="" name="sys_ux_client_script">sys_ux_client_script</sys_db_object>
+        <sys_id>86146d4bb085477e8bfad331924a2369</sys_id>
+        <sys_metadata>ef2effe21f29a1105011edd0e7a51983</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Create knowledge feedback</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_scope_delete display_value="">9010b0fe4941481f931beec4cfddca89</sys_scope_delete>
+        <sys_update_name>sys_ux_client_script_ef2effe21f29a1105011edd0e7a51983</sys_update_name>
+        <sys_update_version display_value="sys_ux_client_script_ef2effe21f29a1105011edd0e7a51983">10a836554775e910265ad698436d43b5</sys_update_version>
+        <sys_updated_by>vscode.user</sys_updated_by>
+        <sys_updated_on>2023-03-24 22:34:19</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

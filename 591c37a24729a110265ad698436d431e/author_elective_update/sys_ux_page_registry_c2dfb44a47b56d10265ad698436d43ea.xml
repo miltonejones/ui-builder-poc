@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_page_registry">
+    <sys_ux_page_registry action="DELETE">
+        <active>true</active>
+        <admin_panel/>
+        <admin_panel_table/>
+        <auth_routes/>
+        <page display_value="UI Builder">399fcc0077733300cf3a4a2a6910611b</page>
+        <parent_app/>
+        <path>/landing</path>
+        <root_macroponent/>
+        <sys_class_name>sys_ux_page_registry</sys_class_name>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-03-26 21:42:28</sys_created_on>
+        <sys_id>c2dfb44a47b56d10265ad698436d43ea</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Test</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_page_registry_c2dfb44a47b56d10265ad698436d43ea</sys_update_name>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-03-26 21:43:50</sys_updated_on>
+        <title>Test</title>
+    </sys_ux_page_registry>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</application>
+        <file_path/>
+        <instance_id>83ce67badb169190b847ac44d4961903</instance_id>
+        <instance_name>employbridgedev</instance_name>
+        <name>sys_ux_page_registry_c2dfb44a47b56d10265ad698436d43ea</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_page_registry"><sys_ux_page_registry action="INSERT_OR_UPDATE"><active>true</active><admin_panel/><admin_panel_table/><auth_routes/><page display_value="UI Builder">399fcc0077733300cf3a4a2a6910611b</page><parent_app/><path>/landing</path><root_macroponent/><sys_class_name>sys_ux_page_registry</sys_class_name><sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by><sys_created_on>2023-03-26 21:42:28</sys_created_on><sys_id>c2dfb44a47b56d10265ad698436d43ea</sys_id><sys_mod_count>1</sys_mod_count><sys_name>Test</sys_name><sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package><sys_policy/><sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope><sys_update_name>sys_ux_page_registry_c2dfb44a47b56d10265ad698436d43ea</sys_update_name><sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by><sys_updated_on>2023-03-26 21:43:50</sys_updated_on><title>Test</title></sys_ux_page_registry></record_update>]]></payload>
+        <payload_hash>-448518456</payload_hash>
+        <record_name>Test</record_name>
+        <reverted_from/>
+        <source>991c37a24729a110265ad698436d4320</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-03-26 21:43:50</sys_created_on>
+        <sys_id>d440058a47b56d10265ad698436d43dc</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1871fe0acb50000001</sys_recorded_at>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-03-26 21:43:50</sys_updated_on>
+        <type>UX Application</type>
+        <update_guid>9c40058afcb56d107ff44ea2e67afbdb</update_guid>
+        <update_guid_history>9c40058afcb56d107ff44ea2e67afbdb:-448518456,10ffb08a17b56d10dd1213d0c2987484:-1943616010</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-03-26 21:45:06</sys_created_on>
+        <sys_db_object display_value="" name="sys_ux_page_registry">sys_ux_page_registry</sys_db_object>
+        <sys_id>009d286adb704ce08d6fc5ff84c6a810</sys_id>
+        <sys_metadata>c2dfb44a47b56d10265ad698436d43ea</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Test</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_scope_delete display_value="">9010b0fe4941481f931beec4cfddca89</sys_scope_delete>
+        <sys_update_name>sys_ux_page_registry_c2dfb44a47b56d10265ad698436d43ea</sys_update_name>
+        <sys_update_version display_value="sys_ux_page_registry_c2dfb44a47b56d10265ad698436d43ea">d440058a47b56d10265ad698436d43dc</sys_update_version>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-03-26 21:45:06</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

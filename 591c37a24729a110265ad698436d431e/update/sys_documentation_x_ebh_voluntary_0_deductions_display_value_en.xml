@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="display_value" label="Display Value" language="en" table="x_ebh_voluntary_0_deductions">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>display_value</element>
+            <help/>
+            <hint/>
+            <label>Display Value</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <plural/>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-27 15:45:28</sys_created_on>
+            <sys_mod_count>9</sys_mod_count>
+            <sys_name>Display Value</sys_name>
+            <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+            <sys_update_name>sys_documentation_x_ebh_voluntary_0_deductions_display_value_en</sys_update_name>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-05-18 18:14:34</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

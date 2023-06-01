@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <includes/>
+        <macroponent display_value="Default">08285e72c386611011971d4ce0013118</macroponent>
+        <name>Clear state</name>
+        <preset/>
+        <required_translations>[ ]</required_translations>
+        <script><![CDATA[// Page scripts - Clear state
+function handler({
+    api,
+    event,
+    helpers,
+    imports
+}) {
+
+    const defaultState = {
+        "form_sys_id": -1,
+        "deductions": [],
+        "deduction_notes": null,
+        "deduction_eff_date": null,
+        "isEffectiveDateCalendarVisible": false,
+        "search_user_input": "",
+        "user_selected": null,
+        "isSearchVisible": false,
+        "forceUpdate": null,
+        "created_sys_id": null,
+        "submitted": false
+    };
+
+    for (let prop in defaultState) {
+        api.setState(prop, defaultState[prop]);
+    }
+
+    // hide calendar
+    api.setState("isEffectiveDateCalendarVisible", false);
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+        <sys_created_on>2023-04-10 22:18:55</sys_created_on>
+        <sys_id>64285e72c386611011971d4ce0013190</sys_id>
+        <sys_mod_count>28</sys_mod_count>
+        <sys_name>Clear state</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_client_script_64285e72c386611011971d4ce0013190</sys_update_name>
+        <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-05-17 14:27:25</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

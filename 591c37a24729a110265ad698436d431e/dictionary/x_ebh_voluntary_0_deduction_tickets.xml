@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="eeb90b1dc31e291011971d4ce00131d4" label="Deduction Tickets" max_length="40" name="x_ebh_voluntary_0_deduction_tickets" type="collection">
+        <element label="Deductions" max_length="1000000" name="deductions" read_only="true" reference="x_ebh_voluntary_0_deductions" type="glide_list"/>
+        <element choice="1" choice_field="deduction_type" choice_table="x_ebh_voluntary_0_deductions" label="Deduction Types" max_length="1200" name="deduction_types" read_only="true" reference="x_ebh_voluntary_0_deductions" type="glide_list">
+            <choice/>
+        </element>
+        <element label="Effective Date" max_length="40" name="effective_date" read_only="true" type="glide_date"/>
+        <element label="Notes" max_length="524" name="notes" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Deduction ID" max_length="40" name="number" read_only="true" type="string"/>
+        <element label="Owner" max_length="40" name="owner" read_only="true" type="string"/>
+        <element choice="3" default="submitted" label="Status" max_length="40" name="status" read_only="true" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Queued" sequence="0" value="queued"/>
+                <element inactive_on_update="false" label="Submitted" sequence="1" value="submitted"/>
+                <element inactive_on_update="false" label="Processed" sequence="2" value="processed"/>
+            </choice>
+        </element>
+        <element dependent="talent_user" dependent_on_field="talent_user" formula="talent_user" label="Talent ID" max_length="40" name="talent_id" read_only="true" type="string" use_dependent_field="true" virtual="true" virtual_type="formula"/>
+        <element label="Talent User" max_length="32" name="talent_user" read_only="true" reference="sys_user" type="reference"/>
+        <element label="Deduction ID" max_length="40" name="voluntary_deduction_id" read_only="true" type="string"/>
+        <index name="index">
+            <element name="talent_user"/>
+        </index>
+    </element>
+</database>

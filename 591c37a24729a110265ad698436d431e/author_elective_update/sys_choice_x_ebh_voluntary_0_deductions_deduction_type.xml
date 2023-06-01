@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="deduction_type" table="x_ebh_voluntary_0_deductions" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>deduction_type</element>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>deduction_type</sys_name>
+            <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+            <sys_update_name>sys_choice_x_ebh_voluntary_0_deductions_deduction_type</sys_update_name>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>UWAY - United Way</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>UWAY</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VADV - Temp Advance</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VADV</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VBDG - Badge Deduction</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VBDG</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VBPR - Beeper Charge</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VBPR</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VCRM - Criminal Background Check</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VCRM</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VDRG - Drug Screen</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VDRG</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VGFT - Gift Bonus Reversal</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>6</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VGFT</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VMIS - Miscellaneous Deduction</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>7</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VMIS</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VPHO - Phone Deduction</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>8</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VPHO</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VPHY - Physical</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>9</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VPHY</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VSAF - Safety Equipment</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VSAF</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VSCF - Screening Fee</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>11</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VSCF</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VSTP - Stop Payment Fee</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>12</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VSTP</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>deduction_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>VUNI - Uniform Deduction</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deductions</name>
+            <sequence>13</sequence>
+            <synonyms/>
+            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
+            <sys_created_on>2023-04-18 14:14:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-04-18 14:14:23</sys_updated_on>
+            <value>VUNI</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>
