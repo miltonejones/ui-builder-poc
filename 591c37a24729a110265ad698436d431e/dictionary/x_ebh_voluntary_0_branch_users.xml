@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="efac2a50c3e32d1011971d4ce00131bc" label="Branch Users" max_length="40" name="x_ebh_voluntary_0_branch_users" type="collection">
+        <element label="Branch" max_length="32" name="branch_id" reference="u_branches" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="User" max_length="32" name="user_id" reference="sys_user" type="reference"/>
+        <index name="index">
+            <element name="branch_id"/>
+        </index>
+        <index name="index2">
+            <element name="user_id"/>
+        </index>
+    </element>
+</database>
