@@ -13,10 +13,11 @@
                 <element inactive_on_update="false" label="Queued" sequence="0" value="queued"/>
                 <element inactive_on_update="false" label="Submitted" sequence="1" value="submitted"/>
                 <element inactive_on_update="false" label="Processed" sequence="2" value="processed"/>
+                <element inactive_on_update="false" label="Sent" sequence="3" value="Sent"/>
             </choice>
         </element>
         <element dependent="talent_user" dependent_on_field="talent_user" formula="talent_user" label="Talent ID" max_length="40" name="talent_id" read_only="true" type="string" use_dependent_field="true" virtual="true" virtual_type="formula"/>
-        <element label="Talent User" max_length="32" name="talent_user" read_only="true" reference="sys_user" type="reference"/>
+        <element label="Talent User" max_length="32" name="talent_user" read_only="true" reference="x_ebh_ccde_talent_core" type="reference"/>
         <element label="Deduction ID" max_length="40" name="voluntary_deduction_id" read_only="true" type="string"/>
         <index name="index">
             <element name="talent_user"/>

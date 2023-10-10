@@ -11,6 +11,10 @@
       "type" : "JSON_LITERAL",
       "value" : "1"
     },
+    "hideEmptyStateUi" : {
+      "type" : "JSON_LITERAL",
+      "value" : true
+    },
     "ariaRegionName" : {
       "type" : "TRANSLATION_LITERAL",
       "value" : {
@@ -453,7 +457,7 @@
         },
         "columns" : {
           "type" : "JSON_LITERAL",
-          "value" : "branch_id,user_id"
+          "value" : "branch_id,user_id,sys_id"
         },
         "hideLinks" : {
           "type" : "JSON_LITERAL",
@@ -477,7 +481,7 @@
         },
         "maxColumns" : {
           "type" : "JSON_LITERAL",
-          "value" : 5
+          "value" : 3
         },
         "hidePreviousPage" : {
           "type" : "JSON_LITERAL",
@@ -601,7 +605,7 @@
               "script" : {
                 "apiVersion" : "1.0.0",
                 "controllerElementId" : null,
-                "inlineScript" : "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\tconsole.log ({ event })\n\treturn {\n\t\tpropName: null,\n\t\tvalue: null\n\t};\n}",
+                "inlineScript" : "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\tconsole.log ({  event })\n\tconsole.log ({ row: event.payload.row.rowData.value   })\n\tconst { sys_id } = event.payload;\n\treturn {\n\t\tpropName: 'doomed_record',\n\t\tvalue: sys_id\n\t};\n}",
                 "scriptSysId" : null,
                 "target" : null
               }
@@ -610,6 +614,30 @@
           },
           "operation" : null,
           "targetId" : "cljccxktupaaccjtddeehhtmnteeaaanaa",
+          "type" : "EVENT"
+        }, {
+          "broker" : null,
+          "clientScript" : null,
+          "conditional" : null,
+          "declarativeAction" : null,
+          "event" : {
+            "apiName" : "x_ebh_voluntary_0.MODAL_SELECTED_RELAY_3dad22d0c3e32d1011971d4ce001314d",
+            "payload" : {
+              "type" : "JSON_LITERAL",
+              "value" : {
+                "modalId" : "[component-id$='confirm_and_destroy_1']",
+                "showModal" : true,
+                "displayOptions" : null,
+                "bare" : false,
+                "viewportElementId" : null,
+                "viewportRoute" : null,
+                "viewportFields" : null
+              }
+            },
+            "sysId" : "acafc765c323215011971d4ce00131d1"
+          },
+          "operation" : null,
+          "targetId" : "cljeemveehhhaaemffddeehhtedqeebbytn",
           "type" : "EVENT"
         } ]
       } ],
@@ -690,7 +718,7 @@
         },
         "query" : {
           "type" : "JSON_LITERAL",
-          "value" : "active=true"
+          "value" : "first_nameLIKEnav"
         },
         "hideFilterPanel" : {
           "type" : "JSON_LITERAL",
@@ -937,6 +965,10 @@
     "ariaRegionHeadingLevel" : {
       "type" : "JSON_LITERAL",
       "value" : "1"
+    },
+    "hideEmptyStateUi" : {
+      "type" : "JSON_LITERAL",
+      "value" : true
     },
     "ariaRegionName" : {
       "type" : "TRANSLATION_LITERAL",
@@ -1255,6 +1287,123 @@
   "styles" : {
     "width" : "100%"
   }
+}, {
+  "elementId" : "confirm_and_destroy_1",
+  "elementLabel" : "Confirm and destroy 1",
+  "propertyValues" : {
+    "preventDefaultSecondaryAction" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "defer" : {
+      "type" : "JSON_LITERAL",
+      "value" : true
+    },
+    "size" : {
+      "type" : "JSON_LITERAL",
+      "value" : "md"
+    },
+    "headerLabel" : {
+      "type" : "CLIENT_TRANSFORM_SCRIPT",
+      "script" : {
+        "apiVersion" : "2.0.0",
+        "controllerElementId" : null,
+        "inlineScript" : null,
+        "scriptSysId" : "f68f8b65c323215011971d4ce0013134",
+        "target" : null
+      }
+    },
+    "primaryButtonLabel" : {
+      "type" : "TRANSLATION_LITERAL",
+      "value" : {
+        "code" : null,
+        "message" : "Delete",
+        "comment" : ""
+      }
+    },
+    "preventDefaultPrimaryAction" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    },
+    "content" : {
+      "type" : "TRANSLATION_LITERAL",
+      "value" : {
+        "code" : null,
+        "message" : "This can't be reversed.",
+        "comment" : ""
+      }
+    },
+    "secondaryButtonLabel" : {
+      "type" : "TRANSLATION_LITERAL",
+      "value" : {
+        "code" : null,
+        "message" : "Cancel",
+        "comment" : ""
+      }
+    }
+  },
+  "eventMappings" : [ {
+    "eventMappingId" : "cljeenhhliipaalgnddeehhttgfzbbbggl",
+    "isConfiguration" : false,
+    "offRowStorageId" : null,
+    "sourceEventApiName" : "sn_canvas_chrome.NOW_CONFIRM_DESTROY_MODAL#CONFIRM_CLICKED",
+    "sourceEventCorrelationId" : null,
+    "sourceEventDefinition" : {
+      "apiName" : "sn_canvas_chrome.NOW_CONFIRM_DESTROY_MODAL#CONFIRM_CLICKED",
+      "id" : null,
+      "type" : "UXEVENT"
+    },
+    "sourceEventSysId" : null,
+    "targets" : [ {
+      "broker" : null,
+      "clientScript" : {
+        "sysId" : "60515ba5c323215011971d4ce00131c4"
+      },
+      "conditional" : null,
+      "declarativeAction" : null,
+      "event" : null,
+      "operation" : null,
+      "targetId" : "cljeenhhliipaalgoddeehhtvlqoffccva",
+      "type" : "CLIENT_SCRIPT"
+    }, {
+      "broker" : null,
+      "clientScript" : null,
+      "conditional" : null,
+      "declarativeAction" : null,
+      "event" : {
+        "apiName" : "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+        "payload" : {
+          "type" : "CLIENT_TRANSFORM_SCRIPT",
+          "script" : {
+            "apiVersion" : "1.0.0",
+            "controllerElementId" : null,
+            "inlineScript" : "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\treturn {\n\t\tpropName: 'refresh_date',\n\t\tvalue: new Date().toString()\n\t};\n}",
+            "scriptSysId" : null,
+            "target" : null
+          }
+        },
+        "sysId" : "32408b42ff7a10109046e490703bf176"
+      },
+      "operation" : null,
+      "targetId" : "cljeeniisuggaaliffddeehhtddhhqdlzaag",
+      "type" : "EVENT"
+    } ]
+  } ],
+  "slot" : null,
+  "definition" : {
+    "id" : "637fc6a75b230010b913cbd59b81c779",
+    "type" : "MACROPONENT"
+  },
+  "overrides" : null,
+  "isHidden" : {
+    "type" : "JSON_LITERAL",
+    "value" : null
+  },
+  "isHero" : false,
+  "extensionPoints" : [ ],
+  "isNonDestructive" : false,
+  "items" : [ ],
+  "styles" : { }
 } ]</composition>
         <da_relay_models/>
         <data>[ {
@@ -1481,9 +1630,20 @@
     }
   },
   "readEvaluationMode" : "EAGER"
+}, {
+  "definition" : {
+    "id" : "00cd9b8353211010cbc2ddeeff7b1205",
+    "type" : "GRAPHQL"
+  },
+  "dependencies" : { },
+  "elementId" : "delete_record_1",
+  "elementLabel" : "Delete Record 1",
+  "eventMappings" : [ ],
+  "inputValues" : { },
+  "readEvaluationMode" : "EXPLICIT"
 } ]</data>
         <description/>
-        <dispatched_events/>
+        <dispatched_events>acafc765c323215011971d4ce00131d1</dispatched_events>
         <ext_controller_dep/>
         <extends display_value="Page Template">19be392623033300f4b4c50947bf65ba</extends>
         <handled_events/>
@@ -1557,10 +1717,19 @@
   "message" : "Branches",
   "comment" : ""
 }, {
+  "message" : "Cancel",
+  "comment" : ""
+}, {
+  "message" : "Delete",
+  "comment" : ""
+}, {
   "message" : "Enter a label",
   "comment" : ""
 }, {
   "message" : "Save",
+  "comment" : ""
+}, {
+  "message" : "This can't be reversed.",
   "comment" : ""
 }, {
   "message" : "Users",
@@ -1592,19 +1761,30 @@
     "type" : "JSON_LITERAL",
     "value" : "-1"
   }
+}, {
+  "name" : "doomed_record",
+  "label" : "doomed_record",
+  "fieldType" : "string",
+  "valueType" : "string",
+  "shape" : "",
+  "description" : "",
+  "initialValue" : {
+    "type" : "JSON_LITERAL",
+    "value" : null
+  }
 } ]</state_properties>
         <sys_class_name>sys_ux_macroponent</sys_class_name>
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-06-16 19:02:20</sys_created_on>
         <sys_id>3dad22d0c3e32d1011971d4ce001314d</sys_id>
-        <sys_mod_count>24</sys_mod_count>
+        <sys_mod_count>38</sys_mod_count>
         <sys_name>Playground</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_3dad22d0c3e32d1011971d4ce001314d</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-06-19 14:07:39</sys_updated_on>
+        <sys_updated_on>2023-09-15 13:29:47</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=3dad22d0c3e32d1011971d4ce001314d"/>
 </record_update>

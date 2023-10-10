@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="pa_tabs">
+    <pa_tabs action="DELETE">
+        <canvas_page/>
+        <name>Week Over Week - New Tab</name>
+        <page/>
+        <sys_class_name>pa_tabs</sys_class_name>
+        <sys_created_by>kic@ebselect.com</sys_created_by>
+        <sys_created_on>2023-06-15 14:20:40</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>0693208cc3afa91011971d4ce00131ce</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Week Over Week - New Tab</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>pa_tabs_0693208cc3afa91011971d4ce00131ce</sys_update_name>
+        <sys_updated_by>kic@ebselect.com</sys_updated_by>
+        <sys_updated_on>2023-06-15 14:20:40</sys_updated_on>
+    </pa_tabs>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</application>
+        <file_path/>
+        <instance_id>83ce67badb169190b847ac44d4961903</instance_id>
+        <instance_name>employbridgedev</instance_name>
+        <name>pa_tabs_0693208cc3afa91011971d4ce00131ce</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="pa_tabs"><pa_tabs action="INSERT_OR_UPDATE"><canvas_page/><name>Week Over Week - New Tab</name><page/><sys_class_name>pa_tabs</sys_class_name><sys_created_by>kic@ebselect.com</sys_created_by><sys_created_on>2023-06-15 14:20:40</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>0693208cc3afa91011971d4ce00131ce</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Week Over Week - New Tab</sys_name><sys_overrides/><sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package><sys_policy/><sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope><sys_update_name>pa_tabs_0693208cc3afa91011971d4ce00131ce</sys_update_name><sys_updated_by>kic@ebselect.com</sys_updated_by><sys_updated_on>2023-06-15 14:20:40</sys_updated_on></pa_tabs></record_update>]]></payload>
+        <payload_hash>1469098652</payload_hash>
+        <record_name>Week Over Week - New Tab</record_name>
+        <reverted_from/>
+        <source>3f98b5afc38fa55011971d4ce001314f</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>kic@ebselect.com</sys_created_by>
+        <sys_created_on>2023-06-15 14:21:17</sys_created_on>
+        <sys_id>1bb3a08cc3afa91011971d4ce00131cd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>188bf6e9f110000001</sys_recorded_at>
+        <sys_updated_by>kic@ebselect.com</sys_updated_by>
+        <sys_updated_on>2023-06-15 14:21:17</sys_updated_on>
+        <type>Tab</type>
+        <update_guid>0293208ce9afa91053d69e47cb3b46d0</update_guid>
+        <update_guid_history>0293208ce9afa91053d69e47cb3b46d0:-1960537564,0293208ce9afa91053d69e47cb3b46d0:-1960537564,0293208ce9afa91053d69e47cb3b46d0:-1960537564</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Week Over Week - New Tab">5fb3a08cc3afa91011971d4ce00131da</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>kic@ebselect.com</sys_created_by>
+        <sys_created_on>2023-06-15 14:21:18</sys_created_on>
+        <sys_db_object display_value="" name="pa_tabs">pa_tabs</sys_db_object>
+        <sys_id>0073f3faddbc4628b949465b0e25db90</sys_id>
+        <sys_metadata>0693208cc3afa91011971d4ce00131ce</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Week Over Week - New Tab</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_scope_delete display_value="">9010b0fe4941481f931beec4cfddca89</sys_scope_delete>
+        <sys_update_name>pa_tabs_0693208cc3afa91011971d4ce00131ce</sys_update_name>
+        <sys_update_version display_value="pa_tabs_0693208cc3afa91011971d4ce00131ce">1bb3a08cc3afa91011971d4ce00131cd</sys_update_version>
+        <sys_updated_by>kic@ebselect.com</sys_updated_by>
+        <sys_updated_on>2023-06-15 14:21:18</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

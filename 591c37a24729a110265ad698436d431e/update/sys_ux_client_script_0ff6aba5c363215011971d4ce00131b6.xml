@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <includes/>
+        <macroponent display_value="Voluntary Deductions - Search">d1a6e898c38b2d1011971d4ce0013178</macroponent>
+        <name>Set new query</name>
+        <preset/>
+        <required_translations>[ ]</required_translations>
+        <script><![CDATA[/**
+* @param {params} params
+* @param {api} params.api
+* @param {any} params.event 
+* @param {any} params.imports
+* @param {ApiHelpers} params.helpers
+*/
+function handler({api, event, helpers, imports}) {
+    	// console.log ('eval', api.data.look_up_records_3.results);
+	const prop = api.data.look_up_records_3.results
+	  .filter(result =>  !api.state.excluded_users.some(user => user ===  result.user_id._reference.email.value ))
+	  .map(result => `sys_created_by=${result.user_id._reference.email.value}`)
+	  .join("^OR");
+	// console.log ({ prop });
+    api.setState('queryProp', prop)
+	  
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-06-20 20:25:13</sys_created_on>
+        <sys_id>0ff6aba5c363215011971d4ce00131b6</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Set new query</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_client_script_0ff6aba5c363215011971d4ce00131b6</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-09-15 13:16:11</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

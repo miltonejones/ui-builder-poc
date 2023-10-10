@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_template">
+    <sc_template action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <available_for>528f74f273221010c84e2bb43cf6a766</available_for>
+        <cat_item display_value="Catalog Item Builder">91edb87273221010c84e2bb43cf6a7ae</cat_item>
+        <name>Application access POC</name>
+        <short_description>Use for all requests related to new application access</short_description>
+        <sys_class_name>sc_template</sys_class_name>
+        <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+        <sys_created_on>2023-08-07 13:58:22</sys_created_on>
+        <sys_id>686a9d0d47e07110265ad698436d4307</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Application access POC</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sc_template_686a9d0d47e07110265ad698436d4307</sys_update_name>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-08-07 13:58:39</sys_updated_on>
+    </sc_template>
+    <sys_translated_text action="delete_multiple" query="documentkey=686a9d0d47e07110265ad698436d4307"/>
+</record_update>

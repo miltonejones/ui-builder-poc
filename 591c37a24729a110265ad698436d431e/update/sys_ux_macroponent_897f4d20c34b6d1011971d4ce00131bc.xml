@@ -11,6 +11,10 @@
       "type" : "JSON_LITERAL",
       "value" : "1"
     },
+    "hideEmptyStateUi" : {
+      "type" : "JSON_LITERAL",
+      "value" : true
+    },
     "ariaRegionName" : {
       "type" : "TRANSLATION_LITERAL",
       "value" : {
@@ -46,6 +50,10 @@
         "ariaRegionHeadingLevel" : {
           "type" : "JSON_LITERAL",
           "value" : "1"
+        },
+        "hideEmptyStateUi" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
         },
         "ariaRegionName" : {
           "type" : "TRANSLATION_LITERAL",
@@ -295,6 +303,10 @@
           "type" : "JSON_LITERAL",
           "value" : "1"
         },
+        "hideEmptyStateUi" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
+        },
         "ariaRegionName" : {
           "type" : "TRANSLATION_LITERAL",
           "value" : {
@@ -470,6 +482,10 @@
                   "type" : "JSON_LITERAL",
                   "value" : "1"
                 },
+                "hideEmptyStateUi" : {
+                  "type" : "JSON_LITERAL",
+                  "value" : true
+                },
                 "ariaRegionName" : {
                   "type" : "TRANSLATION_LITERAL",
                   "value" : {
@@ -505,6 +521,10 @@
                     "ariaRegionHeadingLevel" : {
                       "type" : "JSON_LITERAL",
                       "value" : "1"
+                    },
+                    "hideEmptyStateUi" : {
+                      "type" : "JSON_LITERAL",
+                      "value" : true
                     },
                     "ariaRegionName" : {
                       "type" : "TRANSLATION_LITERAL",
@@ -1090,6 +1110,10 @@
                       "type" : "JSON_LITERAL",
                       "value" : "1"
                     },
+                    "hideEmptyStateUi" : {
+                      "type" : "JSON_LITERAL",
+                      "value" : true
+                    },
                     "ariaRegionName" : {
                       "type" : "TRANSLATION_LITERAL",
                       "value" : {
@@ -1125,6 +1149,10 @@
                         "ariaRegionHeadingLevel" : {
                           "type" : "JSON_LITERAL",
                           "value" : "1"
+                        },
+                        "hideEmptyStateUi" : {
+                          "type" : "JSON_LITERAL",
+                          "value" : true
                         },
                         "ariaRegionName" : {
                           "type" : "TRANSLATION_LITERAL",
@@ -1172,6 +1200,10 @@
                                 "ariaRegionHeadingLevel" : {
                                   "type" : "JSON_LITERAL",
                                   "value" : "1"
+                                },
+                                "hideEmptyStateUi" : {
+                                  "type" : "JSON_LITERAL",
+                                  "value" : true
                                 },
                                 "ariaRegionName" : {
                                   "type" : "TRANSLATION_LITERAL",
@@ -2117,6 +2149,10 @@
                               "type" : "JSON_LITERAL",
                               "value" : "1"
                             },
+                            "hideEmptyStateUi" : {
+                              "type" : "JSON_LITERAL",
+                              "value" : true
+                            },
                             "ariaRegionName" : {
                               "type" : "TRANSLATION_LITERAL",
                               "value" : {
@@ -2299,6 +2335,10 @@
                         "ariaRegionHeadingLevel" : {
                           "type" : "JSON_LITERAL",
                           "value" : "1"
+                        },
+                        "hideEmptyStateUi" : {
+                          "type" : "JSON_LITERAL",
+                          "value" : true
                         },
                         "ariaRegionName" : {
                           "type" : "TRANSLATION_LITERAL",
@@ -3117,6 +3157,10 @@
           "type" : "JSON_LITERAL",
           "value" : "1"
         },
+        "hideEmptyStateUi" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
+        },
         "ariaRegionName" : {
           "type" : "TRANSLATION_LITERAL",
           "value" : {
@@ -3383,6 +3427,10 @@
   "elementId" : "custom_1",
   "elementLabel" : "Submit confirmation dialog",
   "propertyValues" : {
+    "labelledby" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
     "defer" : {
       "type" : "JSON_LITERAL",
       "value" : true
@@ -3414,6 +3462,10 @@
         "ariaRegionHeadingLevel" : {
           "type" : "JSON_LITERAL",
           "value" : "1"
+        },
+        "hideEmptyStateUi" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
         },
         "ariaRegionName" : {
           "type" : "TRANSLATION_LITERAL",
@@ -3514,6 +3566,10 @@
           "type" : "JSON_LITERAL",
           "value" : "1"
         },
+        "hideEmptyStateUi" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
+        },
         "ariaRegionName" : {
           "type" : "TRANSLATION_LITERAL",
           "value" : {
@@ -3584,6 +3640,10 @@
             "ariaRegionHeadingLevel" : {
               "type" : "JSON_LITERAL",
               "value" : "1"
+            },
+            "hideEmptyStateUi" : {
+              "type" : "JSON_LITERAL",
+              "value" : true
             },
             "ariaRegionName" : {
               "type" : "TRANSLATION_LITERAL",
@@ -3719,6 +3779,10 @@
               "type" : "JSON_LITERAL",
               "value" : "1"
             },
+            "hideEmptyStateUi" : {
+              "type" : "JSON_LITERAL",
+              "value" : true
+            },
             "ariaRegionName" : {
               "type" : "TRANSLATION_LITERAL",
               "value" : {
@@ -3853,6 +3917,10 @@
               "type" : "JSON_LITERAL",
               "value" : "1"
             },
+            "hideEmptyStateUi" : {
+              "type" : "JSON_LITERAL",
+              "value" : true
+            },
             "ariaRegionName" : {
               "type" : "TRANSLATION_LITERAL",
               "value" : {
@@ -3936,6 +4004,10 @@
                     "ariaRegionHeadingLevel" : {
                       "type" : "JSON_LITERAL",
                       "value" : "1"
+                    },
+                    "hideEmptyStateUi" : {
+                      "type" : "JSON_LITERAL",
+                      "value" : true
                     },
                     "ariaRegionName" : {
                       "type" : "TRANSLATION_LITERAL",
@@ -4163,6 +4235,10 @@
         "ariaRegionHeadingLevel" : {
           "type" : "JSON_LITERAL",
           "value" : "1"
+        },
+        "hideEmptyStateUi" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
         },
         "ariaRegionName" : {
           "type" : "TRANSLATION_LITERAL",
@@ -4565,6 +4641,10 @@
   "elementId" : "custom_2",
   "elementLabel" : "Confirm Modal",
   "propertyValues" : {
+    "labelledby" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
     "defer" : {
       "type" : "JSON_LITERAL",
       "value" : true
@@ -4596,6 +4676,10 @@
         "ariaRegionHeadingLevel" : {
           "type" : "JSON_LITERAL",
           "value" : "1"
+        },
+        "hideEmptyStateUi" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
         },
         "ariaRegionName" : {
           "type" : "TRANSLATION_LITERAL",
@@ -4704,6 +4788,10 @@
           "type" : "JSON_LITERAL",
           "value" : "1"
         },
+        "hideEmptyStateUi" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
+        },
         "ariaRegionName" : {
           "type" : "TRANSLATION_LITERAL",
           "value" : {
@@ -4801,6 +4889,10 @@
           "type" : "JSON_LITERAL",
           "value" : "1"
         },
+        "hideEmptyStateUi" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
+        },
         "ariaRegionName" : {
           "type" : "TRANSLATION_LITERAL",
           "value" : {
@@ -4836,6 +4928,10 @@
             "ariaRegionHeadingLevel" : {
               "type" : "JSON_LITERAL",
               "value" : "1"
+            },
+            "hideEmptyStateUi" : {
+              "type" : "JSON_LITERAL",
+              "value" : true
             },
             "ariaRegionName" : {
               "type" : "TRANSLATION_LITERAL",
@@ -5408,6 +5504,116 @@
   "eventMappings" : [ ],
   "inputValues" : { },
   "readEvaluationMode" : "EXPLICIT"
+}, {
+  "definition" : {
+    "id" : "b997a84053021010cbc2ddeeff7b1228",
+    "type" : "COMPOSITE"
+  },
+  "dependencies" : { },
+  "elementId" : "get_talent",
+  "elementLabel" : "Get Talent",
+  "eventMappings" : [ ],
+  "inputValues" : {
+    "table" : {
+      "type" : "JSON_LITERAL",
+      "value" : "x_ebh_ccde_talent_core"
+    },
+    "encodedQuery" : {
+      "type" : "CLIENT_TRANSFORM",
+      "transform" : {
+        "operands" : {
+          "type" : "LIST_CONTAINER",
+          "container" : [ {
+            "type" : "JSON_LITERAL",
+            "value" : "is_active=True^full_nameLIKE"
+          }, {
+            "type" : "STATE_BINDING",
+            "binding" : {
+              "address" : [ "search_user_input" ]
+            }
+          } ]
+        },
+        "operator" : "CONCAT"
+      }
+    },
+    "returnFields" : {
+      "type" : "JSON_LITERAL",
+      "value" : "full_name,enterprise_talent_id,sys_id"
+    },
+    "orderBy" : {
+      "type" : "JSON_LITERAL",
+      "value" : "full_name"
+    },
+    "sortType" : {
+      "type" : "JSON_LITERAL",
+      "value" : "asc"
+    },
+    "limit" : {
+      "type" : "JSON_LITERAL",
+      "value" : "1000"
+    },
+    "offset" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "queryCategory" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
+    "returnFieldMetadata" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    }
+  },
+  "readEvaluationMode" : "EAGER"
+}, {
+  "definition" : {
+    "id" : "b997a84053021010cbc2ddeeff7b1228",
+    "type" : "COMPOSITE"
+  },
+  "dependencies" : { },
+  "elementId" : "get_bill_codes",
+  "elementLabel" : "Get BillPay Codes",
+  "eventMappings" : [ ],
+  "inputValues" : {
+    "table" : {
+      "type" : "JSON_LITERAL",
+      "value" : "u_bill_pay_types"
+    },
+    "encodedQuery" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
+    "returnFields" : {
+      "type" : "JSON_LITERAL",
+      "value" : "u_code,u_name,sys_id"
+    },
+    "orderBy" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
+    "sortType" : {
+      "type" : "JSON_LITERAL",
+      "value" : "asc"
+    },
+    "limit" : {
+      "type" : "JSON_LITERAL",
+      "value" : "1000"
+    },
+    "offset" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "queryCategory" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
+    "returnFieldMetadata" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    }
+  },
+  "readEvaluationMode" : "EAGER"
 } ]</data>
         <description/>
         <dispatched_events>f64539ecc38b6d1011971d4ce00131fd,69caed64c38b6d1011971d4ce001315b</dispatched_events>
@@ -5713,14 +5919,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-23 10:17:50</sys_created_on>
         <sys_id>897f4d20c34b6d1011971d4ce00131bc</sys_id>
-        <sys_mod_count>98</sys_mod_count>
+        <sys_mod_count>106</sys_mod_count>
         <sys_name>New Deduction default</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_897f4d20c34b6d1011971d4ce00131bc</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-05-26 17:26:59</sys_updated_on>
+        <sys_updated_on>2023-10-06 17:34:01</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=897f4d20c34b6d1011971d4ce00131bc"/>
 </record_update>

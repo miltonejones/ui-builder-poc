@@ -11,6 +11,10 @@
       "type" : "JSON_LITERAL",
       "value" : "1"
     },
+    "hideEmptyStateUi" : {
+      "type" : "JSON_LITERAL",
+      "value" : true
+    },
     "ariaRegionName" : {
       "type" : "TRANSLATION_LITERAL",
       "value" : {
@@ -282,6 +286,10 @@
       "type" : "JSON_LITERAL",
       "value" : "1"
     },
+    "hideEmptyStateUi" : {
+      "type" : "JSON_LITERAL",
+      "value" : true
+    },
     "ariaRegionName" : {
       "type" : "TRANSLATION_LITERAL",
       "value" : {
@@ -464,7 +472,7 @@
               "script" : {
                 "apiVersion" : "1.0.0",
                 "controllerElementId" : null,
-                "inlineScript" : "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\tconst { fieldValue: val } = event.payload;\n\tconst query = `talent_user.nameLIKE${val}^ORtalent_user.employee_numberLIKE${val}^ORsys_created_byLIKE${val}`;\n\treturn {\n\t\tpropName: 'queryProp',\n\t\tvalue: query\n\t};\n}",
+                "inlineScript" : "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\tconst { fieldValue: val } = event.payload;\n\tconst query = `talent_user.nameLIKE${val}^ORtalent_user.employee_numberLIKE${val}^ORsys_created_byLIKE${val}`;\n\treturn {\n\t\tpropName: 'inputQueryProp',\n\t\tvalue: query\n\t};\n}",
                 "scriptSysId" : null,
                 "target" : null
               }
@@ -630,7 +638,7 @@
                 "payload" : {
                   "type" : "JSON_LITERAL",
                   "value" : {
-                    "propName" : "queryProp",
+                    "propName" : "inputQueryProp",
                     "value" : null
                   }
                 },
@@ -705,6 +713,10 @@
         "ariaRegionHeadingLevel" : {
           "type" : "JSON_LITERAL",
           "value" : "1"
+        },
+        "hideEmptyStateUi" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
         },
         "ariaRegionName" : {
           "type" : "TRANSLATION_LITERAL",
@@ -905,6 +917,10 @@
             "ariaRegionHeadingLevel" : {
               "type" : "JSON_LITERAL",
               "value" : "1"
+            },
+            "hideEmptyStateUi" : {
+              "type" : "JSON_LITERAL",
+              "value" : true
             },
             "ariaRegionName" : {
               "type" : "TRANSLATION_LITERAL",
@@ -1144,12 +1160,174 @@
         "align-self" : "center",
         "flex-grow" : "1"
       }
+    }, {
+      "elementId" : "dropdown_1",
+      "elementLabel" : "Dropdown 1",
+      "propertyValues" : {
+        "select" : {
+          "type" : "JSON_LITERAL",
+          "value" : "none"
+        },
+        "showPadding" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "showPresencePattern" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "icon" : {
+          "type" : "JSON_LITERAL",
+          "value" : "verify-person-outline"
+        },
+        "opened" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "tooltipContent" : {
+          "type" : "TRANSLATION_LITERAL",
+          "value" : {
+            "code" : null,
+            "message" : "Choose creator",
+            "comment" : ""
+          }
+        },
+        "panelFitProps" : {
+          "type" : "JSON_LITERAL",
+          "value" : { }
+        },
+        "configAria" : {
+          "type" : "JSON_LITERAL",
+          "value" : null
+        },
+        "hideCaret" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "search" : {
+          "type" : "JSON_LITERAL",
+          "value" : "none"
+        },
+        "size" : {
+          "type" : "JSON_LITERAL",
+          "value" : "md"
+        },
+        "variant" : {
+          "type" : "JSON_LITERAL",
+          "value" : "secondary"
+        },
+        "disabled" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "placeholder" : {
+          "type" : "TRANSLATION_LITERAL",
+          "value" : {
+            "code" : null,
+            "message" : "Created by",
+            "comment" : ""
+          }
+        },
+        "bare" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "items" : {
+          "type" : "CLIENT_TRANSFORM_SCRIPT",
+          "script" : {
+            "apiVersion" : "2.0.0",
+            "controllerElementId" : null,
+            "inlineScript" : null,
+            "scriptSysId" : "6c9c82e1c36fed1011971d4ce001313d",
+            "target" : null
+          }
+        },
+        "selectedItems" : {
+          "type" : "JSON_LITERAL",
+          "value" : [ ]
+        },
+        "hideLabel" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        }
+      },
+      "eventMappings" : [ {
+        "eventMappingId" : "cljeeqeefsaaaogggddeehhtokuacfcii",
+        "isConfiguration" : false,
+        "offRowStorageId" : null,
+        "sourceEventApiName" : "sn_dropdown.NOW_DROPDOWN#ITEM_CLICKED",
+        "sourceEventCorrelationId" : null,
+        "sourceEventDefinition" : {
+          "apiName" : "sn_dropdown.NOW_DROPDOWN#ITEM_CLICKED",
+          "id" : null,
+          "type" : "UXEVENT"
+        },
+        "sourceEventSysId" : null,
+        "targets" : [ {
+          "broker" : null,
+          "clientScript" : null,
+          "conditional" : null,
+          "declarativeAction" : null,
+          "event" : {
+            "apiName" : "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+            "payload" : {
+              "type" : "CLIENT_TRANSFORM_SCRIPT",
+              "script" : {
+                "apiVersion" : "1.0.0",
+                "controllerElementId" : null,
+                "inlineScript" : "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\tconsole.log ('dropdown', { event })\n\t// const { excluded_users } = api.state;\n\tconst { email } = event.payload.item;\n\tconst excluded_users = api.state.excluded_users.some(user =&gt; user === email)\n\t  ? api.state.excluded_users.filter(user =&gt; user !== email)\n\t  : api.state.excluded_users.concat(email);\n\n\t// console.log({ excluded_users }); \n\treturn {\n\t\tpropName: 'excluded_users',\n\t\tvalue: excluded_users\n\t};\n}",
+                "scriptSysId" : null,
+                "target" : null
+              }
+            },
+            "sysId" : "32408b42ff7a10109046e490703bf176"
+          },
+          "operation" : null,
+          "targetId" : "cljeeqeefsaaaogghddeehhtgpkctfaaa",
+          "type" : "EVENT"
+        }, {
+          "broker" : null,
+          "clientScript" : {
+            "sysId" : "0ff6aba5c363215011971d4ce00131b6"
+          },
+          "conditional" : null,
+          "declarativeAction" : null,
+          "event" : null,
+          "operation" : null,
+          "targetId" : "cljeeqnrjcaaojpddeehhtlclfsddek",
+          "type" : "CLIENT_SCRIPT"
+        }, {
+          "broker" : null,
+          "clientScript" : null,
+          "conditional" : null,
+          "declarativeAction" : null,
+          "event" : null,
+          "operation" : null,
+          "targetId" : "cljeeqoccqpaaojvddeehhtjffiihhojjn",
+          "type" : "EVENT"
+        } ]
+      } ],
+      "slot" : "",
+      "definition" : {
+        "id" : "22c67d9a1e515fef66442e1469bed3a2",
+        "type" : "MACROPONENT"
+      },
+      "overrides" : null,
+      "isHidden" : {
+        "type" : "JSON_LITERAL",
+        "value" : null
+      },
+      "isHero" : false,
+      "extensionPoints" : [ ],
+      "isNonDestructive" : false,
+      "items" : [ ],
+      "styles" : { }
     } ],
     "layout" : {
       "default" : {
         "children" : null,
         "isInline" : null,
-        "items" : [{"element_id":"input_1","styles":{"width":"calc(100% - 385px)","flex-grow":"","flex":"none","min-width":"","max-width":""}},{"element_id":"container_3","styles":{}}],
+        "items" : [{"element_id":"dropdown_1","styles":{}},{"element_id":"input_1","styles":{"width":"calc(100% - 535px)","flex-grow":"","flex":"none","min-width":"","max-width":""}},{"element_id":"container_3","styles":{}}],
         "root" : null,
         "rules" : null,
         "styles" : {"flex-direction":"row","gap":"var(--now-static-space--lg)","align-items":"center","display":"flex","grid-template-columns":"1fr 1fr","grid-template-rows":"1fr","grid-auto-rows":"1fr","grid-auto-columns":"1fr","grid-auto-flow":"row","margin":"var(--now-static-space--lg)"},
@@ -1247,7 +1425,7 @@
     "query" : {
       "type" : "STATE_BINDING",
       "binding" : {
-        "address" : [ "queryProp" ]
+        "address" : [ "inputQueryProp" ]
       }
     },
     "hideFilterPanel" : {
@@ -1287,8 +1465,10 @@
       }
     },
     "fixedQuery" : {
-      "type" : "JSON_LITERAL",
-      "value" : ""
+      "type" : "STATE_BINDING",
+      "binding" : {
+        "address" : [ "queryProp" ]
+      }
     },
     "hideDotwalk" : {
       "type" : "JSON_LITERAL",
@@ -1336,7 +1516,7 @@
     },
     "hideTitleRowCount" : {
       "type" : "JSON_LITERAL",
-      "value" : true
+      "value" : false
     },
     "hideColumnFiltering" : {
       "type" : "JSON_LITERAL",
@@ -1741,7 +1921,7 @@
     },
     "returnFields" : {
       "type" : "JSON_LITERAL",
-      "value" : ""
+      "value" : "sys_created_by"
     },
     "orderBy" : {
       "type" : "JSON_LITERAL",
@@ -1769,6 +1949,204 @@
     }
   },
   "readEvaluationMode" : "EAGER"
+}, {
+  "definition" : {
+    "id" : "b997a84053021010cbc2ddeeff7b1228",
+    "type" : "COMPOSITE"
+  },
+  "dependencies" : { },
+  "elementId" : "look_up_records_2",
+  "elementLabel" : "Load branches for user",
+  "eventMappings" : [ {
+    "eventMappingId" : "cljeebmkvjjaabffddeehhtcccfffaajjxk",
+    "isConfiguration" : false,
+    "offRowStorageId" : null,
+    "sourceEventApiName" : "sn_uxf.DATA_FETCH_SUCCEEDED",
+    "sourceEventCorrelationId" : null,
+    "sourceEventDefinition" : {
+      "apiName" : "sn_uxf.DATA_FETCH_SUCCEEDED",
+      "id" : null,
+      "type" : "UXEVENT"
+    },
+    "sourceEventSysId" : null,
+    "targets" : [ {
+      "broker" : null,
+      "clientScript" : null,
+      "conditional" : null,
+      "declarativeAction" : null,
+      "event" : {
+        "apiName" : "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+        "payload" : {
+          "type" : "CLIENT_TRANSFORM_SCRIPT",
+          "script" : {
+            "apiVersion" : "1.0.0",
+            "controllerElementId" : null,
+            "inlineScript" : "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\tconst [user] = api.data.look_up_records_2.results;\n\tconst branch_id = user.branch_id.value;\n\tconst prop = `branch_id=${branch_id}`;\n\tconsole.log ({ user, prop })\n\treturn {\n\t\tpropName: 'userQueryProp',\n\t\tvalue: prop\n\t};\n}",
+            "scriptSysId" : null,
+            "target" : null
+          }
+        },
+        "sysId" : "32408b42ff7a10109046e490703bf176"
+      },
+      "operation" : null,
+      "targetId" : "cljeebmkvjjaabfgddeehhtgggbsffkphh",
+      "type" : "EVENT"
+    }, {
+      "broker" : null,
+      "clientScript" : null,
+      "conditional" : null,
+      "declarativeAction" : null,
+      "event" : null,
+      "operation" : {
+        "dataBrokerId" : "b997a84053021010cbc2ddeeff7b1228",
+        "operationName" : "REFRESH",
+        "parentResourceId" : "look_up_records_3",
+        "payload" : {
+          "type" : "JSON_LITERAL",
+          "value" : { }
+        }
+      },
+      "targetId" : "cljeecffdxaaaabmwddeehhtggtpqpuaaee",
+      "type" : "DATABROKER_OP"
+    } ]
+  } ],
+  "inputValues" : {
+    "table" : {
+      "type" : "JSON_LITERAL",
+      "value" : "x_ebh_voluntary_0_branch_users"
+    },
+    "encodedQuery" : {
+      "type" : "STATE_BINDING",
+      "binding" : {
+        "address" : [ "branchQueryProp" ]
+      }
+    },
+    "returnFields" : {
+      "type" : "JSON_LITERAL",
+      "value" : "branch_id,user_id"
+    },
+    "orderBy" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
+    "sortType" : {
+      "type" : "JSON_LITERAL",
+      "value" : "asc"
+    },
+    "limit" : {
+      "type" : "JSON_LITERAL",
+      "value" : "1000"
+    },
+    "offset" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "queryCategory" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
+    "returnFieldMetadata" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    }
+  },
+  "readEvaluationMode" : "EXPLICIT"
+}, {
+  "definition" : {
+    "id" : "b997a84053021010cbc2ddeeff7b1228",
+    "type" : "COMPOSITE"
+  },
+  "dependencies" : { },
+  "elementId" : "look_up_records_3",
+  "elementLabel" : "Load users for branches",
+  "eventMappings" : [ {
+    "eventMappingId" : "cljeecggeeffsaabntddeehhtxmzwhbbwff",
+    "isConfiguration" : false,
+    "offRowStorageId" : null,
+    "sourceEventApiName" : "sn_uxf.DATA_FETCH_SUCCEEDED",
+    "sourceEventCorrelationId" : null,
+    "sourceEventDefinition" : {
+      "apiName" : "sn_uxf.DATA_FETCH_SUCCEEDED",
+      "id" : null,
+      "type" : "UXEVENT"
+    },
+    "sourceEventSysId" : null,
+    "targets" : [ {
+      "broker" : null,
+      "clientScript" : {
+        "sysId" : "0ff6aba5c363215011971d4ce00131b6"
+      },
+      "conditional" : null,
+      "declarativeAction" : null,
+      "event" : null,
+      "operation" : null,
+      "targetId" : "cljeeqluiipaaohoddeehhtvqeeddqedo",
+      "type" : "CLIENT_SCRIPT"
+    }, {
+      "broker" : null,
+      "clientScript" : null,
+      "conditional" : null,
+      "declarativeAction" : null,
+      "event" : {
+        "apiName" : "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+        "payload" : {
+          "type" : "CLIENT_TRANSFORM_SCRIPT",
+          "script" : {
+            "apiVersion" : "1.0.0",
+            "controllerElementId" : null,
+            "inlineScript" : "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\treturn {\n\t\tpropName: 'listRefresh',\n\t\tvalue: new Date().toString()\n\t};\n}",
+            "scriptSysId" : null,
+            "target" : null
+          }
+        },
+        "sysId" : "32408b42ff7a10109046e490703bf176"
+      },
+      "operation" : null,
+      "targetId" : "cljeeqmddlbbaaohtddeehhtbbcogbbcddgg",
+      "type" : "EVENT"
+    } ]
+  } ],
+  "inputValues" : {
+    "table" : {
+      "type" : "JSON_LITERAL",
+      "value" : "x_ebh_voluntary_0_branch_users"
+    },
+    "encodedQuery" : {
+      "type" : "STATE_BINDING",
+      "binding" : {
+        "address" : [ "userQueryProp" ]
+      }
+    },
+    "returnFields" : {
+      "type" : "JSON_LITERAL",
+      "value" : "user_id,user_id.email"
+    },
+    "orderBy" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
+    "sortType" : {
+      "type" : "JSON_LITERAL",
+      "value" : "asc"
+    },
+    "limit" : {
+      "type" : "JSON_LITERAL",
+      "value" : "1000"
+    },
+    "offset" : {
+      "type" : "JSON_LITERAL",
+      "value" : null
+    },
+    "queryCategory" : {
+      "type" : "JSON_LITERAL",
+      "value" : ""
+    },
+    "returnFieldMetadata" : {
+      "type" : "JSON_LITERAL",
+      "value" : false
+    }
+  },
+  "readEvaluationMode" : "EXPLICIT"
 }, {
   "definition" : {
     "id" : "029f04e053610110ac9bddeeff7b1294",
@@ -1916,7 +2294,59 @@
         <handled_events/>
         <interactions/>
         <interfaces/>
-        <internal_event_mappings>{ }</internal_event_mappings>
+        <internal_event_mappings>{
+  "MACROPONENT_READY" : [ {
+    "broker" : null,
+    "clientScript" : {
+      "sysId" : "97e7acd8c38b2d1011971d4ce00131f3"
+    },
+    "conditional" : null,
+    "declarativeAction" : null,
+    "event" : null,
+    "operation" : null,
+    "targetId" : "cljeebgccfcaabjjuddeehhtggwccgmcnj",
+    "type" : "CLIENT_SCRIPT"
+  }, {
+    "broker" : null,
+    "clientScript" : null,
+    "conditional" : null,
+    "declarativeAction" : null,
+    "event" : {
+      "apiName" : "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+      "payload" : {
+        "type" : "CLIENT_TRANSFORM_SCRIPT",
+        "script" : {
+          "apiVersion" : "1.0.0",
+          "controllerElementId" : null,
+          "inlineScript" : "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\tconst { fieldValue: val } = event.payload;\n\tconst query = `user_id=${api.context.session.user.sys_id}`;\n\tconsole.log ({ query })\n\treturn {\n\t\tpropName: 'branchQueryProp',\n\t\tvalue: query\n\t};\n}",
+          "scriptSysId" : null,
+          "target" : null
+        }
+      },
+      "sysId" : "32408b42ff7a10109046e490703bf176"
+    },
+    "operation" : null,
+    "targetId" : "cljeebilbpaabbiiddeehhtjjwddgjggvz",
+    "type" : "EVENT"
+  }, {
+    "broker" : null,
+    "clientScript" : null,
+    "conditional" : null,
+    "declarativeAction" : null,
+    "event" : null,
+    "operation" : {
+      "dataBrokerId" : "b997a84053021010cbc2ddeeff7b1228",
+      "operationName" : "REFRESH",
+      "parentResourceId" : "look_up_records_2",
+      "payload" : {
+        "type" : "JSON_LITERAL",
+        "value" : { }
+      }
+    },
+    "targetId" : "cljeebmhhpbaabepddeehhtbbzdqawzy",
+    "type" : "DATABROKER_OP"
+  } ]
+}</internal_event_mappings>
         <layout>{
   "default" : {
     "children" : null,
@@ -2127,10 +2557,16 @@
   "message" : "Add new deduction",
   "comment" : ""
 }, {
+  "message" : "Choose creator",
+  "comment" : ""
+}, {
   "message" : "Clear",
   "comment" : ""
 }, {
   "message" : "Created On",
+  "comment" : ""
+}, {
+  "message" : "Created by",
   "comment" : ""
 }, {
   "message" : "Deduction History",
@@ -2334,19 +2770,74 @@
     "type" : "JSON_LITERAL",
     "value" : 0
   }
+}, {
+  "name" : "branchQueryProp",
+  "label" : "branchQueryProp",
+  "fieldType" : "string",
+  "valueType" : "string",
+  "shape" : "",
+  "description" : "",
+  "initialValue" : {
+    "type" : "JSON_LITERAL",
+    "value" : null
+  }
+}, {
+  "name" : "userBranches",
+  "label" : "userBranches",
+  "fieldType" : "json",
+  "valueType" : "json",
+  "shape" : "",
+  "description" : "",
+  "initialValue" : {
+    "type" : "JSON_LITERAL",
+    "value" : [ ]
+  }
+}, {
+  "name" : "userQueryProp",
+  "label" : "userQueryProp",
+  "fieldType" : "string",
+  "valueType" : "string",
+  "shape" : "",
+  "description" : "",
+  "initialValue" : {
+    "type" : "JSON_LITERAL",
+    "value" : null
+  }
+}, {
+  "name" : "excluded_users",
+  "label" : "excluded_users",
+  "fieldType" : "json",
+  "valueType" : "json",
+  "shape" : "",
+  "description" : "",
+  "initialValue" : {
+    "type" : "JSON_LITERAL",
+    "value" : [ ]
+  }
+}, {
+  "name" : "inputQueryProp",
+  "label" : "inputQueryProp",
+  "fieldType" : "string",
+  "valueType" : "string",
+  "shape" : "",
+  "description" : "",
+  "initialValue" : {
+    "type" : "JSON_LITERAL",
+    "value" : null
+  }
 } ]</state_properties>
         <sys_class_name>sys_ux_macroponent</sys_class_name>
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-22 12:41:03</sys_created_on>
         <sys_id>d1a6e898c38b2d1011971d4ce0013178</sys_id>
-        <sys_mod_count>52</sys_mod_count>
+        <sys_mod_count>99</sys_mod_count>
         <sys_name>Voluntary Deductions - Search</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_d1a6e898c38b2d1011971d4ce0013178</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-05-25 20:48:39</sys_updated_on>
+        <sys_updated_on>2023-09-15 13:17:24</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=d1a6e898c38b2d1011971d4ce0013178"/>
 </record_update>
