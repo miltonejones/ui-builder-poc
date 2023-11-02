@@ -4,6 +4,7 @@
         <api_name>x_ebh_voluntary_0.Voluntary Deduction Audience</api_name>
         <description/>
         <name>Voluntary Deduction Audience</name>
+        <role_names/>
         <roles>a11c37a24729a110265ad698436d4324,e11c37a24729a110265ad698436d4336,2831a114c611228501d4ea6c309d626d</roles>
         <sys_class_name>sys_ux_applicability</sys_class_name>
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>

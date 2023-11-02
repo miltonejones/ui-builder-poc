@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
     <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
         <includes/>
         <macroponent display_value="Landing Page">6b2effe24e29a11095e7fde2a8e7c288</macroponent>
         <name>Card click redirection for My requests</name>

@@ -5,9 +5,11 @@
         <advanced>false</advanced>
         <condition/>
         <description/>
+        <local_or_existing>Local</local_or_existing>
         <name>x_ebh_voluntary_0_branch_users</name>
         <operation display_value="create">create</operation>
         <script/>
+        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-06-16 18:58:09</sys_created_on>

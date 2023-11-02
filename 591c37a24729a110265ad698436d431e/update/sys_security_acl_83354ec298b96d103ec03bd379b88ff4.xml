@@ -5,9 +5,11 @@
         <advanced>false</advanced>
         <condition/>
         <description>Transform boolean output to configure MFA in Custom portal</description>
+        <local_or_existing>Local</local_or_existing>
         <name>0f354ec247b96d1041d81e743058b7f3</name>
         <operation display_value="execute">execute</operation>
         <script/>
+        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-03-27 02:45:15</sys_created_on>

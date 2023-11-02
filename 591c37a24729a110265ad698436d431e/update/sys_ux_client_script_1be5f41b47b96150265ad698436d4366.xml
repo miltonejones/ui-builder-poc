@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
     <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
         <includes/>
         <macroponent display_value="New Deduction default">77170ba64779ed10265ad698436d431f</macroponent>
         <name>select_1/selectedItem</name>

@@ -3,6 +3,7 @@
         <active>true</active>
         <app_config/>
         <description/>
+        <disable_auto_reflow>false</disable_auto_reflow>
         <event_mappings>[ ]</event_mappings>
         <macroponent display_value="Order success">cb354ec2f8b96d10c199ac9dc11b93ee</macroponent>
         <macroponent_config>{

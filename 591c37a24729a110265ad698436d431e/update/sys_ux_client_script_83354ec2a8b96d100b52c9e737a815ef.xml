@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
     <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
         <includes/>
         <macroponent display_value="Record Page(task)">47354ec2b1b96d10683af2f4992e6ff2</macroponent>
         <name>Home redirection</name>

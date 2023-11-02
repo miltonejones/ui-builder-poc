@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="created_by" label="Created By" language="en" table="x_ebh_voluntary_0_deduction_tickets">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>created_by</element>
+            <help/>
+            <hint/>
+            <label>Created By</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deduction_tickets</name>
+            <plural>Created Bys</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+            <sys_created_on>2023-10-20 21:17:34</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Created By</sys_name>
+            <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+            <sys_update_name>sys_documentation_x_ebh_voluntary_0_deduction_tickets_created_by_en</sys_update_name>
+            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-10-20 21:17:34</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

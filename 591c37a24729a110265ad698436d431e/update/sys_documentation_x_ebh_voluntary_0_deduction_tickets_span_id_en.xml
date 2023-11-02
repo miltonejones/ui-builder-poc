@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="span_id" label="Span ID" language="en" table="x_ebh_voluntary_0_deduction_tickets">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>span_id</element>
+            <help/>
+            <hint/>
+            <label>Span ID</label>
+            <language>en</language>
+            <name>x_ebh_voluntary_0_deduction_tickets</name>
+            <plural>Span IDs</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+            <sys_created_on>2023-10-20 21:16:30</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Span ID</sys_name>
+            <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+            <sys_update_name>sys_documentation_x_ebh_voluntary_0_deduction_tickets_span_id_en</sys_update_name>
+            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-10-20 21:16:30</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

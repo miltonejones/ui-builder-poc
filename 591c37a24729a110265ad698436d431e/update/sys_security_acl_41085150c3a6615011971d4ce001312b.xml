@@ -5,9 +5,11 @@
         <advanced>false</advanced>
         <condition/>
         <description/>
+        <local_or_existing>Local</local_or_existing>
         <name>x_ebh_voluntary_0_deduction_type_list</name>
         <operation display_value="write">write</operation>
         <script/>
+        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
         <sys_created_on>2023-04-27 19:45:22</sys_created_on>

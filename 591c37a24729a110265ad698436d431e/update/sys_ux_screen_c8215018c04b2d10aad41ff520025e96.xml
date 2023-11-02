@@ -3,8 +3,9 @@
         <active>true</active>
         <app_config display_value="Voluntary Deductions Config">c8215018704b2d1029193c3e1831599c</app_config>
         <description/>
+        <disable_auto_reflow>false</disable_auto_reflow>
         <event_mappings/>
-        <macroponent display_value="Visualization Designer">2d5dcc29c3110110d938e4788940dd8f</macroponent>
+        <macroponent display_value="Visualization designer">2d5dcc29c3110110d938e4788940dd8f</macroponent>
         <macroponent_config>{
   "sysid" : "",
   "label" : "",
@@ -17,7 +18,7 @@
 }</macroponent_config>
         <name>Visualization Designer default</name>
         <order>0</order>
-        <parent_macroponent display_value="Agent Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
+        <parent_macroponent display_value="Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
         <required_translations>[ ]</required_translations>
         <rollback_screen/>
         <screen_condition/>

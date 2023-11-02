@@ -4,6 +4,7 @@
         <api_name>x_ebh_voluntary_0.Audience for appVoluntary Deductions</api_name>
         <description/>
         <name>Audience for appVoluntary Deductions</name>
+        <role_names/>
         <roles>a11c37a24729a110265ad698436d4324,e11c37a24729a110265ad698436d4336</roles>
         <sys_class_name>sys_ux_applicability</sys_class_name>
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>

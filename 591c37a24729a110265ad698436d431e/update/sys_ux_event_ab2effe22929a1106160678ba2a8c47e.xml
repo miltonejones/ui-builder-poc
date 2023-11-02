@@ -2,6 +2,7 @@
     <sys_ux_event action="INSERT_OR_UPDATE">
         <description/>
         <event_name>MODAL_SELECTED_RELAY_672effe29b29a110ad0800e64944ce88</event_name>
+        <explicit_api_name/>
         <interfaces/>
         <label>Toggle Modal Relay</label>
         <props>[{"name":"modalId","label":"Modal","fieldType":"string","interfaceApiName":"global.modal","valueType":"string"},{"name":"showModal","label":"Show Modal","fieldType":"boolean","valueType":"string"},{"name":"displayOptions","label":"Modal display options","fieldType":"json","valueType":"string"}]</props>

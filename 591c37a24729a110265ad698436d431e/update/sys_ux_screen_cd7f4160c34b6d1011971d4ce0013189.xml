@@ -3,205 +3,245 @@
         <active>true</active>
         <app_config display_value="Voluntary Deductions Config">c8215018704b2d1029193c3e1831599c</app_config>
         <description/>
-        <event_mappings>[ {
-  "eventMappingId" : "cliaaaejjbggaaaggeeddeehhtaatuvddddjo",
-  "isConfiguration" : false,
-  "offRowStorageId" : null,
-  "sourceEventApiName" : "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_897f4d20c34b6d1011971d4ce00131bc",
-  "sourceEventCorrelationId" : null,
-  "sourceEventDefinition" : {
-    "apiName" : "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_897f4d20c34b6d1011971d4ce00131bc",
-    "id" : null,
-    "type" : "UXEVENT"
-  },
-  "sourceEventSysId" : null,
-  "targets" : [ {
-    "broker" : null,
-    "clientScript" : null,
-    "conditional" : null,
-    "declarativeAction" : null,
-    "event" : {
-      "apiName" : "sn_canvas_core.NAV_ITEM_SELECTED",
-      "payload" : {
-        "type" : "MAP_CONTAINER",
-        "container" : {
-          "route" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "route" ]
+        <disable_auto_reflow>false</disable_auto_reflow>
+        <event_mappings>[
+    {
+        "eventMappingId": "cliaaaejjbggaaaggeeddeehhtaatuvddddjo",
+        "isConfiguration": false,
+        "offRowStorageId": null,
+        "sourceEventApiName": "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_897f4d20c34b6d1011971d4ce00131bc",
+        "sourceEventCorrelationId": null,
+        "sourceEventDefinition": {
+            "apiName": "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_897f4d20c34b6d1011971d4ce00131bc",
+            "id": null,
+            "type": "UXEVENT"
+        },
+        "sourceEventSysId": null,
+        "targets": [
+            {
+                "broker": null,
+                "clientScript": null,
+                "conditional": null,
+                "declarativeAction": null,
+                "event": {
+                    "apiName": "sn_canvas_core.NAV_ITEM_SELECTED",
+                    "payload": {
+                        "container": {
+                            "external": {
+                                "binding": {
+                                    "address": [
+                                        "external"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "fields": {
+                                "binding": {
+                                    "address": [
+                                        "fields"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "multiInstField": {
+                                "binding": {
+                                    "address": [
+                                        "multiInstField"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "params": {
+                                "binding": {
+                                    "address": [
+                                        "params"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "passiveNavigation": {
+                                "binding": {
+                                    "address": [
+                                        "passiveNavigation"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "redirect": {
+                                "binding": {
+                                    "address": [
+                                        "redirect"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "route": {
+                                "binding": {
+                                    "address": [
+                                        "route"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "targetRoute": {
+                                "binding": {
+                                    "address": [
+                                        "targetRoute"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "title": {
+                                "binding": {
+                                    "address": [
+                                        "title"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            }
+                        },
+                        "type": "MAP_CONTAINER"
+                    },
+                    "sysId": "8b82bf18e5276c8e423b6e4e0889b463"
+                },
+                "operation": null,
+                "targetId": "cliaaaejjbggaaaggddddeehhtmciaaicvf",
+                "type": "EVENT"
             }
-          },
-          "fields" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "fields" ]
-            }
-          },
-          "params" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "params" ]
-            }
-          },
-          "redirect" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "redirect" ]
-            }
-          },
-          "passiveNavigation" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "passiveNavigation" ]
-            }
-          },
-          "title" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "title" ]
-            }
-          },
-          "multiInstField" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "multiInstField" ]
-            }
-          },
-          "targetRoute" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "targetRoute" ]
-            }
-          },
-          "external" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "external" ]
-            }
-          }
-        }
-      },
-      "sysId" : "8b82bf18e5276c8e423b6e4e0889b463"
+        ]
     },
-    "operation" : null,
-    "targetId" : "cliaaaejjbggaaaggddddeehhtmciaaicvf",
-    "type" : "EVENT"
-  } ]
-}, {
-  "eventMappingId" : "cliaaiirffjjlaajjiieeddeehhtvlsydwpee",
-  "isConfiguration" : false,
-  "offRowStorageId" : null,
-  "sourceEventApiName" : "x_ebh_voluntary_0.MODAL_SELECTED_RELAY_897f4d20c34b6d1011971d4ce00131bc",
-  "sourceEventCorrelationId" : null,
-  "sourceEventDefinition" : {
-    "apiName" : "x_ebh_voluntary_0.MODAL_SELECTED_RELAY_897f4d20c34b6d1011971d4ce00131bc",
-    "id" : null,
-    "type" : "UXEVENT"
-  },
-  "sourceEventSysId" : null,
-  "targets" : [ {
-    "broker" : null,
-    "clientScript" : null,
-    "conditional" : null,
-    "declarativeAction" : null,
-    "event" : {
-      "apiName" : "sn_canvas_core.MODAL_SELECTED",
-      "payload" : {
-        "type" : "MAP_CONTAINER",
-        "container" : {
-          "modalId" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "modalId" ]
+    {
+        "eventMappingId": "cliaaiirffjjlaajjiieeddeehhtvlsydwpee",
+        "isConfiguration": false,
+        "offRowStorageId": null,
+        "sourceEventApiName": "x_ebh_voluntary_0.MODAL_SELECTED_RELAY_897f4d20c34b6d1011971d4ce00131bc",
+        "sourceEventCorrelationId": null,
+        "sourceEventDefinition": {
+            "apiName": "x_ebh_voluntary_0.MODAL_SELECTED_RELAY_897f4d20c34b6d1011971d4ce00131bc",
+            "id": null,
+            "type": "UXEVENT"
+        },
+        "sourceEventSysId": null,
+        "targets": [
+            {
+                "broker": null,
+                "clientScript": null,
+                "conditional": null,
+                "declarativeAction": null,
+                "event": {
+                    "apiName": "sn_canvas_core.MODAL_SELECTED",
+                    "payload": {
+                        "container": {
+                            "bare": {
+                                "binding": {
+                                    "address": [
+                                        "bare"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "displayOptions": {
+                                "binding": {
+                                    "address": [
+                                        "displayOptions"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "modalId": {
+                                "binding": {
+                                    "address": [
+                                        "modalId"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "showModal": {
+                                "binding": {
+                                    "address": [
+                                        "showModal"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "viewportElementId": {
+                                "binding": {
+                                    "address": [
+                                        "viewportElementId"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "viewportFields": {
+                                "binding": {
+                                    "address": [
+                                        "viewportFields"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "viewportRoute": {
+                                "binding": {
+                                    "address": [
+                                        "viewportRoute"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            }
+                        },
+                        "type": "MAP_CONTAINER"
+                    },
+                    "sysId": "882eed4091382d3a41f1bb3f382ae089"
+                },
+                "operation": null,
+                "targetId": "cliaaiirffjjkaajjiiddddeehhtffaeeoccosb",
+                "type": "EVENT"
             }
-          },
-          "showModal" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "showModal" ]
-            }
-          },
-          "displayOptions" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "displayOptions" ]
-            }
-          },
-          "bare" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "bare" ]
-            }
-          },
-          "viewportElementId" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "viewportElementId" ]
-            }
-          },
-          "viewportRoute" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "viewportRoute" ]
-            }
-          },
-          "viewportFields" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "viewportFields" ]
-            }
-          }
-        }
-      },
-      "sysId" : "882eed4091382d3a41f1bb3f382ae089"
-    },
-    "operation" : null,
-    "targetId" : "cliaaiirffjjkaajjiiddddeehhtffaeeoccosb",
-    "type" : "EVENT"
-  } ]
-} ]</event_mappings>
+        ]
+    }
+]</event_mappings>
         <macroponent display_value="New Deduction default">897f4d20c34b6d1011971d4ce00131bc</macroponent>
         <macroponent_config>{
-  "reset" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "label" : {
-    "type" : "TRANSLATION_LITERAL",
-    "value" : {
-      "code" : null,
-      "message" : "",
-      "comment" : ""
+    "bare": {
+        "type": "JSON_LITERAL",
+        "value": true
+    },
+    "headerLevel": {
+        "type": "JSON_LITERAL",
+        "value": "1"
+    },
+    "headingOnlyVisibleToScreenReaders": {
+        "type": "JSON_LITERAL",
+        "value": false
+    },
+    "interceptNotifications": {
+        "type": "JSON_LITERAL",
+        "value": false
+    },
+    "label": {
+        "type": "TRANSLATION_LITERAL",
+        "value": {
+            "code": null,
+            "comment": "",
+            "message": ""
+        }
+    },
+    "propagateNotifications": {
+        "type": "JSON_LITERAL",
+        "value": false
+    },
+    "reset": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "scrollable": {
+        "type": "JSON_LITERAL",
+        "value": "y"
     }
-  },
-  "bare" : {
-    "type" : "JSON_LITERAL",
-    "value" : true
-  },
-  "scrollable" : {
-    "type" : "JSON_LITERAL",
-    "value" : "y"
-  },
-  "headerLevel" : {
-    "type" : "JSON_LITERAL",
-    "value" : "1"
-  },
-  "headingOnlyVisibleToScreenReaders" : {
-    "type" : "JSON_LITERAL",
-    "value" : false
-  },
-  "interceptNotifications" : {
-    "type" : "JSON_LITERAL",
-    "value" : false
-  },
-  "propagateNotifications" : {
-    "type" : "JSON_LITERAL",
-    "value" : false
-  }
 }</macroponent_config>
         <name>New Deduction default</name>
         <order>0</order>
-        <parent_macroponent display_value="Agent Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
+        <parent_macroponent display_value="Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
         <required_translations>[ ]</required_translations>
         <rollback_screen/>
         <screen_condition/>
@@ -212,7 +252,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>cd7f4160c34b6d1011971d4ce0013189</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>56</sys_mod_count>
         <sys_name>New Deduction default</sys_name>
         <sys_overrides/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
@@ -220,7 +260,7 @@
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_screen_cd7f4160c34b6d1011971d4ce0013189</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-05-23 13:03:12</sys_updated_on>
+        <sys_updated_on>2023-11-02 14:41:17</sys_updated_on>
     </sys_ux_screen>
     <sys_translated_text action="delete_multiple" query="documentkey=cd7f4160c34b6d1011971d4ce0013189"/>
 </record_update>

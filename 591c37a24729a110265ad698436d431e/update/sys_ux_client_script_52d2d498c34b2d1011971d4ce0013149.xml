@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
     <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
         <includes/>
         <macroponent display_value="Deduction Tickets - Home">9551d018c34b2d1011971d4ce0013150</macroponent>
         <name>stylized_text_4/text</name>

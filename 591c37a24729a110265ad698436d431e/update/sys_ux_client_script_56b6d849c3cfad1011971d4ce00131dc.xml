@@ -1,52 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
     <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
         <includes/>
         <macroponent display_value="Preview default">39c37f3cc34fad1011971d4ce0013157</macroponent>
         <name>repeater_1/NODE__repeatWith</name>
         <preset/>
-        <required_translations>[ ]</required_translations>
+        <required_translations>[
+    
+]</required_translations>
         <script><![CDATA[/**
   * @param {params} params
   * @param {api} params.api
   * @param {TransformApiHelpers} params.helpers
   */
-function evaluateProperty({api, helpers}) {
-  const data = [...api.data.Get_deduction_details.items];
-  const filter = ["Deduction ID"];
+function evaluateProperty({api, helpers}) { 
+    
+  return dataReduce(api.data.Get_deduction_details.result);  
 
-  // const filtered_items = data.filter(({label}) => !filter.includes(label));
-  const {result} = api.data.Get_deduction_details;
-  const filtered_items = Object.keys(result)
-    .map(key => {
-      const node = result[key];
-      console.log ({ node, key })
-      const label = node.label;// : node._reference.full_name.value;
-      const id = node.value;
-      const value = key !== 'talent_user' ? node.value : node._reference.full_name.value;
-      return {
-        label,
-        id,
-        value
+  function dataReduce(obj) {
+    // Create an array to hold the filtered properties
+    const filteredProps = [];
+
+    // Loop through each property in the input object
+    for (const key in obj) {
+      // Check if the property has a label and a value
+      if (obj[key].label && obj[key].value) {
+        // If the property is the "talent_user" property, extract the "enterprise_talent_id" and "full_name" properties
+        if (key === "talent_user") {
+          filteredProps.push({
+            label: "Talent ID",
+            id: obj[key].value,
+            value: obj[key]._reference.enterprise_talent_id.value,
+          });
+          filteredProps.push({
+            label: "Talent Name",
+            id: obj[key].value,
+            value: obj[key]._reference.full_name.value,
+          });
+        } else {
+          // Otherwise, add the property to the filtered properties array
+          filteredProps.push({
+            label: obj[key].label,
+            id: obj[key].value,
+            value: obj[key].value,
+          });
+        }
       }
-    }).filter(f => !!f.label);
+    }
 
-  console.log(filtered_items, data,api.data.Get_deduction_details.result);
+    // Return the filtered properties array
+    return filteredProps;
+  }
 
-	return filtered_items;
+
 }]]></script>
         <script_api_version>2.0.0</script_api_version>
         <sys_class_name>sys_ux_client_script</sys_class_name>
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-24 19:26:56</sys_created_on>
         <sys_id>56b6d849c3cfad1011971d4ce00131dc</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>24</sys_mod_count>
         <sys_name>repeater_1/NODE__repeatWith</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_client_script_56b6d849c3cfad1011971d4ce00131dc</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 17:24:48</sys_updated_on>
+        <sys_updated_on>2023-10-25 14:28:18</sys_updated_on>
         <target>macroponent</target>
         <type>transform</type>
     </sys_ux_client_script>

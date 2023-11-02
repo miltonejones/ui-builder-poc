@@ -3,6 +3,7 @@
         <active>true</active>
         <app_config/>
         <description/>
+        <disable_auto_reflow>false</disable_auto_reflow>
         <event_mappings>[ ]</event_mappings>
         <macroponent display_value="asd default">82d365e347f9a150265ad698436d4321</macroponent>
         <macroponent_config>{
@@ -41,7 +42,7 @@
 }</macroponent_config>
         <name>asd default</name>
         <order>0</order>
-        <parent_macroponent display_value="Agent Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
+        <parent_macroponent display_value="Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
         <required_translations>[ ]</required_translations>
         <rollback_screen/>
         <screen_condition/>

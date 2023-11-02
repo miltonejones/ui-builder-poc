@@ -3,6 +3,7 @@
         <active>true</active>
         <app_config display_value="Voluntary Deductions Config">c8215018704b2d1029193c3e1831599c</app_config>
         <description/>
+        <disable_auto_reflow>false</disable_auto_reflow>
         <event_mappings>[ ]</event_mappings>
         <macroponent display_value="Record Information">0c215018d94b2d10f618caec3e593594</macroponent>
         <macroponent_config>{

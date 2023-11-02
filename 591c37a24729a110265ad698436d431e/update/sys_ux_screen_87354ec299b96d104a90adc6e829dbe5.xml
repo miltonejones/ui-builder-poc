@@ -3,6 +3,7 @@
         <active>true</active>
         <app_config/>
         <description/>
+        <disable_auto_reflow>false</disable_auto_reflow>
         <event_mappings>[ ]</event_mappings>
         <macroponent display_value="Search Page">cf354ec229b96d10762b3a3736b132ee</macroponent>
         <macroponent_config>{

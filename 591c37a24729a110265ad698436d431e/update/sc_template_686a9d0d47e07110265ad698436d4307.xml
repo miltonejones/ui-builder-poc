@@ -17,6 +17,7 @@
         <sys_update_name>sc_template_686a9d0d47e07110265ad698436d4307</sys_update_name>
         <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
         <sys_updated_on>2023-08-07 13:58:39</sys_updated_on>
+        <use_template_scope>false</use_template_scope>
     </sc_template>
     <sys_translated_text action="delete_multiple" query="documentkey=686a9d0d47e07110265ad698436d4307"/>
 </record_update>

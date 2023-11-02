@@ -3,73 +3,76 @@
         <active>false</active>
         <app_config display_value="Voluntary Deductions Config">c8215018704b2d1029193c3e1831599c</app_config>
         <description/>
-        <event_mappings>[ ]</event_mappings>
+        <disable_auto_reflow>false</disable_auto_reflow>
+        <event_mappings>[
+    
+]</event_mappings>
         <macroponent display_value="Deduction Tickets - Home">9551d018c34b2d1011971d4ce0013150</macroponent>
         <macroponent_config>{
-  "views" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "selectedTabIndex" : {
-    "type" : "JSON_LITERAL",
-    "value" : 0
-  },
-  "task" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "refresh" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "next" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "ui" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "version" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "label" : {
-    "type" : "TRANSLATION_LITERAL",
-    "value" : {
-      "code" : null,
-      "message" : "",
-      "comment" : ""
+    "bare": {
+        "type": "JSON_LITERAL",
+        "value": true
+    },
+    "headerLevel": {
+        "type": "JSON_LITERAL",
+        "value": "1"
+    },
+    "headingOnlyVisibleToScreenReaders": {
+        "type": "JSON_LITERAL",
+        "value": false
+    },
+    "interceptNotifications": {
+        "type": "JSON_LITERAL",
+        "value": false
+    },
+    "label": {
+        "type": "TRANSLATION_LITERAL",
+        "value": {
+            "code": null,
+            "comment": "",
+            "message": ""
+        }
+    },
+    "next": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "propagateNotifications": {
+        "type": "JSON_LITERAL",
+        "value": false
+    },
+    "refresh": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "scrollable": {
+        "type": "JSON_LITERAL",
+        "value": "y"
+    },
+    "selectedTabIndex": {
+        "type": "JSON_LITERAL",
+        "value": 0
+    },
+    "task": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "ui": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "version": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "views": {
+        "type": "JSON_LITERAL",
+        "value": ""
     }
-  },
-  "bare" : {
-    "type" : "JSON_LITERAL",
-    "value" : true
-  },
-  "scrollable" : {
-    "type" : "JSON_LITERAL",
-    "value" : "y"
-  },
-  "headerLevel" : {
-    "type" : "JSON_LITERAL",
-    "value" : "1"
-  },
-  "headingOnlyVisibleToScreenReaders" : {
-    "type" : "JSON_LITERAL",
-    "value" : false
-  },
-  "interceptNotifications" : {
-    "type" : "JSON_LITERAL",
-    "value" : false
-  },
-  "propagateNotifications" : {
-    "type" : "JSON_LITERAL",
-    "value" : false
-  }
 }</macroponent_config>
         <name>Deduction Tickets - Home</name>
         <order>0</order>
-        <parent_macroponent display_value="Agent Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
+        <parent_macroponent display_value="Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
         <required_translations>[ ]</required_translations>
         <rollback_screen/>
         <screen_condition/>
@@ -80,7 +83,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>dd51d018c34b2d1011971d4ce0013152</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>Deduction Tickets - Home</sys_name>
         <sys_overrides/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
@@ -88,7 +91,7 @@
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_screen_dd51d018c34b2d1011971d4ce0013152</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-05-22 12:49:42</sys_updated_on>
+        <sys_updated_on>2023-10-16 19:33:09</sys_updated_on>
     </sys_ux_screen>
     <sys_translated_text action="delete_multiple" query="documentkey=dd51d018c34b2d1011971d4ce0013152"/>
 </record_update>

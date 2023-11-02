@@ -2,13 +2,14 @@
     <ais_relevancy_solution_definition action="INSERT_OR_UPDATE">
         <active>true</active>
         <capability display_value="Search Relevancy">458c3b2ab72300100e173307fe11a923</capability>
-        <current_solution_version>1</current_solution_version>
+        <current_solution_version>7</current_solution_version>
         <dataset_language>en</dataset_language>
         <fields>signal_json</fields>
         <filter table="ais_relevancy_training_staging">sys_created_onONLast 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()^search_profile=1ca2c91a2616e9105eef44a48eacfdea^EQ<item endquery="false" field="sys_created_on" goto="false" newquery="false" operator="ON" or="false" value="Last 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()"/>
             <item display_table="ais_search_profile" display_value="Bill Report Search Profile" endquery="false" field="search_profile" goto="false" newquery="false" operator="=" or="false" value="1ca2c91a2616e9105eef44a48eacfdea"/>
             <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
         </filter>
+        <pretrained>false</pretrained>
         <profile display_value="Bill Report Search Profile">1ca2c91a2616e9105eef44a48eacfdea</profile>
         <request_source>api</request_source>
         <solution_label>ais_relevancy_1ca2c91a2616e9105eef44a48eacfdea</solution_label>
@@ -32,6 +33,7 @@
         <sys_updated_on>2023-04-21 13:04:12</sys_updated_on>
         <table>ais_relevancy_training_staging</table>
         <training_frequency>every_30_days</training_frequency>
+        <triggered_source>API</triggered_source>
         <word_vector_corpus/>
     </ais_relevancy_solution_definition>
 </record_update>

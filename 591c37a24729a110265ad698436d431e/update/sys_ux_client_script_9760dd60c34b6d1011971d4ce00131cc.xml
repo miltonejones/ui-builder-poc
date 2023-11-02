@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
     <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
         <includes/>
         <macroponent display_value="New Deduction default">897f4d20c34b6d1011971d4ce00131bc</macroponent>
         <name>stylized_text_14/text</name>
         <preset/>
-        <required_translations>[ ]</required_translations>
+        <required_translations>[
+    
+]</required_translations>
         <script><![CDATA[/**
   * @param {params} params
   * @param {api} params.api
@@ -15,7 +18,7 @@ function evaluateProperty({api, helpers}) {
   
   const deduction_type_store = {}
   api.data.get_deduction_types.results.forEach(({ value, label }) => {
-    deduction_type_store[value.value] = label.value;
+    deduction_type_store[label.value] = label.value;
   });
   const deduction_type = api.item.value.deduction_type;
     
@@ -28,14 +31,14 @@ function evaluateProperty({api, helpers}) {
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-23 10:22:05</sys_created_on>
         <sys_id>9760dd60c34b6d1011971d4ce00131cc</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>stylized_text_14/text</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_client_script_9760dd60c34b6d1011971d4ce00131cc</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-05-23 10:32:07</sys_updated_on>
+        <sys_updated_on>2023-10-25 18:20:41</sys_updated_on>
         <target>macroponent</target>
         <type>transform</type>
     </sys_ux_client_script>

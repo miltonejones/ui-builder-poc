@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_macroponent">
     <sys_ux_macroponent action="INSERT_OR_UPDATE">
         <associated_types/>
+        <bundles/>
         <category>page</category>
         <component_dependencies/>
         <composition>[ {
@@ -582,6 +583,7 @@
         <dispatched_events>c3354ec2f7b96d1071de713931f9dbe9,4f354ec21eb96d1038dff5dcc82c4be8,07354ec26ab96d102a046030bb21e4e9,8f354ec2b4b96d10c08a71d9352b5ee8</dispatched_events>
         <ext_controller_dep/>
         <extends display_value="Page Template">19be392623033300f4b4c50947bf65ba</extends>
+        <extension_point/>
         <handled_events/>
         <interactions/>
         <interfaces/>

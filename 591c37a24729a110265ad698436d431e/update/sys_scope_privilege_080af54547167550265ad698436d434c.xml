@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_scope_privilege">
+    <sys_scope_privilege action="INSERT_OR_UPDATE">
+        <operation>read</operation>
+        <source_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</source_scope>
+        <status>allowed</status>
+        <sys_class_name>sys_scope_privilege</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-11-02 16:04:46</sys_created_on>
+        <sys_id>080af54547167550265ad698436d434c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_ebh_int_mgmt_environment_mapping</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_scope_privilege_080af54547167550265ad698436d434c</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2023-11-02 16:04:46</sys_updated_on>
+        <target_name>x_ebh_int_mgmt_environment_mapping</target_name>
+        <target_scope display_value="Integration Management">4fab061347d76110265ad698436d432e</target_scope>
+        <target_type>sys_db_object</target_type>
+    </sys_scope_privilege>
+</record_update>

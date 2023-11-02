@@ -3,6 +3,7 @@
         <active>true</active>
         <app_config display_value="Voluntary Deductions Config">9f2effe24729a110265ad698436d435e</app_config>
         <description/>
+        <disable_auto_reflow>false</disable_auto_reflow>
         <event_mappings>[ {
   "eventMappingId" : "clgbebmpxaaaaifddbhhsddspliigbbn",
   "isConfiguration" : false,

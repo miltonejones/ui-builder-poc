@@ -3,6 +3,7 @@
         <active>true</active>
         <app_config display_value="Voluntary Deductions Config">c8215018704b2d1029193c3e1831599c</app_config>
         <description/>
+        <disable_auto_reflow>false</disable_auto_reflow>
         <event_mappings>[ {&#13;
   "eventMappingId" : "7c4b7a6d-da76-4cfb-9561-c14388a97faf",&#13;
   "sourceEventApiName" : "sn_uib_base_aw.NAV_ITEM_SELECTED_RELAY_8515f3e853031010ffa5ddeeff7b1297",&#13;
@@ -151,7 +152,7 @@
 }</macroponent_config>
         <name>Simple List Default</name>
         <order>0</order>
-        <parent_macroponent display_value="Agent Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
+        <parent_macroponent display_value="Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
         <required_translations>[]</required_translations>
         <rollback_screen/>
         <screen_condition/>

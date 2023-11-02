@@ -2,10 +2,12 @@
     <ais_search_profile action="INSERT_OR_UPDATE">
         <active>true</active>
         <description>This is default AI Search profile for Voluntary Deductions</description>
+        <exclude_from_evaluation>false</exclude_from_evaluation>
         <genius_result_assembly/>
         <label>Voluntary Deductions Search Profile</label>
         <name>x_ebh_voluntary_0_drpvtcz_search_profile</name>
         <publish_id>8db3e7a6-99fb-4dce-88c1-8b76287ecc86</publish_id>
+        <qna_model_id/>
         <state>PUBLISHED</state>
         <sys_class_name>ais_search_profile</sys_class_name>
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>

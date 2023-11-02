@@ -3,157 +3,180 @@
         <active>true</active>
         <app_config display_value="Voluntary Deductions Config">c8215018704b2d1029193c3e1831599c</app_config>
         <description/>
-        <event_mappings>[ {
-  "eventMappingId" : "cliccggotjeaaccbbbddbhhsfwidsldbb",
-  "isConfiguration" : false,
-  "offRowStorageId" : null,
-  "sourceEventApiName" : "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_d1a6e898c38b2d1011971d4ce0013178",
-  "sourceEventCorrelationId" : null,
-  "sourceEventDefinition" : {
-    "apiName" : "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_d1a6e898c38b2d1011971d4ce0013178",
-    "id" : null,
-    "type" : "UXEVENT"
-  },
-  "sourceEventSysId" : null,
-  "targets" : [ {
-    "broker" : null,
-    "clientScript" : null,
-    "conditional" : null,
-    "declarativeAction" : null,
-    "event" : {
-      "apiName" : "sn_canvas_core.NAV_ITEM_SELECTED",
-      "payload" : {
-        "type" : "MAP_CONTAINER",
-        "container" : {
-          "route" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "route" ]
+        <disable_auto_reflow>false</disable_auto_reflow>
+        <event_mappings>[
+    {
+        "eventMappingId": "cliccggotjeaaccbbbddbhhsfwidsldbb",
+        "isConfiguration": false,
+        "offRowStorageId": null,
+        "sourceEventApiName": "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_d1a6e898c38b2d1011971d4ce0013178",
+        "sourceEventCorrelationId": null,
+        "sourceEventDefinition": {
+            "apiName": "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_d1a6e898c38b2d1011971d4ce0013178",
+            "id": null,
+            "type": "UXEVENT"
+        },
+        "sourceEventSysId": null,
+        "targets": [
+            {
+                "broker": null,
+                "clientScript": null,
+                "conditional": null,
+                "declarativeAction": null,
+                "event": {
+                    "apiName": "sn_canvas_core.NAV_ITEM_SELECTED",
+                    "payload": {
+                        "container": {
+                            "external": {
+                                "binding": {
+                                    "address": [
+                                        "external"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "fields": {
+                                "binding": {
+                                    "address": [
+                                        "fields"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "multiInstField": {
+                                "binding": {
+                                    "address": [
+                                        "multiInstField"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "params": {
+                                "binding": {
+                                    "address": [
+                                        "params"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "passiveNavigation": {
+                                "binding": {
+                                    "address": [
+                                        "passiveNavigation"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "redirect": {
+                                "binding": {
+                                    "address": [
+                                        "redirect"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "route": {
+                                "binding": {
+                                    "address": [
+                                        "route"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "targetRoute": {
+                                "binding": {
+                                    "address": [
+                                        "targetRoute"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            },
+                            "title": {
+                                "binding": {
+                                    "address": [
+                                        "title"
+                                    ]
+                                },
+                                "type": "EVENT_PAYLOAD_BINDING"
+                            }
+                        },
+                        "type": "MAP_CONTAINER"
+                    },
+                    "sysId": "8b82bf18e5276c8e423b6e4e0889b463"
+                },
+                "operation": null,
+                "targetId": "cliccggotjeaaccbaaddbhhsgyxvbbijv",
+                "type": "EVENT"
             }
-          },
-          "fields" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "fields" ]
-            }
-          },
-          "params" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "params" ]
-            }
-          },
-          "redirect" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "redirect" ]
-            }
-          },
-          "passiveNavigation" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "passiveNavigation" ]
-            }
-          },
-          "title" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "title" ]
-            }
-          },
-          "multiInstField" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "multiInstField" ]
-            }
-          },
-          "targetRoute" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "targetRoute" ]
-            }
-          },
-          "external" : {
-            "type" : "EVENT_PAYLOAD_BINDING",
-            "binding" : {
-              "address" : [ "external" ]
-            }
-          }
-        }
-      },
-      "sysId" : "8b82bf18e5276c8e423b6e4e0889b463"
-    },
-    "operation" : null,
-    "targetId" : "cliccggotjeaaccbaaddbhhsgyxvbbijv",
-    "type" : "EVENT"
-  } ]
-} ]</event_mappings>
+        ]
+    }
+]</event_mappings>
         <macroponent display_value="Voluntary Deductions - Search">d1a6e898c38b2d1011971d4ce0013178</macroponent>
         <macroponent_config>{
-  "views" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "selectedTabIndex" : {
-    "type" : "JSON_LITERAL",
-    "value" : 0
-  },
-  "task" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "refresh" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "next" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "ui" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "version" : {
-    "type" : "JSON_LITERAL",
-    "value" : ""
-  },
-  "label" : {
-    "type" : "TRANSLATION_LITERAL",
-    "value" : {
-      "code" : null,
-      "message" : "",
-      "comment" : ""
+    "bare": {
+        "type": "JSON_LITERAL",
+        "value": true
+    },
+    "headerLevel": {
+        "type": "JSON_LITERAL",
+        "value": "1"
+    },
+    "headingOnlyVisibleToScreenReaders": {
+        "type": "JSON_LITERAL",
+        "value": false
+    },
+    "interceptNotifications": {
+        "type": "JSON_LITERAL",
+        "value": false
+    },
+    "label": {
+        "type": "TRANSLATION_LITERAL",
+        "value": {
+            "code": null,
+            "comment": "",
+            "message": ""
+        }
+    },
+    "next": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "propagateNotifications": {
+        "type": "JSON_LITERAL",
+        "value": false
+    },
+    "refresh": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "scrollable": {
+        "type": "JSON_LITERAL",
+        "value": "y"
+    },
+    "selectedTabIndex": {
+        "type": "JSON_LITERAL",
+        "value": 0
+    },
+    "task": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "ui": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "version": {
+        "type": "JSON_LITERAL",
+        "value": ""
+    },
+    "views": {
+        "type": "JSON_LITERAL",
+        "value": ""
     }
-  },
-  "bare" : {
-    "type" : "JSON_LITERAL",
-    "value" : true
-  },
-  "scrollable" : {
-    "type" : "JSON_LITERAL",
-    "value" : "y"
-  },
-  "headerLevel" : {
-    "type" : "JSON_LITERAL",
-    "value" : "1"
-  },
-  "headingOnlyVisibleToScreenReaders" : {
-    "type" : "JSON_LITERAL",
-    "value" : false
-  },
-  "interceptNotifications" : {
-    "type" : "JSON_LITERAL",
-    "value" : false
-  },
-  "propagateNotifications" : {
-    "type" : "JSON_LITERAL",
-    "value" : false
-  }
 }</macroponent_config>
         <name>Voluntary Deductions - Search</name>
         <order>0</order>
-        <parent_macroponent display_value="Agent Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
+        <parent_macroponent display_value="Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
         <required_translations>[ ]</required_translations>
         <rollback_screen/>
         <screen_condition/>
@@ -164,7 +187,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>5da6e898c38b2d1011971d4ce001317a</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>21</sys_mod_count>
         <sys_name>Voluntary Deductions - Search</sys_name>
         <sys_overrides/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
@@ -172,7 +195,7 @@
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_screen_5da6e898c38b2d1011971d4ce001317a</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-06-19 14:59:49</sys_updated_on>
+        <sys_updated_on>2023-10-23 16:23:45</sys_updated_on>
     </sys_ux_screen>
     <sys_translated_text action="delete_multiple" query="documentkey=5da6e898c38b2d1011971d4ce001317a"/>
 </record_update>

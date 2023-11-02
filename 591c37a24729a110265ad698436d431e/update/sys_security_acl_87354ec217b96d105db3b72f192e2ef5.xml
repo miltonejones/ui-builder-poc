@@ -5,9 +5,11 @@
         <advanced>false</advanced>
         <condition/>
         <description/>
+        <local_or_existing>Local</local_or_existing>
         <name>03354ec2c1b96d109fcd1410eea978f5</name>
         <operation display_value="execute">execute</operation>
         <script/>
+        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-03-27 02:45:15</sys_created_on>
