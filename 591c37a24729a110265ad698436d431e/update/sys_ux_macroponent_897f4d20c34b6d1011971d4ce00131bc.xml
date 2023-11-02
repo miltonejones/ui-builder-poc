@@ -4050,6 +4050,64 @@
                     },
                     "slot": null,
                     "styles": null
+                },
+                {
+                    "definition": {
+                        "id": "e72c75f648cda0becbd28db9a44b569f",
+                        "type": "MACROPONENT"
+                    },
+                    "elementId": "stepper_2",
+                    "elementLabel": "Stepper 2",
+                    "eventMappings": [
+                        
+                    ],
+                    "isHidden": {
+                        "type": "JSON_LITERAL",
+                        "value": null
+                    },
+                    "preset": null,
+                    "propertyValues": {
+                        "hideNumbers": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "items": {
+                            "type": "JSON_LITERAL",
+                            "value": [
+                                {
+                                    "id": "step1",
+                                    "label": "Not started",
+                                    "progress": "none"
+                                },
+                                {
+                                    "id": "step2",
+                                    "label": "Active",
+                                    "progress": "partial"
+                                },
+                                {
+                                    "id": "step3",
+                                    "label": "In progress",
+                                    "progress": "partial"
+                                },
+                                {
+                                    "disabled": true,
+                                    "id": "step4",
+                                    "label": "Complete",
+                                    "progress": "done"
+                                }
+                            ]
+                        },
+                        "selectedItem": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "showCompletedCount": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        }
+                    },
+                    "slot": null,
+                    "styles": null
                 }
             ],
             "layout": {
@@ -4076,6 +4134,10 @@
                                 "align-self": "flex-end",
                                 "width": "100%"
                             }
+                        },
+                        {
+                            "element_id": "stepper_2",
+                            "styles": {}
                         }
                     ],
                     "root": null,
@@ -4267,6 +4329,64 @@
                         "type": {
                             "type": "JSON_LITERAL",
                             "value": "section"
+                        }
+                    },
+                    "slot": null,
+                    "styles": null
+                },
+                {
+                    "definition": {
+                        "id": "e72c75f648cda0becbd28db9a44b569f",
+                        "type": "MACROPONENT"
+                    },
+                    "elementId": "stepper_1",
+                    "elementLabel": "Stepper 1",
+                    "eventMappings": [
+                        
+                    ],
+                    "isHidden": {
+                        "type": "JSON_LITERAL",
+                        "value": null
+                    },
+                    "preset": null,
+                    "propertyValues": {
+                        "hideNumbers": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "items": {
+                            "type": "JSON_LITERAL",
+                            "value": [
+                                {
+                                    "id": "step1",
+                                    "label": "Not started",
+                                    "progress": "none"
+                                },
+                                {
+                                    "id": "step2",
+                                    "label": "Active",
+                                    "progress": "partial"
+                                },
+                                {
+                                    "id": "step3",
+                                    "label": "In progress",
+                                    "progress": "partial"
+                                },
+                                {
+                                    "disabled": true,
+                                    "id": "step4",
+                                    "label": "Complete",
+                                    "progress": "done"
+                                }
+                            ]
+                        },
+                        "selectedItem": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "showCompletedCount": {
+                            "type": "JSON_LITERAL",
+                            "value": false
                         }
                     },
                     "slot": null,
@@ -5506,6 +5626,10 @@
                                 "flex-direction": "column",
                                 "width": "100%"
                             }
+                        },
+                        {
+                            "element_id": "stepper_1",
+                            "styles": {}
                         },
                         {
                             "element_id": "body_1",
@@ -6867,6 +6991,9 @@
   "message" : "0.00",
   "comment" : ""
 }, {
+  "message" : "Active",
+  "comment" : ""
+}, {
   "message" : "Add deduction",
   "comment" : ""
 }, {
@@ -6880,6 +7007,9 @@
   "comment" : ""
 }, {
   "message" : "Cancel",
+  "comment" : ""
+}, {
+  "message" : "Complete",
   "comment" : ""
 }, {
   "message" : "Confirm",
@@ -6918,10 +7048,16 @@
   "message" : "Enter a label",
   "comment" : ""
 }, {
+  "message" : "In progress",
+  "comment" : ""
+}, {
   "message" : "New Deduction",
   "comment" : ""
 }, {
   "message" : "No deduction types added",
+  "comment" : ""
+}, {
+  "message" : "Not started",
   "comment" : ""
 }, {
   "message" : "Notes",
@@ -7140,14 +7276,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-23 10:17:50</sys_created_on>
         <sys_id>897f4d20c34b6d1011971d4ce00131bc</sys_id>
-        <sys_mod_count>159</sys_mod_count>
+        <sys_mod_count>160</sys_mod_count>
         <sys_name>New Deduction default</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_897f4d20c34b6d1011971d4ce00131bc</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-02 14:41:18</sys_updated_on>
+        <sys_updated_on>2023-11-02 19:17:51</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=897f4d20c34b6d1011971d4ce00131bc"/>
 </record_update>
