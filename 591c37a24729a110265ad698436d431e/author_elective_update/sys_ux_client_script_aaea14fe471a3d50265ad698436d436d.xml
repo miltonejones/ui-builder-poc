@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="DELETE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="New Deduction default">897f4d20c34b6d1011971d4ce00131bc</macroponent>
+        <name>date_time_1/disabledItems</name>
+        <preset/>
+        <required_translations>[
+    
+]</required_translations>
+        <script><![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({api, helpers}) {
+  const currentDate = new Date();
+  const month = currentDate.getMonth() + 1;
+  const day = currentDate.getDate();
+  const year = currentDate.getFullYear();
+
+  const before = `${month}/${day}/${year}`;
+	return [{ before }];
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-07 19:47:25</sys_created_on>
+        <sys_id>aaea14fe471a3d50265ad698436d436d</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>date_time_1/disabledItems</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_client_script_aaea14fe471a3d50265ad698436d436d</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-11-07 19:48:28</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</application>
+        <file_path/>
+        <instance_id>83ce67badb169190b847ac44d4961903</instance_id>
+        <instance_name>employbridgedev</instance_name>
+        <name>sys_ux_client_script_aaea14fe471a3d50265ad698436d436d</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_ux_client_script"&gt;&lt;sys_ux_client_script action="INSERT_OR_UPDATE"&gt;&lt;controller_preset/&gt;&lt;includes/&gt;&lt;macroponent display_value="New Deduction default"&gt;897f4d20c34b6d1011971d4ce00131bc&lt;/macroponent&gt;&lt;name&gt;date_time_1/disabledItems&lt;/name&gt;&lt;preset/&gt;&lt;required_translations&gt;[
+    
+]&lt;/required_translations&gt;&lt;script&gt;&lt;![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({api, helpers}) {
+  const currentDate = new Date();
+  const month = currentDate.getMonth() + 1;
+  const day = currentDate.getDate();
+  const year = currentDate.getFullYear();
+
+  const before = `${month}/${day}/${year}`;
+	return [{ before }];
+}]]&gt;&lt;/script&gt;&lt;script_api_version&gt;2.0.0&lt;/script_api_version&gt;&lt;sys_class_name&gt;sys_ux_client_script&lt;/sys_class_name&gt;&lt;sys_created_by&gt;Milton.Jones@employbridge.com&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2023-11-07 19:47:25&lt;/sys_created_on&gt;&lt;sys_id&gt;aaea14fe471a3d50265ad698436d436d&lt;/sys_id&gt;&lt;sys_mod_count&gt;3&lt;/sys_mod_count&gt;&lt;sys_name&gt;date_time_1/disabledItems&lt;/sys_name&gt;&lt;sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0"&gt;591c37a24729a110265ad698436d431e&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Voluntary Deductions"&gt;591c37a24729a110265ad698436d431e&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ux_client_script_aaea14fe471a3d50265ad698436d436d&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;Milton.Jones@employbridge.com&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2023-11-07 19:48:28&lt;/sys_updated_on&gt;&lt;target&gt;macroponent&lt;/target&gt;&lt;type&gt;transform&lt;/type&gt;&lt;/sys_ux_client_script&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>686584823</payload_hash>
+        <record_name>date_time_1/disabledItems</record_name>
+        <reverted_from/>
+        <source>629f362247923d50265ad698436d43e2</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-07 19:48:28</sys_created_on>
+        <sys_id>bd2dd8b2475a3d50265ad698436d43c9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18bab5445a30000001</sys_recorded_at>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-11-07 19:48:28</sys_updated_on>
+        <type>UX Client Script</type>
+        <update_guid>f12dd8b2d35a3d508ba1c3ec66dc16c9</update_guid>
+        <update_guid_history>f12dd8b2d35a3d508ba1c3ec66dc16c9:686584823,daec54b2b45a3d505473cc935d5dc01c:-1832003079</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-13 18:54:52</sys_created_on>
+        <sys_db_object display_value="" name="sys_ux_client_script">sys_ux_client_script</sys_db_object>
+        <sys_id>8047440cf49d45b0ad5df799b6da2bd1</sys_id>
+        <sys_metadata>aaea14fe471a3d50265ad698436d436d</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>date_time_1/disabledItems</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_scope_delete display_value="">9010b0fe4941481f931beec4cfddca89</sys_scope_delete>
+        <sys_update_name>sys_ux_client_script_aaea14fe471a3d50265ad698436d436d</sys_update_name>
+        <sys_update_version display_value="sys_ux_client_script_aaea14fe471a3d50265ad698436d436d">bd2dd8b2475a3d50265ad698436d43c9</sys_update_version>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-11-13 18:54:52</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

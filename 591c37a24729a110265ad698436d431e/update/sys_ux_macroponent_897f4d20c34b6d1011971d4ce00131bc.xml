@@ -1173,14 +1173,10 @@
                                                                             "value": false
                                                                         },
                                                                         "disabledItems": {
-                                                                            "script": {
-                                                                                "apiVersion": "2.0.0",
-                                                                                "controllerElementId": null,
-                                                                                "inlineScript": "/**\n  * @param {params} params\n  * @param {api} params.api\n  * @param {TransformApiHelpers} params.helpers\n  */\nfunction evaluateProperty({api, helpers}) {\n  const currentDate = new Date();\n  const month = currentDate.getMonth() + 1;\n  const day = currentDate.getDate();\n  const year = currentDate.getFullYear();\n\n  const before = `${month}/${day}/${year}`;\n\treturn [{ before }];\n}",
-                                                                                "scriptSysId": "aaea14fe471a3d50265ad698436d436d",
-                                                                                "target": null
-                                                                            },
-                                                                            "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                                            "type": "JSON_LITERAL",
+                                                                            "value": [
+                                                                                
+                                                                            ]
                                                                         },
                                                                         "firstDayOfWeek": {
                                                                             "type": "JSON_LITERAL",
@@ -7144,14 +7140,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-23 10:17:50</sys_created_on>
         <sys_id>897f4d20c34b6d1011971d4ce00131bc</sys_id>
-        <sys_mod_count>166</sys_mod_count>
+        <sys_mod_count>167</sys_mod_count>
         <sys_name>New Deduction default</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_897f4d20c34b6d1011971d4ce00131bc</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-07 19:48:27</sys_updated_on>
+        <sys_updated_on>2023-11-13 18:54:50</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=897f4d20c34b6d1011971d4ce00131bc"/>
 </record_update>
