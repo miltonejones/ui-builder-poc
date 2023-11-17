@@ -31,276 +31,79 @@
             "composition": [
                 {
                     "definition": {
-                        "id": "d356d14b6e293a3020a244b63d278d8f",
+                        "id": "9c2e48402c6c25d281faeb20637f6106",
                         "type": "MACROPONENT"
                     },
-                    "elementId": "head",
-                    "elementLabel": "Head",
+                    "elementId": "breadcrumbs_1",
+                    "elementLabel": "Breadcrumbs 1",
                     "eventMappings": [
                         
                     ],
-                    "extensionPoints": [
-                        
-                    ],
-                    "isHero": false,
                     "isHidden": {
                         "type": "JSON_LITERAL",
                         "value": null
                     },
-                    "isNonDestructive": false,
-                    "items": [
-                        
-                    ],
-                    "overrides": {
-                        "composition": [
-                            {
-                                "definition": {
-                                    "id": "67d8bc45906c355a3100c0782f45487b",
-                                    "type": "MACROPONENT"
-                                },
-                                "elementId": "button_bare_1",
-                                "elementLabel": "Back to Home Button",
-                                "eventMappings": [
-                                    {
-                                        "eventMappingId": "clgbevssoaabbjjxddbhhsggjjthhbbuiir",
-                                        "isConfiguration": false,
-                                        "offRowStorageId": null,
-                                        "sourceEventApiName": "sn_button.NOW_BUTTON_BARE#CLICKED",
-                                        "sourceEventCorrelationId": null,
-                                        "sourceEventDefinition": {
-                                            "apiName": "sn_button.NOW_BUTTON_BARE#CLICKED",
-                                            "id": null,
-                                            "type": "UXEVENT"
+                    "preset": null,
+                    "propertyValues": {
+                        "delimiter": {
+                            "type": "JSON_LITERAL",
+                            "value": "chevron"
+                        },
+                        "items": {
+                            "container": [
+                                {
+                                    "container": {
+                                        "href": {
+                                            "type": "JSON_LITERAL",
+                                            "value": "#"
                                         },
-                                        "sourceEventSysId": null,
-                                        "targets": [
-                                            {
-                                                "broker": null,
-                                                "clientScript": null,
-                                                "conditional": null,
-                                                "declarativeAction": null,
-                                                "event": {
-                                                    "apiName": "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_08285e72c386611011971d4ce0013118",
-                                                    "payload": {
-                                                        "container": {
-                                                            "external": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "fields": {
-                                                                "container": {
-                                                                    "ui": {
-                                                                        "type": "JSON_LITERAL",
-                                                                        "value": "v2"
-                                                                    }
-                                                                },
-                                                                "type": "MAP_CONTAINER"
-                                                            },
-                                                            "multiInstField": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "params": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "passiveNavigation": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "redirect": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "route": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": "home"
-                                                            },
-                                                            "targetRoute": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "title": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            }
-                                                        },
-                                                        "type": "MAP_CONTAINER"
-                                                    },
-                                                    "sysId": "a7285e72c386611011971d4ce00131f2"
-                                                },
-                                                "operation": null,
-                                                "targetId": "clgbevssoaabbjjyddbhhsdywqccbddd",
-                                                "type": "EVENT"
-                                            },
-                                            {
-                                                "broker": null,
-                                                "clientScript": null,
-                                                "conditional": null,
-                                                "declarativeAction": null,
-                                                "event": {
-                                                    "apiName": "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_897f4d20c34b6d1011971d4ce00131bc",
-                                                    "payload": {
-                                                        "container": {
-                                                            "external": null,
-                                                            "fields": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "multiInstField": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "params": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "passiveNavigation": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "redirect": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "route": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": "home"
-                                                            },
-                                                            "targetRoute": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            },
-                                                            "title": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": null
-                                                            }
-                                                        },
-                                                        "type": "MAP_CONTAINER"
-                                                    },
-                                                    "sysId": "f64539ecc38b6d1011971d4ce00131fd"
-                                                },
-                                                "operation": null,
-                                                "targetId": "cliaaadltxaaaffwddeehhtinddclaabbh",
-                                                "type": "EVENT"
+                                        "label": {
+                                            "type": "TRANSLATION_LITERAL",
+                                            "value": {
+                                                "code": null,
+                                                "comment": "",
+                                                "message": "Apps"
                                             }
-                                        ]
-                                    }
-                                ],
-                                "extensionPoints": [
-                                    
-                                ],
-                                "isHero": false,
-                                "isHidden": {
-                                    "type": "JSON_LITERAL",
-                                    "value": null
-                                },
-                                "isNonDestructive": false,
-                                "items": [
-                                    
-                                ],
-                                "overrides": null,
-                                "propertyValues": {
-                                    "configAria": {
-                                        "container": {},
-                                        "type": "MAP_CONTAINER"
-                                    },
-                                    "disabled": {
-                                        "type": "JSON_LITERAL",
-                                        "value": false
-                                    },
-                                    "hidePadding": {
-                                        "type": "JSON_LITERAL",
-                                        "value": false
-                                    },
-                                    "highContrast": {
-                                        "type": "JSON_LITERAL",
-                                        "value": false
-                                    },
-                                    "iconEnd": {
-                                        "type": "JSON_LITERAL",
-                                        "value": null
-                                    },
-                                    "iconStart": {
-                                        "type": "JSON_LITERAL",
-                                        "value": "chevron-left-fill"
-                                    },
-                                    "label": {
-                                        "type": "TRANSLATION_LITERAL",
-                                        "value": {
-                                            "code": null,
-                                            "comment": "",
-                                            "message": "Back"
                                         }
                                     },
-                                    "showInlinePadding": {
-                                        "type": "JSON_LITERAL",
-                                        "value": true
-                                    },
-                                    "size": {
-                                        "type": "JSON_LITERAL",
-                                        "value": "md"
-                                    },
-                                    "variant": {
-                                        "type": "JSON_LITERAL",
-                                        "value": "primary"
-                                    }
+                                    "type": "MAP_CONTAINER"
                                 },
-                                "slot": null,
-                                "styles": null
-                            }
-                        ],
-                        "layout": {
-                            "default": {
-                                "children": null,
-                                "isInline": null,
-                                "items": [
-                                    {
-                                        "element_id": "button_bare_1",
-                                        "styles": {}
-                                    }
-                                ],
-                                "root": null,
-                                "rules": null,
-                                "styles": {
-                                    "align-items": "center",
-                                    "flex-direction": "row",
-                                    "justify-content": "space-between"
+                                {
+                                    "container": {
+                                        "href": {
+                                            "type": "JSON_LITERAL",
+                                            "value": "/x/ebh/voluntary-deductions/home"
+                                        },
+                                        "label": {
+                                            "type": "TRANSLATION_LITERAL",
+                                            "value": {
+                                                "code": null,
+                                                "comment": "",
+                                                "message": "Voluntary Deductions"
+                                            }
+                                        }
+                                    },
+                                    "type": "MAP_CONTAINER"
                                 },
-                                "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
-                                "type": "flex"
-                            },
-                            "version": "3.0.0"
-                        }
-                    },
-                    "propertyValues": {
-                        "ariaRegionHeadingLevel": {
-                            "type": "JSON_LITERAL",
-                            "value": "1"
+                                {
+                                    "container": {
+                                        "label": {
+                                            "type": "TRANSLATION_LITERAL",
+                                            "value": {
+                                                "code": null,
+                                                "comment": "",
+                                                "message": "Add New Deduction"
+                                            }
+                                        }
+                                    },
+                                    "type": "MAP_CONTAINER"
+                                }
+                            ],
+                            "type": "LIST_CONTAINER"
                         },
-                        "ariaRegionName": {
-                            "type": "TRANSLATION_LITERAL",
-                            "value": {
-                                "code": null,
-                                "comment": "",
-                                "message": ""
-                            }
-                        },
-                        "ariaRole": {
+                        "overflow": {
                             "type": "JSON_LITERAL",
-                            "value": ""
-                        },
-                        "hideEmptyStateUi": {
-                            "type": "JSON_LITERAL",
-                            "value": true
-                        },
-                        "includeAriaHeading": {
-                            "type": "JSON_LITERAL",
-                            "value": false
-                        },
-                        "type": {
-                            "type": "JSON_LITERAL",
-                            "value": "section"
+                            "value": "collapse"
                         }
                     },
                     "slot": null,
@@ -1512,7 +1315,7 @@
                                                                                                                                 "script": {
                                                                                                                                     "apiVersion": "1.0.0",
                                                                                                                                     "controllerElementId": null,
-                                                                                                                                    "inlineScript": "// Input (Value)\nfunction evaluateEvent({ api, event }) {\n  let input = event.payload.fieldValue;\n  const index = api.item.index;\n  const deductions = api.state.deductions;\n\n  // Requirements:\n  if (Number(input) == 0) input = null;\n  if (Number.isNaN(Number(input))) input = null;\n  if (input &lt;= 0) input = null;\n\n  // Validation messages\n  const validation = [];\n  if (!input) {\n    const content = \"Enter numbers for the deduction amount.\";\n    const error = { status: \"critical\", content, icon: \"circle-exclamation-fill\" };\n    validation.push(error);\n  }\n\n  // Output\n  const value = input ? Number(input).toFixed(2) : null;\n  const payload = { ...deductions[index], deduction_value: value, validation };\n  deductions[index] = payload;\n\n  console.log ({ deductions });\n\n  return {\n    propName: \"deductions\",\n    value: deductions,\n  };\n}\n ",
+                                                                                                                                    "inlineScript": "// Input (Value)\nfunction evaluateEvent({ api, event }) {\n  let input = event.payload.fieldValue;\n  const index = api.item.index;\n  const deductions = api.state.deductions;\n\n  // Requirements:\n  if (Number(input) == 0) input = null;\n  if (Number.isNaN(Number(input))) input = null;\n  if (input &lt;= 0) input = null;\n\n  // Validation messages\n  const validation = [];\n  if (!input) {\n    const content = \"Enter numbers for the Deduction Amount.\";\n    const error = { status: \"critical\", content, icon: \"circle-exclamation-fill\" };\n    validation.push(error);\n  }\n\n  // Output\n  const value = input ? Number(input).toFixed(2) : null;\n\n  const payload = { \n    ...deductions[index], \n    deduction_value: value, \n    validation: {\n      ...deductions[index].validation,\n      amount: validation\n    } \n  };\n  \n \n  deductions[index] = payload;\n\n  console.log ({ deductions });\n\n  return {\n    propName: \"deductions\",\n    value: deductions,\n  };\n}\n ",
                                                                                                                                     "scriptSysId": null,
                                                                                                                                     "target": null
                                                                                                                                 },
@@ -1659,7 +1462,8 @@
                                                                                                             "messages": {
                                                                                                                 "binding": {
                                                                                                                     "address": [
-                                                                                                                        "validation"
+                                                                                                                        "validation",
+                                                                                                                        "amount"
                                                                                                                     ],
                                                                                                                     "category": "value"
                                                                                                                 },
@@ -1795,7 +1599,7 @@
                                                                                                                                 "script": {
                                                                                                                                     "apiVersion": "1.0.0",
                                                                                                                                     "controllerElementId": null,
-                                                                                                                                    "inlineScript": "function evaluateEvent({ api, event }) {\n  const fieldName = \"deduction_type\";\n  const input = event.payload.value;\n  const state = api.state.deductions;\n  const index = api.item.index;\n\n  state[index][fieldName] = input;\n\n  return {\n    propName: \"deductions\",\n    value: state,\n  };\n}\n\n// Input (Value)\n// function evaluateEvent({ api, event }) {\n//   let input = event.payload.value;\n//   const index = api.item.index;\n//   const deductions = api.state.deductions;\n\n//   // Output\n//   const payload = { ...deductions[index], deduction_type: input };\n//   deductions[index] = payload;\n\n//   return {\n//     propName: \"deductions\",\n//     value: deductions,\n//   };\n// }\n\n// function evaluateEvent({ api, event }) {\n//   const fieldName = \"deduction_amount\";\n//   const input = event.payload.fieldValue;\n//   const state = api.state.deductions;\n//   const index = api.item.index;\n\n//   state[index][fieldName] = input;\n\n//   console.log(\"&gt;&gt;&gt; state:\", state);\n\n//   return {\n//     propName: \"deductions\",\n//     value: state,\n//   };\n// }\n\n\n",
+                                                                                                                                    "inlineScript": "function evaluateEvent({ api, event }) {\n  const fieldName = \"deduction_type\";\n  const input = event.payload.value;\n  const deductions = api.state.deductions;\n  const index = api.item.index;\n\n  deductions[index][fieldName] = input;\n  deductions[index].validation = [];\n\n  return {\n    propName: \"deductions\",\n    value: deductions,\n  };\n}\n\n// Input (Value)\n// function evaluateEvent({ api, event }) {\n//   let input = event.payload.value;\n//   const index = api.item.index;\n//   const deductions = api.state.deductions;\n\n//   // Output\n//   const payload = { ...deductions[index], deduction_type: input };\n//   deductions[index] = payload;\n\n//   return {\n//     propName: \"deductions\",\n//     value: deductions,\n//   };\n// }\n\n// function evaluateEvent({ api, event }) {\n//   const fieldName = \"deduction_amount\";\n//   const input = event.payload.fieldValue;\n//   const state = api.state.deductions;\n//   const index = api.item.index;\n\n//   state[index][fieldName] = input;\n\n//   console.log(\"&gt;&gt;&gt; state:\", state);\n\n//   return {\n//     propName: \"deductions\",\n//     value: state,\n//   };\n// }\n\n\n",
                                                                                                                                     "scriptSysId": null,
                                                                                                                                     "target": null
                                                                                                                                 },
@@ -1818,6 +1622,44 @@
                                                                                                                         "operation": null,
                                                                                                                         "targetId": "clheypprqaaaamrddthhszegvabbog",
                                                                                                                         "type": "CLIENT_SCRIPT"
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "eventMappingId": "clpbbabzieaaccvzddeehhrxmhnusccd",
+                                                                                                                "isConfiguration": false,
+                                                                                                                "offRowStorageId": null,
+                                                                                                                "sourceEventApiName": "sn_select.NOW_SELECT#INVALID_SET",
+                                                                                                                "sourceEventCorrelationId": null,
+                                                                                                                "sourceEventDefinition": {
+                                                                                                                    "apiName": "sn_select.NOW_SELECT#INVALID_SET",
+                                                                                                                    "id": null,
+                                                                                                                    "type": "UXEVENT"
+                                                                                                                },
+                                                                                                                "sourceEventSysId": null,
+                                                                                                                "targets": [
+                                                                                                                    {
+                                                                                                                        "broker": null,
+                                                                                                                        "clientScript": null,
+                                                                                                                        "conditional": null,
+                                                                                                                        "declarativeAction": null,
+                                                                                                                        "event": {
+                                                                                                                            "apiName": "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+                                                                                                                            "payload": {
+                                                                                                                                "script": {
+                                                                                                                                    "apiVersion": "1.0.0",
+                                                                                                                                    "controllerElementId": null,
+                                                                                                                                    "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n  const input = event.payload.value;  \n  const index = api.item.index;\n  const deductions = api.state.deductions;\n\n  // Validation messages\n  const validation = [];\n  if (!input) {\n    const content = \"Select a Deduction Type.\";\n    const error = { status: \"critical\", content, icon: \"circle-exclamation-fill\" };\n    validation.push(error);\n  }\n\n  const payload = { \n    ...deductions[index], \n    validation: {\n      ...deductions[index].validation,\n      type: validation\n    } \n  };\n  \n  deductions[index] = payload;\n\n console.table (deductions);\n\n\n\treturn {\n    propName: \"deductions\",\n    value: deductions,\n\t};\n}",
+                                                                                                                                    "scriptSysId": null,
+                                                                                                                                    "target": null
+                                                                                                                                },
+                                                                                                                                "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                                                                                            },
+                                                                                                                            "sysId": "32408b42ff7a10109046e490703bf176"
+                                                                                                                        },
+                                                                                                                        "operation": null,
+                                                                                                                        "targetId": "clpbbabzieaaccwaaddeehhrffnqkddwjff",
+                                                                                                                        "type": "EVENT"
                                                                                                                     }
                                                                                                                 ]
                                                                                                             }
@@ -1857,14 +1699,20 @@
                                                                                                                 "value": false
                                                                                                             },
                                                                                                             "invalid": {
-                                                                                                                "type": "JSON_LITERAL",
-                                                                                                                "value": false
+                                                                                                                "script": {
+                                                                                                                    "apiVersion": "2.0.0",
+                                                                                                                    "controllerElementId": null,
+                                                                                                                    "inlineScript": "/**\n  * @param {params} params\n  * @param {api} params.api\n  * @param {TransformApiHelpers} params.helpers\n  */\nfunction evaluateProperty({api, helpers}) {\n  const index = api.item.index;\n\treturn !api.state.deductions[index][\"deduction_type\"];\n}",
+                                                                                                                    "scriptSysId": "73d12de147ae3910265ad698436d43b5",
+                                                                                                                    "target": null
+                                                                                                                },
+                                                                                                                "type": "CLIENT_TRANSFORM_SCRIPT"
                                                                                                             },
                                                                                                             "items": {
                                                                                                                 "script": {
                                                                                                                     "apiVersion": "2.0.0",
                                                                                                                     "controllerElementId": null,
-                                                                                                                    "inlineScript": "/**\r\n * @param {params} params\r\n * @param {api} params.api\r\n * @param {TransformApiHelpers} params.helpers\r\n */\r\nfunction evaluateProperty({\r\n    api,\r\n    helpers\r\n}) {                   \r\nconsole.log ({me: api.item})\r\n    const results = api.data.get_deduction_types.results.map(({    \r\n        value, label, sys_id\r\n    }) =&gt; ({\r\n        id:  label.value ,\r\n        label: label.value,\r\n        sysId: sys_id.value\r\n    }));\r\n\r\n    return [{ id: \"Select\", label: \"Select\" }, ...results];\r\n}",
+                                                                                                                    "inlineScript": "/**\r\n * @param {params} params\r\n * @param {api} params.api\r\n * @param {TransformApiHelpers} params.helpers\r\n */\r\nfunction evaluateProperty({\r\n    api,\r\n    helpers\r\n}) {                   \r\nconsole.log ({me: api.item})\r\n    const results = api.data.get_deduction_types.results.map(({    \r\n        value, label, sys_id\r\n    }) =&gt; ({\r\n        id:  label.value ,\r\n        label: label.value,\r\n        sysId: sys_id.value\r\n    }));\r\n\r\n    return [{ id: \"Select Deduction Type\", label: \"Select Deduction Type\" }, ...results];\r\n}",
                                                                                                                     "scriptSysId": "0b60dd60c34b6d1011971d4ce0013195",
                                                                                                                     "target": null
                                                                                                                 },
@@ -1885,10 +1733,14 @@
                                                                                                                 "type": "CLIENT_TRANSFORM_SCRIPT"
                                                                                                             },
                                                                                                             "messages": {
-                                                                                                                "container": [
-                                                                                                                    
-                                                                                                                ],
-                                                                                                                "type": "LIST_CONTAINER"
+                                                                                                                "binding": {
+                                                                                                                    "address": [
+                                                                                                                        "validation",
+                                                                                                                        "type"
+                                                                                                                    ],
+                                                                                                                    "category": "value"
+                                                                                                                },
+                                                                                                                "type": "REPEATER_ITEM_BINDING"
                                                                                                             },
                                                                                                             "optional": {
                                                                                                                 "type": "JSON_LITERAL",
@@ -1906,7 +1758,7 @@
                                                                                                                 "script": {
                                                                                                                     "apiVersion": "2.0.0",
                                                                                                                     "controllerElementId": null,
-                                                                                                                    "inlineScript": null,
+                                                                                                                    "inlineScript": "/**\r\n  * @param {params} params\r\n  * @param {api} params.api\r\n  * @param {TransformApiHelpers} params.helpers\r\n  */\r\nfunction evaluateProperty({api, helpers}) {\r\n  const index = api.item.index;\r\n\treturn api.state.deductions[index][\"deduction_type\"] || \"Select Deduction Type\";\r\n}",
                                                                                                                     "scriptSysId": "1b60dd60c34b6d1011971d4ce001319e",
                                                                                                                     "target": null
                                                                                                                 },
@@ -2210,7 +2062,8 @@
                                                                                             "root": null,
                                                                                             "rules": null,
                                                                                             "styles": {
-                                                                                                "flex-direction": "column"
+                                                                                                "flex-direction": "column",
+                                                                                                "margin-bottom": "var(--now-scalable-space--xl)"
                                                                                             },
                                                                                             "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
                                                                                             "type": "flex"
@@ -2346,7 +2199,7 @@
                                                                                         "value": {
                                                                                             "code": null,
                                                                                             "comment": "",
-                                                                                            "message": "Add deduction"
+                                                                                            "message": "ADD DEDUCTION"
                                                                                         }
                                                                                     },
                                                                                     "showInlinePadding": {
@@ -2426,7 +2279,7 @@
                                                                                         "value": {
                                                                                             "code": null,
                                                                                             "comment": "",
-                                                                                            "message": "Deduction cannot be submitted until deduction types are specified."
+                                                                                            "message": ""
                                                                                         }
                                                                                     },
                                                                                     "header": {
@@ -3175,24 +3028,6 @@
                                                                                                 "operation": {
                                                                                                     "dataBrokerId": "b997a84053021010cbc2ddeeff7b1228",
                                                                                                     "operationName": "REFRESH",
-                                                                                                    "parentResourceId": "get_users",
-                                                                                                    "payload": {
-                                                                                                        "type": "JSON_LITERAL",
-                                                                                                        "value": {}
-                                                                                                    }
-                                                                                                },
-                                                                                                "targetId": "cliaajjwdhgaajjvkddeehhtjohijjjht",
-                                                                                                "type": "DATABROKER_OP"
-                                                                                            },
-                                                                                            {
-                                                                                                "broker": null,
-                                                                                                "clientScript": null,
-                                                                                                "conditional": null,
-                                                                                                "declarativeAction": null,
-                                                                                                "event": null,
-                                                                                                "operation": {
-                                                                                                    "dataBrokerId": "b997a84053021010cbc2ddeeff7b1228",
-                                                                                                    "operationName": "REFRESH",
                                                                                                     "parentResourceId": "get_talent",
                                                                                                     "payload": {
                                                                                                         "type": "JSON_LITERAL",
@@ -3228,8 +3063,12 @@
                                                                                         "value": null
                                                                                     },
                                                                                     "helperContent": {
-                                                                                        "type": "JSON_LITERAL",
-                                                                                        "value": null
+                                                                                        "type": "TRANSLATION_LITERAL",
+                                                                                        "value": {
+                                                                                            "code": null,
+                                                                                            "comment": "",
+                                                                                            "message": "Search for talent"
+                                                                                        }
                                                                                     },
                                                                                     "hideRequiredIndicator": {
                                                                                         "type": "JSON_LITERAL",
@@ -3243,7 +3082,7 @@
                                                                                         "script": {
                                                                                             "apiVersion": "2.0.0",
                                                                                             "controllerElementId": null,
-                                                                                            "inlineScript": "/**\n * @param {params} params\n * @param {api} params.api\n * @param {TransformApiHelpers} params.helpers\n */\nfunction evaluateProperty({ api, helpers }) {\n  const { results } = api.data.get_talent;\n  console.log ({ results });\n  const options = results\n     .filter(result =&gt; !!result.full_name.value)\n     .map((result) =&gt; ({\n    id: result.sys_id.value,\n    label: result.full_name.value ,\n    sublabel: `Employee ID: ${result.enterprise_talent_id.value}`,\n    talent_id: result.enterprise_talent_id.value,\n    email: result.primary_email.value,\n    sys_id: result.sys_id.value\n  }));\n  console.log ({ options });\n  return JSON.stringify(options);\n}\n",
+                                                                                            "inlineScript": "/**\n * @param {params} params\n * @param {api} params.api\n * @param {TransformApiHelpers} params.helpers\n */\nfunction evaluateProperty({ api, helpers }) {\n  const { results } = api.data.get_talent;\n  const emptyNode = {\n    id: 'home',\n    label: 'Search for Talent',\n  };\n  if (!results) {\n  console.log ( 'NO RESULTS');\n    return JSON.stringify([emptyNode]);\n  }\n  console.log ({ results });\n  const options = results\n     .filter(result =&gt; !!result.full_name.value)\n     .map((result) =&gt; ({\n    id: result.sys_id.value,\n    label: result.full_name.value,// + ` (${result.enterprise_talent_id.value})` ,\n    sublabel: `EID: ${result.enterprise_talent_id.value}, Status: ${result.status_crm.value}`,\n    talent_id: result.enterprise_talent_id.value,\n    email: result.primary_email.value,\n    sys_id: result.sys_id.value\n  }));\n  console.log ({ options });\n  return JSON.stringify([emptyNode, ...options]);\n}\n",
                                                                                             "scriptSysId": "f8df65a8c38b6d1011971d4ce00131b8",
                                                                                             "target": null
                                                                                         },
@@ -4058,10 +3897,8 @@
                     "isInline": null,
                     "items": [
                         {
-                            "element_id": "head",
-                            "styles": {
-                                "width": "100%"
-                            }
+                            "element_id": "breadcrumbs_1",
+                            "styles": {}
                         },
                         {
                             "element_id": "table_body",
@@ -6571,6 +6408,43 @@
                         "type": "CLIENT_SCRIPT"
                     }
                 ]
+            },
+            {
+                "eventMappingId": "clpccndgbbbaabbqbddeehhrkhizypgd",
+                "isConfiguration": false,
+                "offRowStorageId": null,
+                "sourceEventApiName": "sn_uxf.DATA_FETCH_INITIATED",
+                "sourceEventCorrelationId": null,
+                "sourceEventDefinition": {
+                    "apiName": "sn_uxf.DATA_FETCH_INITIATED",
+                    "id": null,
+                    "type": "UXEVENT"
+                },
+                "sourceEventSysId": null,
+                "targets": [
+                    {
+                        "broker": null,
+                        "clientScript": null,
+                        "conditional": null,
+                        "declarativeAction": null,
+                        "event": {
+                            "apiName": "sn_uxf_page.NOW_UXF_PAGE#SET_LOADING_STATE",
+                            "payload": {
+                                "type": "JSON_LITERAL",
+                                "value": {
+                                    "action": null,
+                                    "label": "Please wait....",
+                                    "loading": true,
+                                    "nonBlocking": false
+                                }
+                            },
+                            "sysId": "0404f68486f1baab1dc7ef2a27a3de50"
+                        },
+                        "operation": null,
+                        "targetId": "clpccndgbbbaabbqcddeehhrdxglshiff",
+                        "type": "EVENT"
+                    }
+                ]
             }
         ],
         "inputValues": {
@@ -6611,7 +6485,7 @@
                 "value": "x_ebh_voluntary_0_deduction_type_list"
             }
         },
-        "readEvaluationMode": "EAGER"
+        "readEvaluationMode": "EXPLICIT"
     },
     {
         "definition": {
@@ -6684,7 +6558,7 @@
             },
             "returnFields": {
                 "type": "JSON_LITERAL",
-                "value": "full_name,enterprise_talent_id,sys_id,primary_email"
+                "value": "full_name,enterprise_talent_id,sys_id,primary_email,status_crm"
             },
             "sortType": {
                 "type": "JSON_LITERAL",
@@ -6695,7 +6569,7 @@
                 "value": "x_ebh_ccde_talent_core"
             }
         },
-        "readEvaluationMode": "EAGER"
+        "readEvaluationMode": "EXPLICIT"
     },
     {
         "definition": {
@@ -6746,7 +6620,7 @@
                 "value": "u_bill_pay_types"
             }
         },
-        "readEvaluationMode": "EAGER"
+        "readEvaluationMode": "EXPLICIT"
     }
 ]</data>
         <description/>
@@ -6761,39 +6635,41 @@
     "MACROPONENT_READY": [
         {
             "broker": null,
-            "clientScript": null,
-            "conditional": null,
-            "declarativeAction": null,
-            "event": null,
-            "operation": {
-                "dataBrokerId": "b997a84053021010cbc2ddeeff7b1228",
-                "operationName": "REFRESH",
-                "parentResourceId": "get_talent",
+            "clientScript": {
                 "payload": {
                     "type": "JSON_LITERAL",
                     "value": {}
-                }
+                },
+                "sysId": "f1b12ebdc362791011971d4ce00131f2"
             },
-            "targetId": "clnxghmeddaabbdddddeeiiffffvjjddemlff",
-            "type": "DATABROKER_OP"
+            "conditional": null,
+            "declarativeAction": null,
+            "event": null,
+            "operation": null,
+            "targetId": "clpccnhhtyqaabblhddeehhruiibbwfggt",
+            "type": "CLIENT_SCRIPT"
         },
         {
             "broker": null,
             "clientScript": null,
             "conditional": null,
             "declarativeAction": null,
-            "event": null,
-            "operation": {
-                "dataBrokerId": "b997a84053021010cbc2ddeeff7b1228",
-                "operationName": "REFRESH",
-                "parentResourceId": "get_deduction_types",
+            "event": {
+                "apiName": "sn_uxf_page.NOW_UXF_PAGE#SET_LOADING_STATE",
                 "payload": {
                     "type": "JSON_LITERAL",
-                    "value": {}
-                }
+                    "value": {
+                        "action": null,
+                        "label": null,
+                        "loading": false,
+                        "nonBlocking": false
+                    }
+                },
+                "sysId": "0404f68486f1baab1dc7ef2a27a3de50"
             },
-            "targetId": "clnxgidhgaabbeffddeeiiffyccbbddmelg",
-            "type": "DATABROKER_OP"
+            "operation": null,
+            "targetId": "clpccnhrqhhaabbvhhddeehhrvggqioccmy",
+            "type": "EVENT"
         }
     ]
 }</internal_event_mappings>
@@ -6867,16 +6743,22 @@
   "message" : "0.00",
   "comment" : ""
 }, {
+  "message" : "ADD DEDUCTION",
+  "comment" : ""
+}, {
+  "message" : "Add New Deduction",
+  "comment" : ""
+}, {
   "message" : "Add deduction",
+  "comment" : ""
+}, {
+  "message" : "Apps",
   "comment" : ""
 }, {
   "message" : "Are you sure you wan to delete this item?",
   "comment" : ""
 }, {
   "message" : "Are you sure you want to cancel?",
-  "comment" : ""
-}, {
-  "message" : "Back",
   "comment" : ""
 }, {
   "message" : "Cancel",
@@ -6898,9 +6780,6 @@
   "comment" : ""
 }, {
   "message" : "Deduction Type*",
-  "comment" : ""
-}, {
-  "message" : "Deduction cannot be submitted until deduction types are specified.",
   "comment" : ""
 }, {
   "message" : "Deductions:",
@@ -6936,6 +6815,9 @@
   "message" : "Search by Employee Name or Employee ID",
   "comment" : ""
 }, {
+  "message" : "Search for talent",
+  "comment" : ""
+}, {
   "message" : "Select date",
   "comment" : ""
 }, {
@@ -6952,6 +6834,9 @@
   "comment" : ""
 }, {
   "message" : "This can't be reversed.",
+  "comment" : ""
+}, {
+  "message" : "Voluntary Deductions",
   "comment" : ""
 } ]</required_translations>
         <root_component/>
@@ -7027,11 +6912,10 @@
         "initialValue": {
             "type": "JSON_LITERAL",
             "value": {
-                "elm": {},
                 "email": "example@email.com",
-                "id": "username",
+                "id": "home",
                 "label": "Tomas Username",
-                "talent_id": "1234"
+                "talent_id": 12345
             }
         },
         "label": "user_selected",
@@ -7104,7 +6988,7 @@
         "fieldType": "string",
         "initialValue": {
             "type": "JSON_LITERAL",
-            "value": null
+            "value": "-1"
         },
         "label": "form_sys_id",
         "name": "form_sys_id",
@@ -7134,20 +7018,101 @@
         "name": "confirmation_message",
         "shape": "",
         "valueType": "string"
+    },
+    {
+        "fieldType": "json",
+        "initialValue": {
+            "type": "JSON_LITERAL",
+            "value": {
+                "description": "Displays a form to create a new Voluntary deduction.",
+                "id": "New deduction",
+                "initial": "Initial state",
+                "states": {
+                    "Initial state": {
+                        "description": "User is interacting with the deduction form.",
+                        "on": {
+                            "change record": [
+                                {
+                                    "actions": {
+                                        "type": "updateRecord"
+                                    },
+                                    "cond": "need more input",
+                                    "description": "Change employee or start date.",
+                                    "internal": true,
+                                    "target": "Initial state"
+                                },
+                                {
+                                    "target": "adding deduction type"
+                                }
+                            ]
+                        }
+                    },
+                    "Saving deduction": {
+                        "description": "Deduction data is saved to database.",
+                        "invoke": {
+                            "id": "invoke-n27wf",
+                            "onDone": [
+                                {
+                                    "internal": false,
+                                    "target": "Initial state"
+                                }
+                            ],
+                            "src": "saveDeduction"
+                        }
+                    },
+                    "adding deduction type": {
+                        "on": {
+                            "change deduction": {
+                                "actions": {
+                                    "type": "updateDeduction"
+                                },
+                                "target": "adding deduction type"
+                            },
+                            "save": {
+                                "internal": false,
+                                "target": "confirming inputs"
+                            }
+                        }
+                    },
+                    "confirming inputs": {
+                        "description": "User confirms the values from the form.",
+                        "on": {
+                            "cancel": {
+                                "internal": false,
+                                "target": "Initial state"
+                            },
+                            "okay": {
+                                "internal": false,
+                                "target": "Saving deduction"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "name": "machine",
+        "shape": "",
+        "valueType": "json"
+    },
+    {
+        "initialValue": null,
+        "name": "machineState",
+        "shape": "",
+        "valueType": "string"
     }
 ]</state_properties>
         <sys_class_name>sys_ux_macroponent</sys_class_name>
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-23 10:17:50</sys_created_on>
         <sys_id>897f4d20c34b6d1011971d4ce00131bc</sys_id>
-        <sys_mod_count>167</sys_mod_count>
+        <sys_mod_count>211</sys_mod_count>
         <sys_name>New Deduction default</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_897f4d20c34b6d1011971d4ce00131bc</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-13 18:54:50</sys_updated_on>
+        <sys_updated_on>2023-11-17 18:04:03</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=897f4d20c34b6d1011971d4ce00131bc"/>
 </record_update>

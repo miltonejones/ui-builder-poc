@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Default">5996a635c3a2791011971d4ce00131a9</macroponent>
+        <name>Send Message</name>
+        <preset/>
+        <required_translations>[
+    
+]</required_translations>
+        <script><![CDATA[/**
+ * 
+ * Handles an event in the state machine. 
+ */
+function handleEvent({ api, event, helpers, imports }) {  
+  
+  // Destructure the machineMessage and machineState from the api.state object
+  const { machineMessage, machineState, machine } = api.state;
+ 
+  const message = typeof machineMessage === 'string' 
+    ? machineMessage 
+    : machineMessage.type;
+
+  sendMessage(message, machineState); 
+
+  return;
+
+  /**
+   * Creates actions for updating deductions and records.
+   * @returns {Object} - An object containing the actions.
+   */
+  function createActions() {
+    return {
+      /**
+       * Updates a deduction based on the given event.
+       * @param {Object} event - The event object containing the deduction information.
+       */
+      updateDeduction: (event) => {
+        const { deductions } = machine.context;
+        const { index, field, value: previous } = event;
+        const value = field === 'deduction_value' 
+          ? Number(previous).toFixed(2) 
+          : previous;
+
+        deductions[index][field] = value;
+        setContext({ deductions });
+      },
+
+      cleanUp: () => {
+        setContext({ 
+          talent_user: null,
+          sys_id: -1,
+          effective_date: null,
+          notes: null
+         });
+      },
+
+      /**
+       * Appends a new deduction to the deductions array.
+       * @param {Object} event - The event object containing the deduction information.
+       */
+      appendNewDeduction: (event) => {
+        const { deductions } = machine.context;
+        setContext({
+          deductions: deductions.concat({
+            deduction_type: null,
+            deduction_value: "0.00",
+            validation: null
+          })
+        });
+      },
+
+      /**
+       * Updates a record based on the given event.
+       * @param {Object} event - The event object containing the record information.
+       */
+      updateRecord: (event) => {
+        // global reference to the page Glide Form
+        const g_form = api.data.glide_form_1.nowRecordFormBlob.gForm;
+ 
+        const { record = {} } = machine.context;
+        const updatedRecord = {
+          ...record,
+          [event.field]: event.value
+        }; 
+        setContext({ record: updatedRecord });
+        g_form.setValue(event.field, event.value);
+        console.log ("%cSetting the value of '%s' to '%s'", 'border: dotted 1px magenta', event.field, event.value);
+      }
+    };
+  }
+
+  /**
+   * Creates guards for a state machine.
+   * @returns {Object} - The guards object.
+   */
+  function createGuards() {
+    return {
+      'need more input': (event) => {
+        const { record = {} } = machine.context;
+        const ok = (event.field === 'talent_user' && !!record.effective_date) || 
+            (event.field === 'effective_date' && !!record.talent_user);
+
+        return !ok;
+      }
+    };
+  }
+
+  /**
+   * Creates a services object with a saveDeduction method.
+   * @returns {Object} - The services object.
+   */
+  function createServices() { 
+    // Get the g_form object from the api.data.glide_form_1.nowRecordFormBlob.gForm property
+    const g_form = api.data.glide_form_1.nowRecordFormBlob.gForm;
+  
+    return {
+      /**
+       * Saves the current record and shouts the unique value.
+       * @param {Event} event - The event object.
+       */
+      saveDeduction: (event) => {
+        // Save the record using the g_form.save() method
+        g_form.save();
+
+        // Shout and return the unique value of the record using the shout function
+        shout(`Saved record ${g_form.getUniqueValue()}`);
+
+        return g_form.getUniqueValue();
+      },
+
+
+      /**
+       * Saves deduction types to the database.
+       * @param {Event} event - The event that triggered the save.
+       */
+      saveDeductionTypes: (event) => {
+        // Get the deductions from the machine context
+        const { deductions } = machine.context;
+
+        // Get the unique system ID from the g_form object
+        const incSysid = g_form.getUniqueValue();
+
+        // Loop through each deduction
+        deductions.forEach((deduction) => {
+          // Create a query for the deduction and the unique system ID
+          const query = createDeductionQuery(deduction, incSysid);
+
+          // Log the query for debugging purposes
+          console.log({ query });
+
+          // Update the table with the query
+          updateTable(query);
+        });        
+      }
+    };
+  }
+
+
+/**
+ * STATE MACHINE CONTROLLER
+ */
+
+  /**
+   * Sends a message to the state machine 
+   */
+  function sendMessage(message, state) {
+
+    const guards = createGuards();  
+ 
+    // Get the actual state object from the machine.states object 
+    // TODO: This would need more work to handle nested states
+    const actual = machine.states[state]; 
+    
+    // If the actual state does not exist, return
+    if (!actual) return;  
+  
+    // Get the action object from the actual state's on property 
+    const action = actual.on[message]; 
+    
+    // If the action exists, update the machineState 
+    if (!action) return; 
+
+    // if action is an array, test the cond property of each 
+    // action in the array
+    if (action.hasOwnProperty('length')) {
+      // find the first action that has no condition or whose condition
+      // resolves to TRUE
+      const actor = action.find(f => !f.cond || Boolean(guards[f.cond](machineMessage)));
+      transition(actor);  
+    } else {
+      transition(action); 
+    }
+  }
+
+  /**
+   * Handles a transition event.
+   * @param {Event} event - The transition event.
+   * @returns {any} - The result of the method called.
+   */
+  function transition(event) {
+    const actions = createActions();
+
+    // Set the machine state to the target of the event
+    api.setState("machineState", event.target);
+
+    // get the current state object after the "transition"
+    const actual = machine.states[event.target];  
+
+    // If there are  actions, execute them
+    if (!!event.actions) {
+      // Get the method based on the type of action
+      const method = actions[event.actions.type]; 
+      // Call the event action method with the machine message
+      method(machineMessage);
+    }
+
+    // if the state we just transitioned to has any invoked
+    // methods, invoke them here
+    if (actual.invoke) {
+      actorInvoke(actual.invoke);
+    }
+  }
+
+  /**
+   * Invokes an actor with the given parameters.
+   * @param {Object} invoke - The invoke object containing the src and onDone properties.
+   */
+  function actorInvoke(invoke) {
+    // Destructure the src and onDone properties from the invoke object
+    const { src, onDone } = invoke;
+
+    // Create services
+    const services = createServices();
+
+    // Get the service with the given src
+    const service = services[src];
+
+    // If no service is found, return
+    if (!service) return;
+
+    // Invoke the service with the machineMessage
+    service(machineMessage);
+
+    // If onDone is provided
+    if (onDone) {
+      // Destructure the next property from the onDone array
+      const [next] = onDone;
+
+      // If next is not provided, return
+      if (!next) return;
+
+      // transition to onDone.next state
+      transition(next);
+    }
+  }
+
+  /**
+   * Updates the context of the machine state.
+   * @param {Object} context - The new context to be merged with the existing context.
+   */
+  function setContext(context) {
+    // Merge the new context with the existing context using spread operator.
+    const updatedContext = {
+      ...machine.context,
+      ...context
+    };
+
+    // Update the machine state with the new context.
+    api.setState('machine', {
+      ...machine,
+      context: updatedContext
+    });
+  }
+
+
+
+/**
+ * HELPERS
+ */
+
+
+    /**
+     * Creates a query string for updating/creating a record in the x_ebh_voluntary_0_deductions table.
+     * @param {Object} object - Object containing fields and values to update/create record
+     * @param {string} sys_id - The sys_id of the current record
+     * @returns {string} - The query string for updating/creating the record
+     */
+    function createDeductionQuery(object, sys_id) {
+      return Object.keys(object)
+        .filter((item) => !!object[item]) // Filter out any fields with falsy values
+        .filter((key) => ["validation"].every((word) => key !== word)) // Filter out any fields with the word "validation" in their name
+        .map((key) => `${key}=${object[key]}`) // Create an array of key=value strings
+        .concat(`deduction_ticket_id=${sys_id}`) // Add the sys_id to the array
+        .join("^"); // Join the array with "^" to create the query string
+    }
+
+    /**
+     * Updates or creates a record in the x_ebh_voluntary_0_deductions table.
+     * @param {string} templateFields - The query string for updating/creating the record
+     */
+    function updateTable(templateFields) {
+      const TABLE_NAME = "x_ebh_voluntary_0_deductions";
+
+      // Define command object with required fields for updating/creating record
+      const command = {
+        table: TABLE_NAME,
+        templateFields,
+        useSetDisplayValue: false,
+      };
+
+      // If sys_id is not provided, create a new record
+      api.data.create_record_1.execute(command);
+    }
+
+  function shout(content) {
+    api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', { 
+      items: [
+        { 
+          id: 'alert1', 
+          status: 'positive', 
+          icon: 'check-circle-outline', 
+          content,
+          action: {type: 'acknowledge'} 
+        } 
+      ] 
+    }); 
+  }
+
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-17 13:33:34</sys_created_on>
+        <sys_id>e296e2f1c3a2791011971d4ce0013153</sys_id>
+        <sys_mod_count>169</sys_mod_count>
+        <sys_name>Send Message</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_client_script_e296e2f1c3a2791011971d4ce0013153</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-11-17 19:27:17</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

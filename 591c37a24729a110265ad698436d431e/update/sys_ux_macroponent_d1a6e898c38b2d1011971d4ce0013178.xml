@@ -7,6 +7,69 @@
         <composition>[
     {
         "definition": {
+            "id": "9c2e48402c6c25d281faeb20637f6106",
+            "type": "MACROPONENT"
+        },
+        "elementId": "breadcrumbs_1",
+        "elementLabel": "Breadcrumbs 1",
+        "eventMappings": [
+            
+        ],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "preset": null,
+        "propertyValues": {
+            "delimiter": {
+                "type": "JSON_LITERAL",
+                "value": "chevron"
+            },
+            "items": {
+                "container": [
+                    {
+                        "container": {
+                            "href": {
+                                "type": "JSON_LITERAL",
+                                "value": "#"
+                            },
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Apps"
+                                }
+                            }
+                        },
+                        "type": "MAP_CONTAINER"
+                    },
+                    {
+                        "container": {
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Voluntary Deductions"
+                                }
+                            }
+                        },
+                        "type": "MAP_CONTAINER"
+                    }
+                ],
+                "type": "LIST_CONTAINER"
+            },
+            "overflow": {
+                "type": "JSON_LITERAL",
+                "value": "collapse"
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
             "id": "d356d14b6e293a3020a244b63d278d8f",
             "type": "MACROPONENT"
         },
@@ -734,7 +797,7 @@
                             "value": {
                                 "code": null,
                                 "comment": "",
-                                "message": "Search by Talent ID, Talent Name, or Created By "
+                                "message": "Search by Talent or Created By"
                             }
                         },
                         "readonly": {
@@ -1933,6 +1996,16 @@
                 "styles": {}
             },
             {
+                "element_id": "breadcrumbs_1",
+                "styles": {
+                    "margin": "var(--now-scalable-space--lg)",
+                    "margin-bottom": "var(--now-scalable-space--lg)",
+                    "margin-left": "var(--now-scalable-space--lg)",
+                    "margin-right": "var(--now-scalable-space--lg)",
+                    "margin-top": "var(--now-scalable-space--lg)"
+                }
+            },
+            {
                 "element_id": "head",
                 "styles": {
                     "width": "100%"
@@ -2190,6 +2263,9 @@
   "message" : "ADD NEW DEDUCTION",
   "comment" : ""
 }, {
+  "message" : "Apps",
+  "comment" : ""
+}, {
   "message" : "Clear",
   "comment" : ""
 }, {
@@ -2205,7 +2281,10 @@
   "message" : "Search",
   "comment" : ""
 }, {
-  "message" : "Search by Talent ID, Talent Name, or Created By ",
+  "message" : "Search by Talent or Created By",
+  "comment" : ""
+}, {
+  "message" : "Voluntary Deductions",
   "comment" : ""
 } ]</required_translations>
         <root_component/>
@@ -2477,14 +2556,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-22 12:41:03</sys_created_on>
         <sys_id>d1a6e898c38b2d1011971d4ce0013178</sys_id>
-        <sys_mod_count>115</sys_mod_count>
+        <sys_mod_count>119</sys_mod_count>
         <sys_name>Voluntary Deductions - Search</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_d1a6e898c38b2d1011971d4ce0013178</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-06 22:16:12</sys_updated_on>
+        <sys_updated_on>2023-11-16 18:45:54</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=d1a6e898c38b2d1011971d4ce0013178"/>
 </record_update>
