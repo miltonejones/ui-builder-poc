@@ -2,26 +2,26 @@
     <sys_uib_screen_test_values action="INSERT_OR_UPDATE">
         <macroponent_config>{
     "029f04e053610110ac9bddeeff7b1294": {
-        "inputSysId": "7c22c84f47121110265ad698436d4380",
-        "inputTable": "task"
+        "forcedViewName": "",
+        "inputExtraParams": ""
     },
     "0c3568c75bee0110d78e9e7fb681c784": {
         "selectedTabIndex": 0,
         "views": ""
     }
 }</macroponent_config>
-        <screen display_value="Default">1d96a635c3a2791011971d4ce00131ac</screen>
+        <screen display_value="Voluntary Deductions - Search">5da6e898c38b2d1011971d4ce001317a</screen>
         <sys_class_name>sys_uib_screen_test_values</sys_class_name>
-        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
-        <sys_created_on>2023-11-17 13:30:41</sys_created_on>
-        <sys_id>5996a635c3a2791011971d4ce00131b0</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-20 11:48:16</sys_created_on>
+        <sys_id>6aeb61bac3a2711011971d4ce00131a1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
-        <sys_update_name>sys_uib_screen_test_values_5996a635c3a2791011971d4ce00131b0</sys_update_name>
-        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-20 11:23:46</sys_updated_on>
+        <sys_update_name>sys_uib_screen_test_values_6aeb61bac3a2711011971d4ce00131a1</sys_update_name>
+        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-11-20 11:48:16</sys_updated_on>
     </sys_uib_screen_test_values>
 </record_update>
