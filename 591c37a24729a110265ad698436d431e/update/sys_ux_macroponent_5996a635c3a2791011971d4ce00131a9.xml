@@ -133,56 +133,14 @@
                             "value": "chevron"
                         },
                         "items": {
-                            "container": [
-                                {
-                                    "container": {
-                                        "href": {
-                                            "type": "JSON_LITERAL",
-                                            "value": "#"
-                                        },
-                                        "label": {
-                                            "type": "TRANSLATION_LITERAL",
-                                            "value": {
-                                                "code": null,
-                                                "comment": "",
-                                                "message": "Apps"
-                                            }
-                                        }
-                                    },
-                                    "type": "MAP_CONTAINER"
-                                },
-                                {
-                                    "container": {
-                                        "href": {
-                                            "type": "JSON_LITERAL",
-                                            "value": "/x/ebh/voluntary-deductions/home"
-                                        },
-                                        "label": {
-                                            "type": "TRANSLATION_LITERAL",
-                                            "value": {
-                                                "code": null,
-                                                "comment": "",
-                                                "message": "Voluntary Deductions"
-                                            }
-                                        }
-                                    },
-                                    "type": "MAP_CONTAINER"
-                                },
-                                {
-                                    "container": {
-                                        "label": {
-                                            "type": "TRANSLATION_LITERAL",
-                                            "value": {
-                                                "code": null,
-                                                "comment": "",
-                                                "message": "Add New Deduction"
-                                            }
-                                        }
-                                    },
-                                    "type": "MAP_CONTAINER"
-                                }
-                            ],
-                            "type": "LIST_CONTAINER"
+                            "script": {
+                                "apiVersion": "2.0.0",
+                                "controllerElementId": null,
+                                "inlineScript": "/**\n  * @param {params} params\n  * @param {api} params.api\n  * @param {TransformApiHelpers} params.helpers\n  */\nfunction evaluateProperty({api, helpers}) {\n  const label = api.context.session.user.firstName === 'Milton'\n    ? api.state.machineState\n    : \"Add New Deduction\"\n\treturn [\n    {\n        \"href\": \"https://employbridgedev.service-now.com/launchpad\",\n        \"label\": \"Apps\"\n    },\n    {\n        \"href\": \"/x/ebh/voluntary-deductions/home\",\n        \"label\": \"Voluntary Deductions\"\n    },\n    {\n        label\n    }\n];\n}",
+                                "scriptSysId": "886fe2c7c32ab11011971d4ce0013185",
+                                "target": null
+                            },
+                            "type": "CLIENT_TRANSFORM_SCRIPT"
                         },
                         "overflow": {
                             "type": "JSON_LITERAL",
@@ -1330,6 +1288,42 @@
                                                         },
                                                         "slot": "end",
                                                         "styles": null
+                                                    },
+                                                    {
+                                                        "definition": {
+                                                            "id": "4335ba6dca80378f7ba7a67cd6667bec",
+                                                            "type": "MACROPONENT"
+                                                        },
+                                                        "elementId": "stylized_text_10",
+                                                        "elementLabel": "Stylized text 10",
+                                                        "eventMappings": [
+                                                            
+                                                        ],
+                                                        "isHidden": {
+                                                            "type": "JSON_LITERAL",
+                                                            "value": null
+                                                        },
+                                                        "preset": null,
+                                                        "propertyValues": {
+                                                            "css": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": "* {\n    font-size: 1.1rem;\n    /* font-weight: 600; */\n }"
+                                                            },
+                                                            "tag": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": "div"
+                                                            },
+                                                            "text": {
+                                                                "type": "TRANSLATION_LITERAL",
+                                                                "value": {
+                                                                    "code": null,
+                                                                    "comment": "",
+                                                                    "message": "$"
+                                                                }
+                                                            }
+                                                        },
+                                                        "slot": "start",
+                                                        "styles": null
                                                     }
                                                 ]
                                             },
@@ -1698,7 +1692,7 @@
                                         "value": {
                                             "code": null,
                                             "comment": "",
-                                            "message": "Enter a label"
+                                            "message": ""
                                         }
                                     },
                                     "variant": {
@@ -2095,7 +2089,7 @@
                 "script": {
                     "apiVersion": "2.0.0",
                     "controllerElementId": null,
-                    "inlineScript": "function evaluateProperty({api, helpers}) {\n  \n  return ['save', 'okay'].some(can);\n\n  /**\n   * Checks if a specific message can be triggered in the current machine state.\n   * @param {string} message - The message to check.\n   * @returns {boolean} - Whether the message can be triggered.\n   */\n  function can(message) {\n    const { machineState, machine } = api.state;\n    return Boolean(machine.states[machineState].on[message]);\n  }\n}",
+                    "inlineScript": "function evaluateProperty({api, helpers}) { \n  return ['save', 'okay'].some(can);\n\n  /**\n   * Checks if a specific message can be triggered in the current machine state.\n   * @param {string} message - The message to check.\n   * @returns {boolean} - Whether the message can be triggered.\n   */\n  function can(message) {\n    const { machineState, machine } = api.state;\n    return Boolean(machine.states[machineState].on[message]);\n  }\n}",
                     "scriptSysId": "a696e2f1c3a2791011971d4ce0013153",
                     "target": null
                 },
@@ -2697,13 +2691,14 @@
                                                     "value": "div"
                                                 },
                                                 "text": {
-                                                    "binding": {
-                                                        "address": [
-                                                            "deduction_value"
-                                                        ],
-                                                        "category": "value"
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "/**\n  * @param {params} params\n  * @param {api} params.api\n  * @param {TransformApiHelpers} params.helpers\n  */\nfunction evaluateProperty({api, helpers}) {\n\treturn '$' + api.item.value.deduction_value;\n}",
+                                                        "scriptSysId": "85b28747472e7510265ad698436d43ac",
+                                                        "target": null
                                                     },
-                                                    "type": "REPEATER_ITEM_BINDING"
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
                                                 }
                                             },
                                             "slot": null,
@@ -2977,271 +2972,353 @@
                                         },
                                         {
                                             "definition": {
-                                                "id": "67d8bc45906c355a3100c0782f45487b",
+                                                "id": "d356d14b6e293a3020a244b63d278d8f",
                                                 "type": "MACROPONENT"
                                             },
-                                            "elementId": "button_bare_1",
-                                            "elementLabel": "Confirm Cancel Button",
+                                            "elementId": "container_10",
+                                            "elementLabel": "Container 10",
                                             "eventMappings": [
-                                                {
-                                                    "eventMappingId": "clpccuwryzaaeeffbddeehhrqhwggaaiiwdd",
-                                                    "isConfiguration": false,
-                                                    "offRowStorageId": null,
-                                                    "sourceEventApiName": "sn_button.NOW_BUTTON_BARE#CLICKED",
-                                                    "sourceEventCorrelationId": null,
-                                                    "sourceEventDefinition": {
-                                                        "apiName": "sn_button.NOW_BUTTON_BARE#CLICKED",
-                                                        "id": null,
-                                                        "type": "UXEVENT"
-                                                    },
-                                                    "sourceEventSysId": null,
-                                                    "targets": [
-                                                        {
-                                                            "broker": null,
-                                                            "clientScript": null,
-                                                            "conditional": null,
-                                                            "declarativeAction": null,
-                                                            "event": {
-                                                                "apiName": "x_ebh_voluntary_0.MODAL_SELECTED_RELAY_5996a635c3a2791011971d4ce00131a9",
-                                                                "payload": {
-                                                                    "type": "JSON_LITERAL",
-                                                                    "value": {
-                                                                        "bare": true,
-                                                                        "displayOptions": null,
-                                                                        "modalId": "[component-id$='custom_1']",
-                                                                        "showModal": null,
-                                                                        "viewportElementId": null,
-                                                                        "viewportFields": null,
-                                                                        "viewportParams": null,
-                                                                        "viewportRoute": null
-                                                                    }
-                                                                },
-                                                                "sysId": "dc99c779c326791011971d4ce0013176"
-                                                            },
-                                                            "operation": null,
-                                                            "targetId": "clpccuwryzaaeeffcddeehhrdwjjeeewhhg",
-                                                            "type": "EVENT"
-                                                        },
-                                                        {
-                                                            "broker": null,
-                                                            "clientScript": null,
-                                                            "conditional": null,
-                                                            "declarativeAction": null,
-                                                            "event": {
-                                                                "apiName": "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
-                                                                "payload": {
-                                                                    "type": "JSON_LITERAL",
-                                                                    "value": {
-                                                                        "propName": "machineMessage",
-                                                                        "value": "cancel"
-                                                                    }
-                                                                },
-                                                                "sysId": "32408b42ff7a10109046e490703bf176"
-                                                            },
-                                                            "operation": null,
-                                                            "targetId": "clpccuxaaiiiaaeefftddeehhrzjjmunhat",
-                                                            "type": "EVENT"
-                                                        },
-                                                        {
-                                                            "broker": null,
-                                                            "clientScript": {
-                                                                "payload": {
-                                                                    "type": "JSON_LITERAL",
-                                                                    "value": {}
-                                                                },
-                                                                "sysId": "e296e2f1c3a2791011971d4ce0013153"
-                                                            },
-                                                            "conditional": null,
-                                                            "declarativeAction": null,
-                                                            "event": null,
-                                                            "operation": null,
-                                                            "targetId": "clpccuxjjehhaaeeggbddeehhrxwfuffmccj",
-                                                            "type": "CLIENT_SCRIPT"
-                                                        }
-                                                    ]
-                                                }
+                                                
                                             ],
                                             "isHidden": {
                                                 "type": "JSON_LITERAL",
                                                 "value": null
                                             },
-                                            "preset": null,
-                                            "propertyValues": {
-                                                "configAria": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": {}
-                                                },
-                                                "disabled": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": false
-                                                },
-                                                "hideBlockPadding": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": false
-                                                },
-                                                "highContrast": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": false
-                                                },
-                                                "iconEnd": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": null
-                                                },
-                                                "iconStart": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": null
-                                                },
-                                                "label": {
-                                                    "type": "TRANSLATION_LITERAL",
-                                                    "value": {
-                                                        "code": null,
-                                                        "comment": "",
-                                                        "message": "CANCEL"
-                                                    }
-                                                },
-                                                "showInlinePadding": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": false
-                                                },
-                                                "size": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": "md"
-                                                },
-                                                "variant": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": "primary"
-                                                }
-                                            },
-                                            "slot": null,
-                                            "styles": null
-                                        },
-                                        {
-                                            "definition": {
-                                                "id": "d37ce8abca89d02905fed903c8e34d8e",
-                                                "type": "MACROPONENT"
-                                            },
-                                            "elementId": "button_2",
-                                            "elementLabel": "Confirm Save Button",
-                                            "eventMappings": [
-                                                {
-                                                    "eventMappingId": "clpccuxjcddaaeeggkddeehhrffumeewjjeem",
-                                                    "isConfiguration": false,
-                                                    "offRowStorageId": null,
-                                                    "sourceEventApiName": "sn_button.NOW_BUTTON#CLICKED",
-                                                    "sourceEventCorrelationId": null,
-                                                    "sourceEventDefinition": {
-                                                        "apiName": "sn_button.NOW_BUTTON#CLICKED",
-                                                        "id": null,
-                                                        "type": "UXEVENT"
+                                            "overrides": {
+                                                "composition": [
+                                                    {
+                                                        "definition": {
+                                                            "id": "67d8bc45906c355a3100c0782f45487b",
+                                                            "type": "MACROPONENT"
+                                                        },
+                                                        "elementId": "button_bare_2",
+                                                        "elementLabel": "Confirm Cancel Button",
+                                                        "eventMappings": [
+                                                            {
+                                                                "eventMappingId": "clpiidvcrjaaccffcddeehhsmdddqltdii",
+                                                                "isConfiguration": false,
+                                                                "offRowStorageId": null,
+                                                                "sourceEventApiName": "sn_button.NOW_BUTTON_BARE#CLICKED",
+                                                                "sourceEventCorrelationId": null,
+                                                                "sourceEventDefinition": {
+                                                                    "apiName": "sn_button.NOW_BUTTON_BARE#CLICKED",
+                                                                    "id": null,
+                                                                    "type": "UXEVENT"
+                                                                },
+                                                                "sourceEventSysId": null,
+                                                                "targets": [
+                                                                    {
+                                                                        "broker": null,
+                                                                        "clientScript": null,
+                                                                        "conditional": null,
+                                                                        "declarativeAction": null,
+                                                                        "event": {
+                                                                            "apiName": "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+                                                                            "payload": {
+                                                                                "type": "JSON_LITERAL",
+                                                                                "value": {
+                                                                                    "propName": "machineMessage",
+                                                                                    "value": "cancel"
+                                                                                }
+                                                                            },
+                                                                            "sysId": "32408b42ff7a10109046e490703bf176"
+                                                                        },
+                                                                        "operation": null,
+                                                                        "targetId": "clpiidvcrjaaccffdddeehhszpjjeeiiyaab",
+                                                                        "type": "EVENT"
+                                                                    },
+                                                                    {
+                                                                        "broker": null,
+                                                                        "clientScript": {
+                                                                            "payload": {
+                                                                                "type": "JSON_LITERAL",
+                                                                                "value": {}
+                                                                            },
+                                                                            "sysId": "e296e2f1c3a2791011971d4ce0013153"
+                                                                        },
+                                                                        "conditional": null,
+                                                                        "declarativeAction": null,
+                                                                        "event": null,
+                                                                        "operation": null,
+                                                                        "targetId": "clpiidvkiyaaccffvddeehhsfjxbbjvle",
+                                                                        "type": "CLIENT_SCRIPT"
+                                                                    },
+                                                                    {
+                                                                        "broker": null,
+                                                                        "clientScript": null,
+                                                                        "conditional": null,
+                                                                        "declarativeAction": null,
+                                                                        "event": {
+                                                                            "apiName": "x_ebh_voluntary_0.MODAL_SELECTED_RELAY_5996a635c3a2791011971d4ce00131a9",
+                                                                            "payload": {
+                                                                                "type": "JSON_LITERAL",
+                                                                                "value": {
+                                                                                    "bare": true,
+                                                                                    "displayOptions": null,
+                                                                                    "modalId": "[component-id$='custom_1']",
+                                                                                    "showModal": null,
+                                                                                    "viewportElementId": null,
+                                                                                    "viewportFields": null,
+                                                                                    "viewportParams": null,
+                                                                                    "viewportRoute": null
+                                                                                }
+                                                                            },
+                                                                            "sysId": "dc99c779c326791011971d4ce0013176"
+                                                                        },
+                                                                        "operation": null,
+                                                                        "targetId": "clpiidvncqaaccggeeddeehhsphhjjbbmrhn",
+                                                                        "type": "EVENT"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "isHidden": {
+                                                            "type": "JSON_LITERAL",
+                                                            "value": null
+                                                        },
+                                                        "preset": null,
+                                                        "propertyValues": {
+                                                            "configAria": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": {}
+                                                            },
+                                                            "disabled": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": false
+                                                            },
+                                                            "hideBlockPadding": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": false
+                                                            },
+                                                            "highContrast": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": false
+                                                            },
+                                                            "iconEnd": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": null
+                                                            },
+                                                            "iconStart": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": null
+                                                            },
+                                                            "label": {
+                                                                "type": "TRANSLATION_LITERAL",
+                                                                "value": {
+                                                                    "code": null,
+                                                                    "comment": "",
+                                                                    "message": "CANCEL"
+                                                                }
+                                                            },
+                                                            "showInlinePadding": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": false
+                                                            },
+                                                            "size": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": "md"
+                                                            },
+                                                            "variant": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": "primary"
+                                                            }
+                                                        },
+                                                        "slot": null,
+                                                        "styles": null
                                                     },
-                                                    "sourceEventSysId": null,
-                                                    "targets": [
-                                                        {
-                                                            "broker": null,
-                                                            "clientScript": null,
-                                                            "conditional": null,
-                                                            "declarativeAction": null,
-                                                            "event": {
-                                                                "apiName": "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
-                                                                "payload": {
-                                                                    "type": "JSON_LITERAL",
-                                                                    "value": {
-                                                                        "propName": "machineMessage",
-                                                                        "value": "okay"
-                                                                    }
-                                                                },
-                                                                "sysId": "32408b42ff7a10109046e490703bf176"
-                                                            },
-                                                            "operation": null,
-                                                            "targetId": "clpccuxjcddaaeegglddeehhrddhzxswpv",
-                                                            "type": "EVENT"
+                                                    {
+                                                        "definition": {
+                                                            "id": "d37ce8abca89d02905fed903c8e34d8e",
+                                                            "type": "MACROPONENT"
                                                         },
-                                                        {
-                                                            "broker": null,
-                                                            "clientScript": {
-                                                                "payload": {
-                                                                    "type": "JSON_LITERAL",
-                                                                    "value": {}
+                                                        "elementId": "button_4",
+                                                        "elementLabel": "Confirm Save Button",
+                                                        "eventMappings": [
+                                                            {
+                                                                "eventMappingId": "clpiidubhhwaaccddvddeehhseecchnipch",
+                                                                "isConfiguration": false,
+                                                                "offRowStorageId": null,
+                                                                "sourceEventApiName": "sn_button.NOW_BUTTON#CLICKED",
+                                                                "sourceEventCorrelationId": null,
+                                                                "sourceEventDefinition": {
+                                                                    "apiName": "sn_button.NOW_BUTTON#CLICKED",
+                                                                    "id": null,
+                                                                    "type": "UXEVENT"
                                                                 },
-                                                                "sysId": "e296e2f1c3a2791011971d4ce0013153"
-                                                            },
-                                                            "conditional": null,
-                                                            "declarativeAction": null,
-                                                            "event": null,
-                                                            "operation": null,
-                                                            "targetId": "clpccuxqwvaaeehhddddeehhrbbskaaccaayn",
-                                                            "type": "CLIENT_SCRIPT"
-                                                        },
-                                                        {
-                                                            "broker": null,
-                                                            "clientScript": null,
-                                                            "conditional": null,
-                                                            "declarativeAction": null,
-                                                            "event": {
-                                                                "apiName": "x_ebh_voluntary_0.MODAL_SELECTED_RELAY_5996a635c3a2791011971d4ce00131a9",
-                                                                "payload": {
-                                                                    "type": "JSON_LITERAL",
-                                                                    "value": {
-                                                                        "bare": true,
-                                                                        "displayOptions": null,
-                                                                        "modalId": "[component-id$='custom_1']",
-                                                                        "showModal": null,
-                                                                        "viewportElementId": null,
-                                                                        "viewportFields": null,
-                                                                        "viewportParams": null,
-                                                                        "viewportRoute": null
+                                                                "sourceEventSysId": null,
+                                                                "targets": [
+                                                                    {
+                                                                        "broker": null,
+                                                                        "clientScript": null,
+                                                                        "conditional": null,
+                                                                        "declarativeAction": null,
+                                                                        "event": {
+                                                                            "apiName": "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+                                                                            "payload": {
+                                                                                "type": "JSON_LITERAL",
+                                                                                "value": {
+                                                                                    "propName": "machineMessage",
+                                                                                    "value": "okay"
+                                                                                }
+                                                                            },
+                                                                            "sysId": "32408b42ff7a10109046e490703bf176"
+                                                                        },
+                                                                        "operation": null,
+                                                                        "targetId": "clpiidubhhwaaccddwddeehhswzccbbeddggb",
+                                                                        "type": "EVENT"
+                                                                    },
+                                                                    {
+                                                                        "broker": null,
+                                                                        "clientScript": {
+                                                                            "payload": {
+                                                                                "type": "JSON_LITERAL",
+                                                                                "value": {}
+                                                                            },
+                                                                            "sysId": "e296e2f1c3a2791011971d4ce0013153"
+                                                                        },
+                                                                        "conditional": null,
+                                                                        "declarativeAction": null,
+                                                                        "event": null,
+                                                                        "operation": null,
+                                                                        "targetId": "clpiiduhdiaacceeeddeehhsozkddehhni",
+                                                                        "type": "CLIENT_SCRIPT"
+                                                                    },
+                                                                    {
+                                                                        "broker": null,
+                                                                        "clientScript": null,
+                                                                        "conditional": null,
+                                                                        "declarativeAction": null,
+                                                                        "event": {
+                                                                            "apiName": "x_ebh_voluntary_0.MODAL_SELECTED_RELAY_5996a635c3a2791011971d4ce00131a9",
+                                                                            "payload": {
+                                                                                "type": "JSON_LITERAL",
+                                                                                "value": {
+                                                                                    "bare": true,
+                                                                                    "displayOptions": null,
+                                                                                    "modalId": "[component-id$='custom_1']",
+                                                                                    "showModal": null,
+                                                                                    "viewportElementId": null,
+                                                                                    "viewportFields": null,
+                                                                                    "viewportParams": null,
+                                                                                    "viewportRoute": null
+                                                                                }
+                                                                            },
+                                                                            "sysId": "dc99c779c326791011971d4ce0013176"
+                                                                        },
+                                                                        "operation": null,
+                                                                        "targetId": "clpiidunqgaacceenddeehhsdrcctwgwi",
+                                                                        "type": "EVENT"
                                                                     }
-                                                                },
-                                                                "sysId": "dc99c779c326791011971d4ce0013176"
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "isHidden": {
+                                                            "type": "JSON_LITERAL",
+                                                            "value": null
+                                                        },
+                                                        "preset": null,
+                                                        "propertyValues": {
+                                                            "configAria": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": {}
                                                             },
-                                                            "operation": null,
-                                                            "targetId": "clpccuxujjggaaeehhcddeehhrnuffrccffbbk",
-                                                            "type": "EVENT"
-                                                        }
-                                                    ]
+                                                            "disabled": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": false
+                                                            },
+                                                            "icon": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": null
+                                                            },
+                                                            "label": {
+                                                                "type": "TRANSLATION_LITERAL",
+                                                                "value": {
+                                                                    "code": null,
+                                                                    "comment": "",
+                                                                    "message": "SAVE"
+                                                                }
+                                                            },
+                                                            "size": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": "md"
+                                                            },
+                                                            "tooltipContent": {
+                                                                "type": "TRANSLATION_LITERAL",
+                                                                "value": {
+                                                                    "code": null,
+                                                                    "comment": "",
+                                                                    "message": ""
+                                                                }
+                                                            },
+                                                            "variant": {
+                                                                "type": "JSON_LITERAL",
+                                                                "value": "primary"
+                                                            }
+                                                        },
+                                                        "slot": null,
+                                                        "styles": null
+                                                    }
+                                                ],
+                                                "layout": {
+                                                    "default": {
+                                                        "children": null,
+                                                        "items": [
+                                                            {
+                                                                "element_id": "button_bare_2",
+                                                                "styles": {}
+                                                            },
+                                                            {
+                                                                "element_id": "button_4",
+                                                                "styles": {}
+                                                            }
+                                                        ],
+                                                        "root": null,
+                                                        "rules": null,
+                                                        "styles": {
+                                                            "align-items": "center",
+                                                            "flex-direction": "row",
+                                                            "gap": "var(--now-scalable-space--md)",
+                                                            "width": "100%"
+                                                        },
+                                                        "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                                        "type": "flex"
+                                                    },
+                                                    "version": "3.0.0"
                                                 }
-                                            ],
-                                            "isHidden": {
-                                                "type": "JSON_LITERAL",
-                                                "value": null
                                             },
                                             "preset": null,
                                             "propertyValues": {
-                                                "configAria": {
+                                                "ariaRegionHeadingLevel": {
                                                     "type": "JSON_LITERAL",
-                                                    "value": {}
+                                                    "value": "1"
                                                 },
-                                                "disabled": {
+                                                "ariaRegionName": {
+                                                    "type": "TRANSLATION_LITERAL",
+                                                    "value": {
+                                                        "code": null,
+                                                        "comment": "",
+                                                        "message": ""
+                                                    }
+                                                },
+                                                "ariaRole": {
+                                                    "type": "JSON_LITERAL",
+                                                    "value": ""
+                                                },
+                                                "hideEmptyStateUi": {
+                                                    "type": "JSON_LITERAL",
+                                                    "value": true
+                                                },
+                                                "includeAriaHeading": {
                                                     "type": "JSON_LITERAL",
                                                     "value": false
                                                 },
-                                                "icon": {
+                                                "slotWrapperBehavior": {
                                                     "type": "JSON_LITERAL",
-                                                    "value": null
+                                                    "value": "fullheight"
                                                 },
-                                                "label": {
-                                                    "type": "TRANSLATION_LITERAL",
-                                                    "value": {
-                                                        "code": null,
-                                                        "comment": "",
-                                                        "message": "CONFIRM"
-                                                    }
-                                                },
-                                                "size": {
+                                                "type": {
                                                     "type": "JSON_LITERAL",
-                                                    "value": "md"
-                                                },
-                                                "tooltipContent": {
-                                                    "type": "TRANSLATION_LITERAL",
-                                                    "value": {
-                                                        "code": null,
-                                                        "comment": "",
-                                                        "message": "Enter a label"
-                                                    }
-                                                },
-                                                "variant": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": "primary"
+                                                    "value": "section"
                                                 }
                                             },
                                             "slot": null,
@@ -3257,11 +3334,7 @@
                                                     "styles": {}
                                                 },
                                                 {
-                                                    "element_id": "button_bare_1",
-                                                    "styles": {}
-                                                },
-                                                {
-                                                    "element_id": "button_2",
+                                                    "element_id": "container_10",
                                                     "styles": {}
                                                 }
                                             ],
@@ -3272,7 +3345,7 @@
                                                 "display": "flex",
                                                 "flex-direction": "row",
                                                 "gap": "var(--now-scalable-space--md)",
-                                                "justify-content": "flex-end"
+                                                "justify-content": "space-between"
                                             },
                                             "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
                                             "type": "flex"
@@ -3539,8 +3612,14 @@
                         }
                     ],
                     "isHidden": {
-                        "type": "JSON_LITERAL",
-                        "value": null
+                        "script": {
+                            "apiVersion": "2.0.0",
+                            "controllerElementId": null,
+                            "inlineScript": "/**\n  * @param {params} params\n  * @param {api} params.api\n  * @param {TransformApiHelpers} params.helpers\n  */\nfunction evaluateProperty({api, helpers}) {\n\treturn api.context.session.user.title.toLowerCase()\n    .indexOf('software engineer') &lt; 0;\n}",
+                            "scriptSysId": "31a6facfc32ab11011971d4ce001314e",
+                            "target": null
+                        },
+                        "type": "CLIENT_TRANSFORM_SCRIPT"
                     },
                     "preset": null,
                     "propertyValues": {
@@ -4360,7 +4439,7 @@
                         "container": [
                             {
                                 "type": "JSON_LITERAL",
-                                "value": "full_nameLIKE"
+                                "value": "is_active=true^full_nameLIKE"
                             },
                             {
                                 "binding": {
@@ -4388,7 +4467,8 @@
                 "value": null
             },
             "orderBy": {
-                "type": "JSON_LITERAL"
+                "type": "JSON_LITERAL",
+                "value": "full_name"
             },
             "queryCategory": {
                 "type": "JSON_LITERAL",
@@ -4558,7 +4638,108 @@
         "elementId": "create_record_1",
         "elementLabel": "Create Record 1",
         "eventMappings": [
-            
+            {
+                "eventMappingId": "clpiijjeeaggaaccffxddeehhuiitbbwuinf",
+                "isConfiguration": false,
+                "offRowStorageId": null,
+                "sourceEventApiName": "sn_uxf.DATA_OP_SUCCEEDED",
+                "sourceEventCorrelationId": null,
+                "sourceEventDefinition": {
+                    "apiName": "sn_uxf.DATA_OP_SUCCEEDED",
+                    "id": null,
+                    "type": "UXEVENT"
+                },
+                "sourceEventSysId": null,
+                "targets": [
+                    {
+                        "broker": null,
+                        "clientScript": null,
+                        "conditional": null,
+                        "declarativeAction": null,
+                        "event": {
+                            "apiName": "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+                            "payload": {
+                                "type": "JSON_LITERAL",
+                                "value": {
+                                    "propName": "machineMessage",
+                                    "value": "data loaded"
+                                }
+                            },
+                            "sysId": "32408b42ff7a10109046e490703bf176"
+                        },
+                        "operation": null,
+                        "targetId": "clpiijjeeaggaaccffyddeehhuwcchmtzkt",
+                        "type": "EVENT"
+                    },
+                    {
+                        "broker": null,
+                        "clientScript": {
+                            "payload": {
+                                "type": "JSON_LITERAL",
+                                "value": {}
+                            },
+                            "sysId": "e296e2f1c3a2791011971d4ce0013153"
+                        },
+                        "conditional": null,
+                        "declarativeAction": null,
+                        "event": null,
+                        "operation": null,
+                        "targetId": "clpiijjffbbceeaaccggxddeehhungpkhsiv",
+                        "type": "CLIENT_SCRIPT"
+                    }
+                ]
+            },
+            {
+                "eventMappingId": "clpiijjeeqggpaaccggfddeehhuggeexmddtgga",
+                "isConfiguration": false,
+                "offRowStorageId": null,
+                "sourceEventApiName": "sn_uxf.DATA_OP_FAILED",
+                "sourceEventCorrelationId": null,
+                "sourceEventDefinition": {
+                    "apiName": "sn_uxf.DATA_OP_FAILED",
+                    "id": null,
+                    "type": "UXEVENT"
+                },
+                "sourceEventSysId": null,
+                "targets": [
+                    {
+                        "broker": null,
+                        "clientScript": null,
+                        "conditional": null,
+                        "declarativeAction": null,
+                        "event": {
+                            "apiName": "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+                            "payload": {
+                                "type": "JSON_LITERAL",
+                                "value": {
+                                    "propName": "machineMessage",
+                                    "value": "data error"
+                                }
+                            },
+                            "sysId": "32408b42ff7a10109046e490703bf176"
+                        },
+                        "operation": null,
+                        "targetId": "clpiijjeeqggpaaccgggddeehhujjvqbbmbbdm",
+                        "type": "EVENT"
+                    },
+                    {
+                        "broker": null,
+                        "clientScript": {
+                            "payload": {
+                                "type": "JSON_LITERAL",
+                                "value": {}
+                            },
+                            "sysId": "e296e2f1c3a2791011971d4ce0013153"
+                        },
+                        "conditional": null,
+                        "declarativeAction": null,
+                        "event": null,
+                        "operation": null,
+                        "targetId": "clpiijjffffxiaacchhggddeehhuiijcffejddjj",
+                        "type": "CLIENT_SCRIPT"
+                    }
+                ]
+            }
         ],
         "inputValues": {
             "table": {
@@ -4585,7 +4766,26 @@
         <handled_events/>
         <interactions/>
         <interfaces/>
-        <internal_event_mappings>{}</internal_event_mappings>
+        <internal_event_mappings>{
+    "MACROPONENT_READY": [
+        {
+            "broker": null,
+            "clientScript": {
+                "payload": {
+                    "type": "JSON_LITERAL",
+                    "value": {}
+                },
+                "sysId": "e2ac0f47c3aab11011971d4ce0013113"
+            },
+            "conditional": null,
+            "declarativeAction": null,
+            "event": null,
+            "operation": null,
+            "targetId": "clpiidjyunaabbhaaddeehhsiiyaayiyzs",
+            "type": "CLIENT_SCRIPT"
+        }
+    ]
+}</internal_event_mappings>
         <layout>{
     "default": {
         "children": null,
@@ -4644,22 +4844,16 @@
     
 ]</props>
         <required_translations>[ {
+  "message" : "$",
+  "comment" : ""
+}, {
   "message" : "0.00",
   "comment" : ""
 }, {
   "message" : "ADD DEDUCTION",
   "comment" : ""
 }, {
-  "message" : "Add New Deduction",
-  "comment" : ""
-}, {
-  "message" : "Apps",
-  "comment" : ""
-}, {
   "message" : "CANCEL",
-  "comment" : ""
-}, {
-  "message" : "CONFIRM",
   "comment" : ""
 }, {
   "message" : "Cancel",
@@ -4686,9 +4880,6 @@
   "message" : "Effective Date",
   "comment" : ""
 }, {
-  "message" : "Enter a label",
-  "comment" : ""
-}, {
   "message" : "Name",
   "comment" : ""
 }, {
@@ -4701,6 +4892,9 @@
   "message" : "Review after save",
   "comment" : ""
 }, {
+  "message" : "SAVE",
+  "comment" : ""
+}, {
   "message" : "SUBMIT DEDUCTION",
   "comment" : ""
 }, {
@@ -4708,9 +4902,6 @@
   "comment" : ""
 }, {
   "message" : "Talent Number",
-  "comment" : ""
-}, {
-  "message" : "Voluntary Deductions",
   "comment" : ""
 }, {
   "message" : "Yes",
@@ -4731,16 +4922,13 @@
                         {
                             "deduction_type": null,
                             "deduction_value": null,
-                            "elm": {},
                             "validation": null
                         }
                     ],
                     "deductionsNotValid": true,
-                    "elm": {},
                     "previewOnSave": true,
-                    "record": {
-                        "elm": {}
-                    },
+                    "record": {},
+                    "save_index": 0,
                     "searchParam": "",
                     "sys_id": -1
                 },
@@ -4779,25 +4967,6 @@
                             ]
                         }
                     },
-                    "Save deduction types": {
-                        "description": "Child records are being saved to the database.",
-                        "invoke": {
-                            "id": "invoke-1injo",
-                            "onDone": [
-                                {
-                                    "cond": "preview on save",
-                                    "target": "preview saved deduction"
-                                },
-                                {
-                                    "actions": {
-                                        "type": "cleanUp"
-                                    },
-                                    "target": "Initial state"
-                                }
-                            ],
-                            "src": "saveDeductionTypes"
-                        }
-                    },
                     "Saving deduction": {
                         "description": "Deduction data is saved to database.",
                         "invoke": {
@@ -4808,7 +4977,7 @@
                                         "type": "assignLatestId"
                                     },
                                     "internal": false,
-                                    "target": "Save deduction types"
+                                    "target": "save type"
                                 }
                             ],
                             "src": "saveDeduction"
@@ -4903,6 +5072,20 @@
                             }
                         }
                     },
+                    "error saving": {
+                        "description": "An error occurred. Show a message and redirect to start.",
+                        "on": {
+                            "cancel": {
+                                "actions": {
+                                    "type": "cleanUp"
+                                },
+                                "target": "#New deduction"
+                            },
+                            "retry": {
+                                "target": "save type"
+                            }
+                        }
+                    },
                     "preview saved deduction": {
                         "description": "Opens the preview page with a detailed view of the created deduction.",
                         "invoke": {
@@ -4916,6 +5099,45 @@
                                 }
                             ],
                             "src": "launchReview"
+                        }
+                    },
+                    "save type": {
+                        "description": "Save child record and iterate the save_index value",
+                        "invoke": {
+                            "id": "invoke-18t16",
+                            "onDone": [
+                                {
+                                    "actions": {
+                                        "type": "incrementIndex"
+                                    },
+                                    "target": "wait for save"
+                                }
+                            ],
+                            "src": "saveDeductionType"
+                        }
+                    },
+                    "wait for save": {
+                        "description": "Waiting for data resource to complete the operation before proceeding.",
+                        "on": {
+                            "data error": {
+                                "actions": {
+                                    "type": "announceProblem"
+                                },
+                                "target": "error saving"
+                            },
+                            "data loaded": [
+                                {
+                                    "cond": "more items to save",
+                                    "target": "save type"
+                                },
+                                {
+                                    "cond": "preview on save",
+                                    "target": "preview saved deduction"
+                                },
+                                {
+                                    "target": "Initial state"
+                                }
+                            ]
                         }
                     }
                 }
@@ -4945,14 +5167,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-17 13:30:41</sys_created_on>
         <sys_id>5996a635c3a2791011971d4ce00131a9</sys_id>
-        <sys_mod_count>424</sys_mod_count>
+        <sys_mod_count>485</sys_mod_count>
         <sys_name>Default</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_5996a635c3a2791011971d4ce00131a9</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-20 11:27:08</sys_updated_on>
+        <sys_updated_on>2023-11-21 18:41:53</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=5996a635c3a2791011971d4ce00131a9"/>
 </record_update>

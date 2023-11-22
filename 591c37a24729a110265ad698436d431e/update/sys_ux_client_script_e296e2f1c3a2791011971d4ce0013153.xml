@@ -3,7 +3,7 @@
         <controller_preset/>
         <includes/>
         <macroponent display_value="Default">5996a635c3a2791011971d4ce00131a9</macroponent>
-        <name>Send Message</name>
+        <name>Send</name>
         <preset/>
         <required_translations>[
     
@@ -11,8 +11,8 @@
         <script><![CDATA[/** 
  * Handles an event in the state machine. 
  */
-function handleEvent({ api, helpers }) {  
-  
+function handleEvent({ api, helpers, imports }) {  
+ 
   // Destructure the machineMessage and machineState from the api.state object
   const { machineMessage, machineState, machine } = api.state;
  
@@ -41,14 +41,17 @@ function handleEvent({ api, helpers }) {
        guards: createGuards()
      },   
   });
-
+  
   // send the message to the state machine
   send(message);  
 
   return;
  
   /**
-   * ACTIONS/GUARDS/SERVICES
+   * ACTIONS/SERVICES/GUARDS
+   *  - Actions modify machine.context values
+   *  - Services invoke methods on external actors
+   *  - Guards control conditional transitions
    */
 
   /**
@@ -90,7 +93,12 @@ function handleEvent({ api, helpers }) {
       }),
 
       assignLatestId: (_, event) => ({
-        latestId: event.data
+        latestId: event.data,
+        save_index: 0
+      }),
+
+      incrementIndex: (context) => ({
+        save_index: context.save_index + 1
       }),
 
       /**
@@ -117,6 +125,13 @@ function handleEvent({ api, helpers }) {
         return { deductionsNotValid };
       }, 
 
+      announceProblem: () => {
+        shout(`An error occured in ${machineState} state. 
+          The last message to the state machine was 
+          ${JSON.stringify(machineMessage)} .
+          Check your console for more details.`);
+      },
+
       /**
        * Validates a deduction value or deduction type.
        * @param {Object} context - The context object containing deductions.
@@ -133,7 +148,8 @@ function handleEvent({ api, helpers }) {
           deduction_type: []
         };
 
-        // Check if the field is deduction_value and the value is not a number or not greater than 0
+        // Check if the field is deduction_value and the value is not 
+        // a number or not greater than 0
         if (field === 'deduction_value' && isNaN(value)) {
           // Add an exception message to the deduction_value validation array
           validation.deduction_value = exception("Deduction Value must be a number.");
@@ -158,6 +174,7 @@ function handleEvent({ api, helpers }) {
       cleanUp: () => {
         return {
           sys_id: -1, 
+          save_index: 0,
           deductions: [
             {
               deduction_type: null,
@@ -264,6 +281,8 @@ function handleEvent({ api, helpers }) {
    */
   function createGuards() {
     return {
+      'more items to save': (context) => context.save_index < context.deductions.length,
+
       /**
        * Checks if preview on save is enabled in the context.
        * @param {Object} context - The context object.
@@ -302,10 +321,7 @@ function handleEvent({ api, helpers }) {
        */
       saveDeduction: () => {
         // Save the record using the g_form.save() method
-        g_form.save();
-
-        // Shout and return the unique value of the record using the shout function
-        shout(`Saved record ${g_form.getUniqueValue()}`);
+        g_form.save(); 
 
         return g_form.getUniqueValue();
       },
@@ -316,32 +332,31 @@ function handleEvent({ api, helpers }) {
       launchReview: () => {
         // Get the unique value of the current incident
         const sysId = g_form.getUniqueValue();
+        const isNew = 1;
 
         // Navigate to the preview page with the incident sysId as a parameter
-        helpers.navigate.to('preview', { sysId });
-      },
+        helpers.navigate.to('preview', { sysId }, { isNew }, true);
+      }, 
 
-      /**
-       * Saves deduction types to the database. 
-       */
-      saveDeductionTypes: () => {
+      saveDeductionType: () => {
         // Get the deductions from the machine context
-        const { deductions } = machine.context;
+        const { deductions, save_index } = machine.context;
+        console.log({ deductions, save_index });
+        const deduction = deductions[save_index];
+        console.log({ deduction });
 
         // Get the unique system ID from the g_form object
         const incSysid = g_form.getUniqueValue();
+        console.log({ incSysid });
 
-        // Loop through each deduction
-        deductions.forEach((deduction) => {
-          // Create a query for the deduction and the unique system ID
-          const query = createDeductionQuery(deduction, incSysid);
+        // Create a query for the deduction and the unique system ID
+        const query = createDeductionQuery(deduction, incSysid);
 
-          // Log the query for debugging purposes
-          console.log({ query });
+        // Log the query for debugging purposes
+        console.log({ query });
 
-          // Update the table with the query
-          updateTable(query);
-        });        
+        // Update the table with the query
+        updateTable(query);  
       }
     };
   }
@@ -362,7 +377,7 @@ function handleEvent({ api, helpers }) {
     return Object.keys(object)
       .filter((item) => !!object[item]) // Filter out any fields with falsy values
       .filter((key) => ["validation"].every((word) => key !== word)) // Filter out any fields with the word "validation" in their name
-      .map((key) => `${key}=${object[key]}`) // Create an array of key=value strings
+      .map((key) => `${key}=${object[key].toString().replace('$', '')}`) // Create an array of key=value strings
       .concat(`deduction_ticket_id=${sys_id}`) // Add the sys_id to the array
       .join("^"); // Join the array with "^" to create the query string
   }
@@ -424,14 +439,14 @@ function handleEvent({ api, helpers }) {
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-17 13:33:34</sys_created_on>
         <sys_id>e296e2f1c3a2791011971d4ce0013153</sys_id>
-        <sys_mod_count>413</sys_mod_count>
-        <sys_name>Send Message</sys_name>
+        <sys_mod_count>468</sys_mod_count>
+        <sys_name>Send</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_client_script_e296e2f1c3a2791011971d4ce0013153</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-18 21:07:22</sys_updated_on>
+        <sys_updated_on>2023-11-21 18:41:55</sys_updated_on>
         <target>macroponent</target>
         <type>default</type>
     </sys_ux_client_script>

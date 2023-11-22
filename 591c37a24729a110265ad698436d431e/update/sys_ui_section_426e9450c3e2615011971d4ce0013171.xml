@@ -1,72 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
     <sys_ui_section caption="Hidden Properties" section_id="426e9450c3e2615011971d4ce0013171" sys_domain="global" table="x_ebh_voluntary_0_deduction_tickets" version="3" view="">
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>number</element>
-            <position>0</position>
-            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
-            <sys_created_on>2023-04-27 19:25:17</sys_created_on>
-            <sys_id>ea6319d8c366615011971d4ce00131b6</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Hidden Properties" display_value="Hidden Properties" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">426e9450c3e2615011971d4ce0013171</sys_ui_section>
-            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-04-27 19:25:17</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
             <element>owner</element>
-            <position>1</position>
-            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
-            <sys_created_on>2023-04-27 19:25:17</sys_created_on>
-            <sys_id>ee6319d8c366615011971d4ce00131b6</sys_id>
+            <position>0</position>
+            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
+            <sys_id>306757f2c3aa711011971d4ce00131d5</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Hidden Properties" display_value="Hidden Properties" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">426e9450c3e2615011971d4ce0013171</sys_ui_section>
-            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-04-27 19:25:17</sys_updated_on>
+            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.split</element>
-            <position>2</position>
-            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
-            <sys_created_on>2023-04-27 19:25:17</sys_created_on>
-            <sys_id>e26319d8c366615011971d4ce00131b7</sys_id>
+            <position>1</position>
+            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
+            <sys_id>346757f2c3aa711011971d4ce00131d5</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Hidden Properties" display_value="Hidden Properties" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">426e9450c3e2615011971d4ce0013171</sys_ui_section>
-            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-04-27 19:25:17</sys_updated_on>
+            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>status</element>
-            <position>3</position>
-            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
-            <sys_created_on>2023-04-27 19:25:17</sys_created_on>
-            <sys_id>e66319d8c366615011971d4ce00131b7</sys_id>
+            <position>2</position>
+            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
+            <sys_id>386757f2c3aa711011971d4ce00131d5</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Hidden Properties" display_value="Hidden Properties" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">426e9450c3e2615011971d4ce0013171</sys_ui_section>
-            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-04-27 19:25:17</sys_updated_on>
+            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>deduction_types</element>
-            <position>4</position>
-            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
-            <sys_created_on>2023-04-27 19:25:17</sys_created_on>
-            <sys_id>ea6319d8c366615011971d4ce00131b7</sys_id>
+            <position>3</position>
+            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
+            <sys_id>3c6757f2c3aa711011971d4ce00131d5</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Hidden Properties" display_value="Hidden Properties" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">426e9450c3e2615011971d4ce0013171</sys_ui_section>
-            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-04-27 19:25:17</sys_updated_on>
+            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

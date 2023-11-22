@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_ebh_voluntary_0.StateMachineUIHandler</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Allows navigation of a state machine JSON object in UI Builder</description>
+        <name>StateMachineUIHandler</name>
+        <script><![CDATA[var StateMachineUIHandler = Class.create();
+StateMachineUIHandler.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+    createSnowMachine: function createMachine(options) {
+  var machine = options.machine;
+  var payload = options.payload;
+  var api = options.api;
+  var helpers = options.helpers;
+  var actions = machine.actions;
+  var guards = machine.guards;
+  var services = machine.services;
+
+  /**
+   * STATE MACHINE CONTROLLER
+   * ===========================================================================
+   */
+
+  /**
+   * Sends a message to the state machine
+   */
+  function sendMessage(message) {
+    // Get the actual state object from the machine.states object
+    // TODO: This would need more work to handle nested states
+    var actual = machine.states[machine.state];
+
+    // If the actual state does not exist, return
+    if (!actual) return;
+
+    // Get the action object from the actual state's "on" property
+    // If it doesn't have one, check the machine's "on" property
+    // for a global event
+    var action = actual.on[message] || machine.on[message];
+
+    // If the action exists, transition to the action.target
+    if (!action) return;
+
+    handleTransition(action);
+  }
+
+  /**
+   * Performs the next action based on the given action.
+   * @param {Object|Array} action - The action to perform.
+   */
+  function handleTransition(action, data) {
+    // if action is an array, test the cond property of each
+    // action in the array
+    if (Array.isArray(action)) {
+      // find the first action that has no condition or whose condition
+      // resolves to TRUE
+      var actor = action.find(function (node) {
+        var guard = guards[node.cond];
+        var valid = !!guard && Boolean(guard(machine.context, payload));
+        return !node.cond || valid;
+      });
+      transition(actor, data);
+    } else {
+      transition(action, data);
+    }
+  }
+
+  /**
+   * Handles a transition event.
+   * @param {Event} event - The transition event.
+   * @returns {any} - The result of the method called.
+   */
+  function transition(event, data) {
+    var properties = typeof payload === "object" ? payload : {};
+
+    // create event parameter to pass into action methods
+    var message = mergeContext(properties, { data: data });
+
+    // initialize interim context object
+    var interim = { context: machine.context };
+
+    // execute state action(s)
+    function execute  (actionProp) {
+      // handle multiple actions from a single event
+      if (Array.isArray(actionProp)) {
+        actionProp.forEach(function (action) {
+          // Get the method based on the type of action
+          var method = actions[action.type];
+          // Call the event action method with the machine message
+          // and the interim context values
+          var values = method(interim.context, message);
+
+          // console.log ('%cExecuting action', 'color:magenta;border:dotted 1px red', { values, message, interim });
+          // update interim context object with action method results
+          interim.context = mergeContext(interim.context, values);
+        });
+
+        // update machine context values
+        setContext(interim.context);
+      } else {
+        // Get the method based on the type of action
+        var method = actions[actionProp.type];
+        // Call the event action method with the machine message
+        interim.context = method(interim.context, message);
+
+        // console.log ('%cExecuting action', 'color:magenta;border:solid 1px red', { values, message });
+        // update machine context values
+        setContext(interim.context);
+      }
+    };
+
+    // if the state we are leaving has any exit actions
+    // fire them first
+    if (machine.states[machine.state].exit) {
+      execute(machine.states[machine.state].exit);
+    }
+
+    // "Transition" the machine state to the target of the event
+    Boolean(event.target) && api.setState("machineState", event.target);
+
+    // If there are actions in this event, execute them here.
+    if (event.actions) {
+      execute(event.actions);
+    }
+
+    // get the current state object after the "transition"
+    var actual = machine.states[event.target];
+
+    if (!actual) return;
+
+    // if the state we just transitioned to has any entry
+    // actions, call those here
+    if (actual.entry) {
+      execute(actual.entry);
+    }
+
+    // if the state we just transitioned to has any invoked
+    // methods, invoke them here
+    if (actual.invoke) {
+      actorInvoke(actual.invoke, interim.context);
+    }
+
+    // if the state we just transitioned to has any always
+    // transitions, call those here
+    if (actual.always) {
+      handleTransition(actual.always);
+    }
+
+    // if the state we just transitioned to has any delayed
+    // transitions, call those here
+    if (actual.after) {
+      Object.keys(actual.after).map(function (time) {
+        helpers.timing.setTimeout(function () {
+          handleTransition(actual.after[time]);
+        }, Number(time));
+      });
+    }
+  }
+
+  /**
+   * Invokes an actor with the given parameters.
+   * @param {Object} invoke - The invoke object containing the src and onDone properties.
+   */
+  function actorInvoke(invoke, context) {
+    // Destructure the src and onDone properties from the invoke object
+
+    // Get the service with the given src
+    var service = services[invoke.src];
+
+    // If no service is found, return
+    if (!service) return;
+
+    try {
+      // Invoke the service with the payload
+      var response = service(context, payload);
+
+      // If onDone is provided
+      if (invoke.onDone) {
+        // transition to onDone.next state
+        handleTransition(invoke.onDone, response);
+      }
+    } catch (error) {
+      // if onError is provided and an error occurs,
+      // transition to the specified state
+      if (invoke.onError) {
+        // transition to onError.next state
+        return handleTransition(invoke.onError, error);
+      }
+      throw new Error( "No error handler provided for "+invoke.src+".onError\n"+error.message+".");
+    }
+  }
+
+  /**
+   * Updates the context of the machine state.
+   * @param {Object} context - The new context to be merged with the existing context.
+   */
+
+  function setContext(context) {
+    var updatedContext = mergeContext(context, machine.context);
+    for (var prop in machine.context) {
+      if (machine.context.hasOwnProperty(prop)) {
+        updatedContext[prop] = machine.context[prop];
+      }
+    }
+    for (var prop in context) {
+      if (context.hasOwnProperty(prop)) {
+        updatedContext[prop] = context[prop];
+      }
+    }
+    var newMachineState = {};
+    for (var prop in machine) {
+      if (machine.hasOwnProperty(prop)) {
+        newMachineState[prop] = machine[prop];
+      }
+    }
+    newMachineState.context = updatedContext;
+    api.setState("machine", newMachineState);
+  }
+
+  function mergeContext(context1, context2) {
+    var updatedContext = {};
+    for (var prop in context2) {
+      if (context2.hasOwnProperty(prop)) {
+        updatedContext[prop] = context2[prop];
+      }
+    }
+    for (var prop in context1) {
+      if (context1.hasOwnProperty(prop)) {
+        updatedContext[prop] = context1[prop];
+      }
+    }
+    return updatedContext;
+  }
+
+  return {
+    send: sendMessage,
+  };
+},
+    type: 'StateMachineUIHandler'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-21 16:09:20</sys_created_on>
+        <sys_id>76c03fcbc32eb11011971d4ce0013175</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>StateMachineUIHandler</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_script_include_76c03fcbc32eb11011971d4ce0013175</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-11-21 16:29:41</sys_updated_on>
+    </sys_script_include>
+</record_update>

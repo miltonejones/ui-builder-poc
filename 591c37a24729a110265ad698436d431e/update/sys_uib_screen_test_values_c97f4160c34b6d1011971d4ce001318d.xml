@@ -2,17 +2,8 @@
     <sys_uib_screen_test_values action="INSERT_OR_UPDATE">
         <macroponent_config>{
     "029f04e053610110ac9bddeeff7b1294": {
-        "inputTable": null,
-        "inputSysId": null,
-        "inputQuery": "",
         "forcedViewName": "",
-        "detailsContext": "",
-        "activityLogs": "",
-        "inputExtraParams": "",
-        "fields": "",
-        "screen": "",
-        "selectedTabIndex": "",
-        "userPrefs": ""
+        "inputExtraParams": ""
     },
     "0c3568c75bee0110d78e9e7fb681c784": {
         "selectedTabIndex": 0,
@@ -24,13 +15,13 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-23 10:17:50</sys_created_on>
         <sys_id>c97f4160c34b6d1011971d4ce001318d</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_uib_screen_test_values_c97f4160c34b6d1011971d4ce001318d</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-17 18:04:05</sys_updated_on>
+        <sys_updated_on>2023-11-20 12:05:08</sys_updated_on>
     </sys_uib_screen_test_values>
 </record_update>

@@ -31,7 +31,7 @@
                         "container": {
                             "href": {
                                 "type": "JSON_LITERAL",
-                                "value": "#"
+                                "value": "/launchpad"
                             },
                             "label": {
                                 "type": "TRANSLATION_LITERAL",
@@ -166,47 +166,24 @@
                                     "event": {
                                         "apiName": "x_ebh_voluntary_0.NAV_ITEM_SELECTED_RELAY_d1a6e898c38b2d1011971d4ce0013178",
                                         "payload": {
-                                            "container": {
+                                            "type": "JSON_LITERAL",
+                                            "value": {
                                                 "external": null,
-                                                "fields": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": null
-                                                },
-                                                "multiInstField": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": null
-                                                },
-                                                "params": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": null
-                                                },
-                                                "passiveNavigation": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": null
-                                                },
-                                                "redirect": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": null
-                                                },
-                                                "route": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": "new-deduction"
-                                                },
-                                                "targetRoute": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": null
-                                                },
-                                                "title": {
-                                                    "type": "JSON_LITERAL",
-                                                    "value": null
-                                                }
-                                            },
-                                            "type": "MAP_CONTAINER"
+                                                "fields": null,
+                                                "multiInstField": null,
+                                                "navigationOptions": null,
+                                                "params": null,
+                                                "passiveNavigation": null,
+                                                "redirect": null,
+                                                "route": "create-new-voluntary-deduction",
+                                                "targetRoute": null,
+                                                "title": null
+                                            }
                                         },
                                         "sysId": "53daa849c303ed1011971d4ce00131a7"
                                     },
                                     "operation": null,
-                                    "targetId": "cliccggojhyaaccatddbhhshhwjylacp",
+                                    "targetId": "clphhhhyyzcaabbjjddddffhhqrcihheexrh",
                                     "type": "EVENT"
                                 }
                             ]
@@ -2556,14 +2533,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-22 12:41:03</sys_created_on>
         <sys_id>d1a6e898c38b2d1011971d4ce0013178</sys_id>
-        <sys_mod_count>123</sys_mod_count>
+        <sys_mod_count>128</sys_mod_count>
         <sys_name>Voluntary Deductions - Search</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_d1a6e898c38b2d1011971d4ce0013178</sys_update_name>
         <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-17 22:31:30</sys_updated_on>
+        <sys_updated_on>2023-11-20 19:31:37</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=d1a6e898c38b2d1011971d4ce0013178"/>
 </record_update>
