@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+  /* widget controller */
+  var c = this; 
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>machine_misc_billing_grid</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Machine Misc Billing Grid</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {  /* populate the 'data' object */  /* e.g., data.table = $sp.getValue('table'); */})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-28 11:51:46</sys_created_on>
+        <sys_id>6b69fe1dc37af91011971d4ce00131ad</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Machine Misc Billing Grid</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_widget_6b69fe1dc37af91011971d4ce00131ad</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-11-28 20:40:40</sys_updated_on>
+        <template><![CDATA[  <div ng-if="page.matches('viewing landing page')">
+    <div class="deduction-flex between">
+      <h2>Miscellaneous Billing</h2>
+
+      <button type="button" ng-click="page.send('create')" class="btn btn-primary">
+        ADD NEW MISC. BILLING
+      </button>
+    </div>
+    <div class="misc-billing-search-form">
+      <input
+        class="form-control"
+        ng-change="page.findBilling(billingParam)"
+        ng-model="billingParam"
+        placeholder="Search for an Account or Account number"
+      />
+    </div>
+    <h3>History</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Misc Billing #</th>
+          <th scope="col">Account Name</th>
+          <th scope="col">Accounting Unit</th>
+          <th scope="col">Created By</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in page.machine.context.visible">
+          <td scope="row">
+            <a href="#" ng-click="page.send({ type: 'view', billing: item })">{{item.number}}</a>
+          </td>
+          <td>{{item.account_name}}</td>
+          <td>{{item.accounting_unit}}</td>
+          <td>{{item.sys_created_by}}</td>
+          <td>{{item.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+]]></template>
+    </sp_widget>
+</record_update>

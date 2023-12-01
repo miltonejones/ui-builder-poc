@@ -136,7 +136,7 @@
                             "script": {
                                 "apiVersion": "2.0.0",
                                 "controllerElementId": null,
-                                "inlineScript": "/**\n  * @param {params} params\n  * @param {api} params.api\n  * @param {TransformApiHelpers} params.helpers\n  */\nfunction evaluateProperty({api, helpers}) {\n  const label = api.context.session.user.firstName === 'Milton'\n    ? api.state.machineState\n    : \"Add New Deduction\"\n\treturn [\n    {\n        \"href\": \"https://employbridgedev.service-now.com/launchpad\",\n        \"label\": \"Apps\"\n    },\n    {\n        \"href\": \"/x/ebh/voluntary-deductions/home\",\n        \"label\": \"Voluntary Deductions\"\n    },\n    {\n        label\n    }\n];\n}",
+                                "inlineScript": "/**\n  * @param {params} params\n  * @param {api} params.api\n  * @param {TransformApiHelpers} params.helpers\n  */\nfunction evaluateProperty({api, helpers}) {\n  const label = api.context.session.user.firstName === 'Milton'\n    ? api.state.machineState\n    : \"Add New Deduction\"\n\treturn [\n    {\n        \"href\": \"/launchpad\",\n        \"label\": \"Apps\"\n    },\n    {\n        \"href\": \"/x/ebh/voluntary-deductions/home\",\n        \"label\": \"Voluntary Deductions\"\n    },\n    {\n        label\n    }\n];\n}",
                                 "scriptSysId": "886fe2c7c32ab11011971d4ce0013185",
                                 "target": null
                             },
@@ -482,8 +482,12 @@
                             }
                         },
                         "helperContent": {
-                            "type": "JSON_LITERAL",
-                            "value": null
+                            "type": "TRANSLATION_LITERAL",
+                            "value": {
+                                "code": null,
+                                "comment": "",
+                                "message": "Search for Talent"
+                            }
                         },
                         "hideRequiredIndicator": {
                             "type": "JSON_LITERAL",
@@ -497,7 +501,7 @@
                             "script": {
                                 "apiVersion": "2.0.0",
                                 "controllerElementId": null,
-                                "inlineScript": "/**\n * @param {params} params\n * @param {api} params.api\n * @param {TransformApiHelpers} params.helpers\n */\nfunction evaluateProperty({ api, helpers }) {\n  const { results } = api.data.get_talent;\n  const emptyNode = {\n    id: 'home',\n    label: 'Search for Talent',\n  };\n  if (!results) {\n  console.log ( 'NO RESULTS');\n    return JSON.stringify([emptyNode]);\n  }\n  // console.log ({ results });\n  const options = results\n     .filter(result =&gt; !!result.full_name.value)\n     .map((result) =&gt; ({\n    id: result.sys_id.value,\n    label: result.full_name.value,// + ` (${result.enterprise_talent_id.value})` ,\n    sublabel: `EID: ${result.enterprise_talent_id.value}, Status: ${result.status_crm.value}`,\n    talent_id: result.enterprise_talent_id.value,\n    email: result.primary_email.value,\n    sys_id: result.sys_id.value\n  }));\n  // console.log ({ options });\n  return JSON.stringify([emptyNode, ...options]);\n}",
+                                "inlineScript": "/**\n * @param {params} params\n * @param {api} params.api\n * @param {TransformApiHelpers} params.helpers\n */\nfunction evaluateProperty({ api, helpers }) {\n  const { results } = api.data.get_talent;\n  const emptyNode = {\n    id: 'home',\n    label: 'Search for Talent',\n  };\n  if (!results) {\n  console.log ( 'NO RESULTS');\n    return JSON.stringify([emptyNode]);\n  }\n   console.log ({ results });\n  const options = results\n     .filter(result =&gt; !!result.full_name.value)\n     .map((result) =&gt; ({\n    id: result.sys_id.value,\n    label: result.full_name.value,// + ` (${result.enterprise_talent_id.value})` ,\n    sublabel: `EID: ${result.enterprise_talent_id.value}, Status: ${result.status_crm.value}`,\n    talent_id: result.enterprise_talent_id.value,\n    email: result.primary_email.value,\n    sys_id: result.sys_id.value\n  }));\n  // console.log ({ options });\n  return JSON.stringify([emptyNode, ...options]);\n}",
                                 "scriptSysId": "6696e2f1c3a2791011971d4ce0013153",
                                 "target": null
                             },
@@ -662,8 +666,12 @@
                             "value": "MM/dd/yyyy"
                         },
                         "helperContent": {
-                            "type": "JSON_LITERAL",
-                            "value": null
+                            "type": "TRANSLATION_LITERAL",
+                            "value": {
+                                "code": null,
+                                "comment": "",
+                                "message": "Select Effective Date"
+                            }
                         },
                         "hideAdjacentDates": {
                             "type": "JSON_LITERAL",
@@ -1278,8 +1286,12 @@
                                                                 "value": "md"
                                                             },
                                                             "tooltipContent": {
-                                                                "type": "JSON_LITERAL",
-                                                                "value": "Enter a label"
+                                                                "type": "TRANSLATION_LITERAL",
+                                                                "value": {
+                                                                    "code": null,
+                                                                    "comment": "",
+                                                                    "message": ""
+                                                                }
                                                             },
                                                             "variant": {
                                                                 "type": "JSON_LITERAL",
@@ -4430,7 +4442,68 @@
         "elementId": "get_talent",
         "elementLabel": "Talent Lookup",
         "eventMappings": [
-            
+            {
+                "eventMappingId": "clpinbbjdraabbabbddeehhscqccbqkcd",
+                "isConfiguration": false,
+                "offRowStorageId": null,
+                "sourceEventApiName": "sn_uxf.DATA_FETCH_INITIATED",
+                "sourceEventCorrelationId": null,
+                "sourceEventDefinition": {
+                    "apiName": "sn_uxf.DATA_FETCH_INITIATED",
+                    "id": null,
+                    "type": "UXEVENT"
+                },
+                "sourceEventSysId": null,
+                "targets": [
+                    {
+                        "broker": null,
+                        "clientScript": {
+                            "payload": {
+                                "type": "JSON_LITERAL",
+                                "value": {}
+                            },
+                            "sysId": "e2ac0f47c3aab11011971d4ce0013113"
+                        },
+                        "conditional": null,
+                        "declarativeAction": null,
+                        "event": null,
+                        "operation": null,
+                        "targetId": "clpinbbjdraabbaccddeehhsvccddcccmto",
+                        "type": "CLIENT_SCRIPT"
+                    }
+                ]
+            },
+            {
+                "eventMappingId": "clpinbbpnqaabbacddeehhsknxmapou",
+                "isConfiguration": false,
+                "offRowStorageId": null,
+                "sourceEventApiName": "sn_uxf.DATA_FETCH_SUCCEEDED",
+                "sourceEventCorrelationId": null,
+                "sourceEventDefinition": {
+                    "apiName": "sn_uxf.DATA_FETCH_SUCCEEDED",
+                    "id": null,
+                    "type": "UXEVENT"
+                },
+                "sourceEventSysId": null,
+                "targets": [
+                    {
+                        "broker": null,
+                        "clientScript": {
+                            "payload": {
+                                "type": "JSON_LITERAL",
+                                "value": {}
+                            },
+                            "sysId": "e2ac0f47c3aab11011971d4ce0013113"
+                        },
+                        "conditional": null,
+                        "declarativeAction": null,
+                        "event": null,
+                        "operation": null,
+                        "targetId": "clpinbbpnqaabbadddeehhsccjnfflugcc",
+                        "type": "CLIENT_SCRIPT"
+                    }
+                ]
+            }
         ],
         "inputValues": {
             "encodedQuery": {
@@ -4440,6 +4513,20 @@
                             {
                                 "type": "JSON_LITERAL",
                                 "value": "is_active=true^full_nameLIKE"
+                            },
+                            {
+                                "binding": {
+                                    "address": [
+                                        "machine",
+                                        "context",
+                                        "searchParam"
+                                    ]
+                                },
+                                "type": "STATE_BINDING"
+                            },
+                            {
+                                "type": "JSON_LITERAL",
+                                "value": "^ORenterprise_talent_idLIKE"
                             },
                             {
                                 "binding": {
@@ -4766,26 +4853,7 @@
         <handled_events/>
         <interactions/>
         <interfaces/>
-        <internal_event_mappings>{
-    "MACROPONENT_READY": [
-        {
-            "broker": null,
-            "clientScript": {
-                "payload": {
-                    "type": "JSON_LITERAL",
-                    "value": {}
-                },
-                "sysId": "e2ac0f47c3aab11011971d4ce0013113"
-            },
-            "conditional": null,
-            "declarativeAction": null,
-            "event": null,
-            "operation": null,
-            "targetId": "clpiidjyunaabbhaaddeehhsiiyaayiyzs",
-            "type": "CLIENT_SCRIPT"
-        }
-    ]
-}</internal_event_mappings>
+        <internal_event_mappings>{}</internal_event_mappings>
         <layout>{
     "default": {
         "children": null,
@@ -4896,6 +4964,12 @@
   "comment" : ""
 }, {
   "message" : "SUBMIT DEDUCTION",
+  "comment" : ""
+}, {
+  "message" : "Search for Talent",
+  "comment" : ""
+}, {
+  "message" : "Select Effective Date",
   "comment" : ""
 }, {
   "message" : "Talent",
@@ -5167,14 +5241,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-17 13:30:41</sys_created_on>
         <sys_id>5996a635c3a2791011971d4ce00131a9</sys_id>
-        <sys_mod_count>485</sys_mod_count>
+        <sys_mod_count>493</sys_mod_count>
         <sys_name>Default</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_5996a635c3a2791011971d4ce00131a9</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-21 18:41:53</sys_updated_on>
+        <sys_updated_on>2023-12-01 16:45:13</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=5996a635c3a2791011971d4ce00131a9"/>
 </record_update>

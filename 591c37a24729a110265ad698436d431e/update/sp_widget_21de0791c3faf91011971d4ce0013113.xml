@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+  /* widget controller */
+  var c = this;
+	
+	$scope.nullTypes = ["is empty", 'is not empty', 'is anything']
+	
+	$scope.queryLines = [];
+	$scope.response = [];
+	$scope.pageSize = 10;
+	$scope.pageNum = 1;
+	$scope.filterTypes = getFilterTypes();
+	
+	$scope.predicates = [
+		{
+			field: null,
+			operator: null,
+			value: null
+		}
+	]
+	$scope.placeholder =  null
+	
+	
+	 
+	
+	// deprecated
+	$scope.selectedItem = 1;
+	$scope.operators = ['equals', 'contains'];
+	$scope.field = "Field name"; 
+	c.setField = function(name) {
+		$scope.field = name;
+	}
+	// deprecated
+	
+	
+ /*
+   table: 'x_ebh_ccde_accounts_data',
+            index: 0,  
+            message: 'There are no items to display',
+            search_fields: 'account_name,account_id',
+            columns: 'account_name,account_id,brand_name,branch_name,'
+ */
+ 
+	
+	// widget properties
+	var table = $scope.options.table || 'x_ebh_billing_pa_0_billing_entry';
+	var search_fields = !$scope.options.search_fields ? ['account_number.account_name', 'account_number.account_id'] : $scope.options.search_fields.split(',');
+	var columns = $scope.options.columns || ('account_number.account_name,account_number.account_id,account_number.brand_name,' + 
+			'account_number.branch_name,bill_type,last_misc_billing_date,status');
+	
+ $scope.linkIndex = $scope.options.index || 0;
+ $scope.title = $scope.options.title || "History";
+ $scope.message = $scope.options.message || "There are no records to display";
+	
+c.handleClick = $scope.page[$scope.options.method];
+	
+	
+	
+ $scope.columns = columns.split(',');
+	
+	
+	c.search = function (param) { 
+		getRecords(param);  
+	}
+	
+	c.page = function (n) {
+		loadRecords(n); 
+	}
+	
+	c.setQuery = function (n) {
+		$scope.filter = $scope.queryLines.join('');
+		loadRecords(1)
+	}
+
+	/**
+	 * Updates the query based on the given predicates.
+	 * @param {Object} n - The predicates to update the query with.
+	 */
+	c.updateQuery = function (n) {
+		// Map over the predicates array
+		var lines = $scope.predicates.map(function (pred) {
+			// Check if field is not defined
+			if (!pred.field) return;
+
+			// Find the item in columnList that matches the field
+			var item = $scope.columnList.find(function(f) {
+				return f.field === pred.field;
+			});
+
+			// Check if operator is not defined
+			if (!pred.operator) return;
+
+			// Get the predicate options based on the item type
+			var predOpts = $scope.filterTypes[item.type];
+
+			// Check if predicate options are not defined
+			if (!predOpts) return ;
+
+			// Get the code for the operator
+			var code = predOpts[pred.operator];
+
+			// Get the operator based on the predicate type
+			var op = !pred.type ? null : pred.type === 'or' ? '^OR' : '^';
+
+			// Filter out any falsy values and join the array elements
+			return [op, pred.field, code, pred.value]
+				.filter(Boolean)
+				.join('');
+		});
+
+		// Update the lines variable in the scope
+		$scope.queryLines = lines;
+	}
+	
+	
+	/**
+	 * Sets the predicate for a given field.
+	 * @param {Object} pred - The predicate object.
+	 * @param {string} pred.field - The field to set the predicate for.
+	 */
+	c.setPredicate = function (pred) { 
+		// Find the item in columnList that matches the field of the predicate
+		var item = $scope.columnList.find(function(f) {
+			return f.field === pred.field;
+		}); 
+
+		// Get the predicate options for the item's type
+		var predOpts = $scope.filterTypes[item.type]; 
+
+		// If predicate options are not found, return
+		if (!predOpts) return; 
+
+		// Set the predicate options for the predicate
+		pred.predOpts = predOpts;
+	}
+	
+	
+	/**
+	 * Adds a new predicate to the list of predicates.
+	 * @param {string} type - The type of the predicate.
+	 */
+	c.addPredicate = function(type) {
+		$scope.predicates.push({
+			field: null,
+			operator: null,
+			value: null,
+			type: type
+		});
+	}
+	
+	/**
+	 * Removes a predicate from the predicates array at the specified index.
+	 * @param {number} index - The index of the predicate to remove.
+	 */
+	c.dropPredicate = function(index) {
+		$scope.predicates.splice(index, 1);
+	}
+	
+	/**
+	 * Sets the placeholder text for the search input field.
+	 */
+	function setPlaceholder() {
+		// Map over the search_fields array to get an array of labels
+		var labels = search_fields.map(function(name) {
+			// Find the column with the matching field name
+			var col = $scope.columnList.find(function(f) {
+				return f.field === name;
+			});
+			// Return the label of the column
+			return col.label;
+		});
+
+		// Remove the last label from the array and store it in the 'last' variable
+		var last = labels.pop();
+
+		// Join the labels array with commas and add ' or ' between the last two labels
+		var placeholderText = [labels.join(','), last].filter(Boolean).join(' or ');
+
+		// Set the placeholder text in the $scope
+		$scope.placeholder = 'Search by ' + placeholderText;
+	}
+	
+	c.open = $scope.page[$scope.options.message];
+
+	
+	initializeList ();
+	
+	return;
+	
+	
+	function initializeList () { 
+	 c.server.update().then(function () {
+      c.server.get({
+				actionName: 'getColumns',
+			  table: table,
+			  fields: $scope.columns
+			}).then(function (res) {
+				$scope.columnList = res.data.message; 
+				if (!$scope.columnList) { 
+					return alert(JSON.stringify(res.data.message))
+				}
+				setPlaceholder ();
+				getRecords();
+			});
+    });
+	}
+	
+	
+	function loadRecords(pageNum) {
+			$scope.busy = true;
+		// Update the server before making the request
+		c.server.update().then(function () {
+			// Get the records from the server
+			c.server.get({
+				table: table,
+				fields: $scope.columns, 
+				filter: $scope.filter, 
+				page: pageNum || 1
+			}).then(function (res) {
+				// Update the response and record count
+				$scope.response = res.data.message;
+				$scope.recordCount = res.data.recordCount;
+
+				// Update the pages
+				updatePages(pageNum);
+
+				// Set the busy flag to false to indicate that the request is complete
+				$scope.busy = false;
+			});
+		});
+	}
+	
+	/**
+	 * Retrieves records from the server based on the given parameters and page number.
+	 * @param {string} param - The parameter to filter the records.
+	 * @param {number} pageNum - The page number to retrieve the records from.
+	 */
+	function getRecords(param, pageNum) {
+		// Set the busy flag to true to indicate that the request is in progress
+		
+		if (param) {
+			$scope.predicates =  [{
+					field: 'account_number.account_name',
+					operator: 'contains',
+					value: param 
+				}];
+
+			$scope.predOpts = $scope.filterTypes.string;
+			c.updateQuery();
+			c.setQuery();
+			return
+		}
+	  loadRecords(pageNum);
+		
+	}
+	
+	function updatePages (pageNum) {
+		// Get the ticket list from the context
+
+		// If there is no ticket list, return the context as is
+		if (!$scope.response) {
+			return;
+		}
+
+		// Get the page number from the event, default to 1 if not provided
+		$scope.pageNum = pageNum || 1;
+
+
+		// Calculate the total number of pages based on the page size
+		var pageCount = Math.ceil($scope.recordCount / $scope.pageSize);
+
+		// Calculate the starting index of the visible tickets based on the page number and page size
+		var startNum = ($scope.pageNum - 1) * $scope.pageSize; 
+
+		// Return the updated context object with the current page number, record count, visible tickets, and page numbers
+
+		$scope.pages =  getPages($scope.pageNum, pageCount); 
+
+	}
+
+
+  /**
+   * Returns an array of page numbers based on the current page and total number of pages.
+   * @param {number} currentPage - The current page number.
+   * @param {number} totalPages - The total number of pages.
+   * @returns {array} - An array of page numbers.
+   */
+  function getPages(currentPage, totalPages) {
+    var pages = [];
+    var startPage = Math.max(currentPage - 5, 1);
+    var endPage = Math.min(startPage + 9, totalPages);
+
+    // Loop through the range of page numbers and push them to the 'pages' array
+    for (var i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+	
+	function getFilterTypes() {
+		return {
+			
+			"boolean": {
+				"is": "=",
+				"is not": "!=",
+				"is empty": "ISEMPTY",
+				"is not empty": "ISNOTEMPTY",
+				"is anything": "ANYTHING",
+				"is same": "SAMEAS",
+				"is different": "NSAMEAS"
+			},
+			"string": {
+				"starts with": "STARTSWITH",
+				"ends with": "ENDSWITH",
+				"contains": "LIKE",
+				"does not contain": "NOT LIKE",
+				"is": "=",
+				"is not": "!=",
+				"is empty": "ISEMPTY",
+				"is not empty": "ISNOTEMPTY",
+				"is anything": "ANYTHING",
+				"is empty string": "EMPTYSTRING",
+				"less than or is": "<=",
+				"greater than or is": ">=",
+				"between": "BETWEEN",
+				"is same": "SAMEAS",
+				"is different": "NSAMEAS"
+			},
+			"number": {
+				"is": "=",
+				"is not": "!=",
+				"is empty": "EMPTY",
+				"is not empty": "NOTEMPTY",
+				"less than": "<",
+				"greater than": ">",
+				"less than or is": "<=",
+				"greater than or is": ">=",
+				"between": "BETWEEN",
+				"is anything": "ANYTHING",
+				"is same": "SAMEAS",
+				"is different": "NSAMEAS"
+			},
+			"integer": {
+				"is": "=",
+				"is not": "!=",
+				"is empty": "EMPTY",
+				"is not empty": "NOTEMPTY",
+				"less than": "<",
+				"greater than": ">",
+				"less than or is": "<=",
+				"greater than or is": ">=",
+				"between": "BETWEEN",
+				"is anything": "ANYTHING",
+				"is same": "SAMEAS",
+				"is different": "NSAMEAS"
+			},
+			"date": {
+				"on": "ONToday",
+				"not on": "NOTONToday",
+				"before": "<",
+				"at or before": "<=",
+				"after": ">",
+				"at or after": ">=",
+				"between": "BETWEEN",
+				"is empty": "ISEMPTY",
+				"is not empty": "ISNOTEMPTY",
+				"is anything": "ANYTHING",
+				"is same": "SAMEAS",
+				"is different": "NSAMEAS"
+			}
+		}
+	}
+
+	
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>div {
+  color: #000 !important;
+}
+
+.menu-box {
+  padding: 1rem; 
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.busy {
+	opacity: 0.4
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.modal-header {
+  display: flex; 
+  align-items: center;
+}
+
+.dropdown-menu {
+  z-index: 1000 
+}
+
+table {
+	margin-top: 1rem;
+}
+
+.hover {
+  color: #001a76;
+  cursor: pointer;
+}
+
+.hover:hover {
+  text-decoration: underline;
+}
+
+th,td {
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.1em;
+  max-width: 280px;
+}
+ 
+
+.flexible {
+  display: flex; 
+  align-items: center; 
+  gap: 1rem;
+}
+
+.flexible.center { 
+  justify-content: center;
+}
+
+.badge {
+  color: #444; 
+}
+
+.predicate {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr 100px;
+  grid-template-rows: auto;
+  gap: 1rem;
+  padding: 1rem;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>machine_data_grid</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Machine Data Grid</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	console.log ({
+		input:input
+	})
+	if (input) {
+		if (!input.table) return;
+		if (input.actionName === 'getColumns') {
+		   var cols = createResource(input.table, input.fields);
+			data.message = cols.describe();
+			return;
+		}
+		var resource = createResource(input.table, input.fields);   
+		data.message = resource.execute(input.filter,  input.page);
+		data.recordCount = resource.count(input.filter); 
+	}
+
+	
+	return;
+	  /**
+   * Creates a resource object with insert and execute methods
+   * @param {string} table - The name of the table to interact with
+   * @param {Array} fields - The fields to include in the resource object
+   * @returns {Object} - The resource object
+   */
+  function createResource(table, fields) {
+    return {
+      fields: fields,
+
+      /**
+       * Inserts a new record into the table
+       * @param {Array} fields - The fields to insert
+       * @returns {string} - The sys_id of the inserted record
+       */
+      insert: function (fields) {
+        var gr = new GlideRecord(table);
+
+        fields.forEach(function (item) {
+          gr[item.alias || item.field] = item.value;
+        });
+
+        // Insert the new record into the table
+        return gr.insert();
+      },
+			
+			
+			/**
+			 * Retrieves the columns of a GlideRecord table.
+			 * @returns {Array} - An array of objects containing field, label, and type properties.
+			 */
+			describe: function () {
+        var gr = new GlideRecord(table); 
+				
+				// get the first record
+        gr.setLimit(1);
+        gr.query();
+				
+        var columns = [];
+ 
+        while (gr.next()) { 
+					var label 
+          this.fields.forEach(function (field) {
+						console.log ({
+							field: field
+						});
+            var elem, ed;
+						
+						// handle reference fields
+            if (field.indexOf(".") > 0) {
+              var both = field.split("."); 
+							var ref = gr[both[0]].getRefRecord(); 
+							if (ref.isValidRecord()) {
+                elem = ref.getElement(both[1]); 
+                ed = elem.getED();
+								columns.push({
+									field: both.join('.'),
+									label: elem.getLabel(),
+							    type: ed.getInternalType()
+								}) 
+							}   
+              return;
+            }
+						 
+            elem = gr.getElement(field) ;  
+            ed = elem.getED();
+						
+						columns.push({
+							field: field,
+							label: elem.getLabel(),
+							type: ed.getInternalType()
+						})   
+          }); 
+        }
+				
+				return columns;
+
+			},
+			
+			count: function ( conditions) {
+        var gr = new GlideRecord(table); 
+        if (conditions) {
+					gr.addEncodedQuery(conditions);
+        } 
+        gr.query();
+				return gr.getRowCount(); 
+			},
+
+      /**
+       * Executes a query on the table and returns the matching records
+       * @param {Array} conditions - The conditions to apply to the query
+       * @returns {Array} - The matching records
+       */
+      execute: function (conditions, page) {
+        var gr = new GlideRecord(table);
+
+        if (conditions) {
+					gr.addEncodedQuery(conditions); 
+        }
+
+        // Order the records by descending sys_created_on field by default
+        // TODO: add variable sorting
+        gr.orderByDesc("sys_created_on");
+				
+				var num = page || 1
+				var start = 10 * (num - 1);
+				var end = start + 10;
+				 
+        // setting a limit for sanity
+        gr.chooseWindow(start, end);
+        gr.query();
+
+        var records = [];
+
+        // Iterate through each record in the GlideRecord
+        while (gr.next()) {
+          var record = {};
+					console.log (1)
+          this.fields.forEach(function (field) {
+            if (field.indexOf(".") > 0) { 
+							
+							// handle reference fields
+              var both = field.split("."); 
+							var ref = gr[both[0]].getRefRecord(); 
+							if (ref.isValidRecord()) {
+								record[both[1]] = ref.getValue(both[1]); 
+							}  
+              return;
+            } 
+            record[field] = gr.getValue(field);
+          });
+          records.push(record);
+        }
+
+        return records;
+      },
+    };
+  }
+	
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-28 13:25:17</sys_created_on>
+        <sys_id>21de0791c3faf91011971d4ce0013113</sys_id>
+        <sys_mod_count>317</sys_mod_count>
+        <sys_name>Machine Data Grid</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_widget_21de0791c3faf91011971d4ce0013113</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-11-30 06:41:40</sys_updated_on>
+        <template><![CDATA[<div>
+     
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" 
+              id="exampleModalLabel">Set Filter</h4>
+          <div class="spacer">
+            <!-- spacer -->
+          </div>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            Build a filter by adding conditions that contain a field, operator,
+            and value(s).
+          </div>
+
+          <div class="predicate" ng-repeat="pred in predicates">
+            <i ng-if="!pred.type" />
+            <div ng-if="!!pred.type"><b>{{pred.type}}</b></div>
+
+            <!-- field picker -->
+            <select
+              class="form-control"
+              ng-change="c.setPredicate(pred)"
+              ng-model="pred.field"
+              ng-options="item.field as item.label for item in columnList"
+            ></select>
+
+            <!-- operator picker -->
+            <select
+              ng-disabled="!pred.predOpts"
+              ng-model="pred.operator"
+              ng-change="c.updateQuery()"
+              ng-options="key as key for (key, value) in pred.predOpts"
+            ></select>
+
+            <!-- value entry -->
+            <input
+              ng-disabled="!!nullTypes.includes(pred.operator) || !pred.predOpts"
+              ng-model="pred.value"
+              ng-change="c.updateQuery()"
+              placeholder="Enter value"
+              class="form-control"
+              type="search"
+            />
+
+            <div class="flexible">
+              <button ng-click="c.addPredicate('or')" class="btn btn-sm btn-primary">
+                or
+              </button>
+              <button ng-click="c.addPredicate('and')" class="btn btn-sm btn-primary">
+                and
+              </button>
+              <i ng-click="c.dropPredicate($index)" class="glyphicon glyphicon-trash" />
+            </div>
+          </div>
+
+       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button
+            ng-click="c.setQuery()"
+            type="button"
+            data-dismiss="modal"
+            class="btn btn-primary"
+          >
+            Apply filters
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input
+    ng-if="placeholder"
+    class="form-control"
+    type="search"
+    placeholder="{{placeholder}}"
+    ng-model="c.data.param"
+    ng-change="c.search(c.data.param)"
+    ng-model-options="{debounce: 250}"
+  />
+
+  <div class="flexible">
+    <h3>{{title}}</h3>
+
+    <span class="badge badge-success">{{recordCount}}</span>
+
+    <div style="flex-grow: 1">
+      <!-- spacer -->
+    </div>
+    <button class="btn btn-sm" data-toggle="modal" data-target="#exampleModal">
+      <i class="glyphicon glyphicon-filter" />
+    </button>
+    <button class="btn btn-sm">
+      <i class="glyphicon glyphicon-refresh" ng-click="c.page(1)"/>
+    </button>
+  </div>
+
+  <div ng-if="!recordCount">{{message}}/{{queryLines}}</div>
+
+  <table class="table" ng-if="recordCount" ng-class="{busy: busy}">
+    <thead>
+      <tr>
+        <th ng-repeat="column in columnList">
+          <a
+             href="#"
+            data-toggle="modal"
+            ng-click="c.setField(title)"
+            data-target="#exampleModal"
+          >
+            {{column.label}}
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in response">
+        <td ng-repeat="column in columnList"> 
+          <span ng-class="{hover: $index === linkIndex}" 
+                ng-click="c.handleClick(item)"
+                ng-if="column.type !== 'date'">
+          {{item[column.field] || item[column.field.split('.').pop()]}} 
+          </span>
+          <span ng-if="column.type === 'date'">
+          {{new Date(item[column.field]).toString()}} 
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div ng-if="recordCount > pageSize" class="flexible center">
+  <nav>
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li
+        class="page-item"
+        ng-class="{'active': n === pageNum}"
+        ng-repeat="n in pages"
+        ng-click="c.page(n)"
+      >
+        <a class="page-link" href="#">{{ n }}</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

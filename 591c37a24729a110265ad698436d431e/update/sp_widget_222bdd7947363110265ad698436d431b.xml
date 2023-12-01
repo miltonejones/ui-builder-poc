@@ -1,0 +1,1141 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function ($scope) {
+  /* widget controller */
+  var c = this;
+
+
+  function createTab() {
+		var dataTable = null;
+		var pageSize = 10;
+		var selectedTable = null;
+		var selectedColumns = {};
+		var selectedFilters = {};
+		var expandedColumns = {};
+		var pageNum = 1;
+		var predicates = [
+			{
+				field: null,
+				operator: null,
+				value: null,
+			},
+		];
+    return {
+      title: "New Query",
+      dataTable: dataTable,
+      pageSize: pageSize,
+      selectedTable: selectedTable,
+      selectedColumns: selectedColumns,
+      selectedFilters: selectedFilters,
+      expandedColumns: expandedColumns,
+      pageNum: pageNum,
+      predicates: predicates,
+      fields: [],
+      rows: null,
+      columns: null,
+      recordCount: 0,
+      columnMap: [],
+    };
+  }
+
+  var scopeProps = [
+    "dataTable",
+    "pageSize",
+    "selectedTable",
+    "selectedColumns",
+    "selectedFilters",
+    "expandedColumns",
+    "pageNum",
+    "predicates",
+    "fields",
+    "rows",
+    "columns",
+    "recordCount",
+    "queryLines",
+    "selectedFilters",
+    "columnMap",
+  ];
+
+  c.addTab = function () {
+    var index = $scope.queryTabs.length;
+    $scope.queryTabs.push(createTab());
+    c.setTab(index);
+  };
+	
+	function syncTab() {
+    $scope.queryTabs.forEach(function (tab, i) {
+      if (i === $scope.queryTabIndex) {
+        scopeProps.forEach(function (prop) {
+          tab[prop] = $scope[prop];
+        });
+      }
+    });
+	}
+
+  c.setTab = function (index) {
+		if (index === $scope.queryTabIndex) {
+			return;
+		}
+    $scope.queryTabs.forEach(function (tab, i) {
+      if (i === $scope.queryTabIndex && i !== index) {
+        scopeProps.forEach(function (prop) {
+          tab[prop] = $scope[prop];
+        });
+      }
+    });
+
+    $scope.queryTabIndex = index;
+    var tab = $scope.queryTabs[index];
+
+		/*$scope.fields = [];
+		$scope.selectedColumns = {};
+		$scope.expandedColumns = {};*/
+		
+    scopeProps.forEach(function (prop) {
+      $scope[prop] = tab[prop];
+    });
+		
+  };
+
+  $scope.queryTabs = [createTab()];
+  $scope.queryTabIndex = 0;
+
+	scopeProps.forEach(function (prop) {
+		$scope[prop] = $scope.queryTabs[0][prop];
+	});
+	
+  $scope.pageSizes = [10, 25, 50];
+  $scope.nullTypes = ["is empty", "is not empty", "is anything"];
+
+  invokeResource("getTables", function (response) {
+    $scope.response = response.data.message;
+    invokeResource("loadJson", function (response) {
+      $scope.filterTypes = response.data.message; 
+    });
+  });
+
+  c.clear = function () {
+    $scope.selectedColumns = {};
+    $scope.expandedColumns = {};
+    $scope.dataTable = null;
+    $scope.selectedTable = null;
+
+    $scope.recordCount = 0;
+    $scope.rows = null;
+		syncTab()
+  };
+
+  c.announce = function (col) {
+    $scope.selectedColumns[col] = !$scope.selectedColumns[col];
+    updateFields();
+  };
+
+  c.selectAll = function () {
+    $scope.columns.forEach(function (col) {
+      $scope.selectedColumns[col.name] = true;
+    });
+    updateFields();
+  };
+
+  c.expand = function (col) {
+    $scope.expandedColumns[col] = !$scope.expandedColumns[col];
+  };
+
+  $scope.handleKeypress = function (event, inputValue) {
+    if (event.which === 13) {
+      // 13 is the code for the Enter key
+      // handle filter update
+      var array = $scope.predicates.filter(function (f) {
+        return !!f.field && f.field !== inputValue;
+      });
+
+      array.push({
+        field: inputValue,
+        operator: "is",
+        value: $scope.selectedFilters[inputValue],
+      });
+
+      $scope.predicates = array;
+      c.updateQuery();
+      c.setQuery();
+    }
+  };
+
+  function updateFields() {
+    var fields = Object.keys($scope.selectedColumns)
+      .filter(function (f) {
+        return !!$scope.selectedColumns[f];
+      })
+      .map(function (f) {
+        return f;
+      });
+    $scope.fields = fields;
+    $scope.tableColumns = fields.map(function (col) {
+      var key = Object.keys($scope.selectedColumns).find(function (f) {
+        return f === col;
+      });
+      return $scope.selectedColumns[key];
+    });
+		syncTab();
+  }
+
+  c.resize = function (n) {
+    $scope.pageSize = n;
+    c.exec();
+  };
+
+  c.exec = function (n) {
+    updateFields();
+    var num = n || 1;
+    $scope.busy = true;
+    invokeResource(
+      "readTable",
+      function (response) {
+        $scope.rows = response.data.message;
+        $scope.recordCount = response.data.count;
+        $scope.busy = false;
+        updatePages(num);
+				syncTab()
+      },
+      {
+        table: $scope.selectedTable.name,
+        fields: $scope.fields,
+        size: $scope.pageSize,
+        page: num,
+        filter: $scope.filter,
+      }
+    );
+  };
+
+  c.describe = function (table) {
+    $scope.selectedTable = table;
+    $scope.filter = null;
+    invokeResource(
+      "getTable",
+      function (response) {
+        $scope.columns = response.data.message;
+        $scope.columnMap = $scope.columns.reduce(function (out, col) {
+          out[col.name] = col.label;
+          if (col.children) {
+            col.children.forEach(function (kid) {
+              out[col.name + "." + kid.name] = kid.label;
+            });
+          }
+          return out;
+        }, {});
+				syncTab()
+			  $scope.queryTabs[$scope.queryTabIndex].title = table.label;
+      },
+      {
+        table: table.name,
+      }
+    );
+  };
+
+  c.search = function (param) {
+    invokeResource(
+      "getTables",
+      function (response) {
+        $scope.response = response.data.message;
+				syncTab()
+      },
+      {
+        filter: "sys_nameLIKE" + param,
+      }
+    );
+  };
+
+  c.setQuery = function () {
+    $scope.filter = $scope.queryLines.join("");
+    c.exec(1);
+  };
+
+  function findColumn(field) {
+    if (field.indexOf(".") < 0) {
+      return $scope.columns.find(function (f) {
+        return f.name === field;
+      });
+    }
+    var part = field.split(".");
+    var item = $scope.columns.find(function (f) {
+      return f.name === part[0];
+    });
+
+    console.log({
+      part: part,
+      columns: $scope.columns,
+      item: item,
+    });
+
+    return item.children.find(function (f) {
+      return f.name === part[1];
+    });
+  }
+
+  /**
+   * Updates the query based on the given predicates.
+   * @param {Object} n - The predicates to update the query with.
+   */
+  c.updateQuery = function (n) {
+    // Map over the predicates array
+    var lines = $scope.predicates.map(function (pred) {
+      // Check if field is not defined
+      if (!pred.field) return alert("Predicate has no field!");
+
+      // Find the item in columnList that matches the field
+      var item = findColumn(pred.field);
+
+      console.log({
+        item: item,
+      });
+
+      // Check if operator is not defined
+      if (!pred.operator) return alert("No operator was found");
+
+      // Get the predicate options based on the item type
+      var predOpts = $scope.filterTypes[item.type] || $scope.filterTypes.string;
+
+      // Check if predicate options are not defined
+      if (!predOpts)
+        return alert('No filterTypes for item "' + item.type + '"');
+
+      // Get the code for the operator
+      var code = predOpts[pred.operator];
+
+      // Get the operator based on the predicate type
+      var op = !pred.type ? null : pred.type === "or" ? "^OR" : "^";
+
+      $scope.selectedFilters[pred.field] = formatPredicate(pred);
+
+      // Filter out any falsy values and join the array elements
+      return [op, pred.field, code, pred.value].filter(Boolean).join("");
+    });
+
+    // Update the lines variable in the scope
+    $scope.queryLines = lines;
+  };
+
+  /**
+   * Formats a predicate based on its operator.
+   * @param {Object} pred - The predicate object.
+   * @param {string} pred.operator - The operator of the predicate.
+   * @param {string} pred.value - The value of the predicate.
+   * @returns {string} - The formatted predicate.
+   */
+  function formatPredicate(pred) {
+    switch (pred.operator) {
+      case "starts with":
+        return pred.value + "*";
+      case "ends with":
+        return "*" + pred.value;
+      case "contains":
+        return "*" + pred.value + "*";
+      default:
+        return pred.value;
+    }
+  }
+
+  /**
+   * Sets the predicate for a given field.
+   * @param {Object} pred - The predicate object.
+   * @param {string} pred.field - The field to set the predicate for.
+   */
+  c.setPredicate = function (pred) {
+    // Find the item in columnList that matches the field of the predicate
+    var item = findColumn(pred.field);
+
+    $scope.filterTypes.choice = $scope.filterTypes.string;
+
+    // Get the predicate options for the item's type
+    var predOpts = $scope.filterTypes[item.type];
+
+    // If predicate options are not found, return
+    if (!predOpts) {
+      alert('Invalid field type "' + item.type + '"');
+    }
+
+    // Set the predicate options for the predicate
+    pred.predOpts = predOpts;
+    pred.choices = item.choices;
+  };
+
+  /**
+   * Adds a new predicate to the list of predicates.
+   * @param {string} type - The type of the predicate.
+   */
+  c.addPredicate = function (type) {
+    $scope.predicates.push({
+      field: null,
+      operator: null,
+      value: null,
+      type: type,
+    });
+  };
+
+  /**
+   * Removes a predicate from the predicates array at the specified index.
+   * @param {number} index - The index of the predicate to remove.
+   */
+  c.dropPredicate = function (index) {
+    $scope.predicates.splice(index, 1);
+  };
+
+  return;
+
+  function updatePages(pageNum) {
+    // Get the ticket list from the context
+
+    // If there is no ticket list, return the context as is
+    if (!$scope.rows) {
+      return;
+    }
+
+    // Get the page number from the event, default to 1 if not provided
+    $scope.pageNum = pageNum || 1;
+
+    // Calculate the total number of pages based on the page size
+    var pageCount = Math.ceil($scope.recordCount / $scope.pageSize);
+
+    // Calculate the starting index of the visible tickets based on the page number and page size
+    var startNum = ($scope.pageNum - 1) * $scope.pageSize;
+
+    // Return the updated context object with the current page number, record count, visible tickets, and page numbers
+
+    $scope.pages = getPages($scope.pageNum, pageCount);
+  }
+
+  /**
+   * Returns an array of page numbers based on the current page and total number of pages.
+   * @param {number} currentPage - The current page number.
+   * @param {number} totalPages - The total number of pages.
+   * @returns {array} - An array of page numbers.
+   */
+  function getPages(currentPage, totalPages) {
+    var pages = [];
+    var startPage = Math.max(currentPage - 5, 1);
+    var endPage = Math.min(startPage + 9, totalPages);
+
+    // Loop through the range of page numbers and push them to the 'pages' array
+    for (var i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
+  /**
+   * Invokes a resource action with the given action name and options.
+   * Calls the callback function with the response from the server.
+   * @param {string} action - The name of the action to invoke.
+   * @param {function} callback - The callback function to call with the server response.
+   * @param {object} options - The options to pass to the action.
+   */
+  function invokeResource(action, callback, options) {
+    var payload = { actionName: action };
+
+    // If options are provided, add them to the payload object
+    if (options) {
+      Object.keys(options).forEach(function (key) {
+        payload[key] = options[key];
+      });
+    }
+
+    // Execute the function with the refreshed data
+    // this will send a 'data loaded' message to the
+    // state machine with the data response
+    c.server.update().then(function () {
+      c.server.get(payload).then(callback);
+    });
+  }
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.column-grid {
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 0.25rem;
+  white-space: nowrap
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.column-grid div {
+  white-space: nowrap
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.column-grid div.active {
+  color: blue;
+}
+
+.nav-link.active {
+   font-weight: 600;
+   color: blue;
+}
+ 
+.badge.active ,
+td.active {
+  color: blue;
+}
+
+.column-panel {
+  margin: 1rem 0;
+}
+
+.column-kid {
+   margin-left: 2rem; 
+}
+
+.busy {
+  opacity: 0.4;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+}
+
+th,
+td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  max-width: 280px;
+}
+
+ul.row {
+ list-style: none; 
+}
+
+ul.row li { 
+  padding: 0 1rem;
+}
+
+ul.row li.active { 
+  color: blue;
+}
+
+
+.flexible {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.flexible.center {
+  justify-content: center;
+}
+
+.badge {
+  color: #444;
+}
+
+.predicate {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr 100px;
+  grid-template-rows: auto;
+  gap: 1rem;
+  padding: 1rem;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>query_builder</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Query Builder</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+//sys_db_object
+	
+	
+	function getTables() {
+		var resource = createResource('sys_db_object', ['sys_name','label','name'])
+		data.message = resource.execute(input.filter)
+	}
+	
+	function getTable() {
+		var resource = createResource(input.table); 
+		data.message = resource.describe()
+	}
+	
+	function readTable() { 
+		var resource = createResource(input.table, input.fields); 
+		data.message = resource.execute(input.filter, input.page, input.size)
+		data.count = resource.count(input.filter)
+	}
+	
+	function loadJson() {
+			// Create a resource object with the specified table and fields
+			var resource = createResource("x_ebh_ccde_application_json", [
+				"title",
+				"content",
+			]);
+
+    // Execute the resource with the application filter
+    var response = resource.execute('title=filter_types'); 
+		 
+    var object = {};
+    // Iterate over the response rows and parse the content as JSON
+    response.forEach(function (row) {
+      object[row.title] = JSON.parse(row.content);
+    });
+
+    // Return the object containing the JSON data
+    data.message = object.filter_types;
+
+	}
+	
+	
+	
+  var requestMethods = { 
+		getTables: getTables,
+		getTable: getTable,
+		readTable: readTable,
+		loadJson: loadJson
+  };
+
+  // execute the requested method if there is one
+  if (input) {
+    var actionName = input.actionName;
+    var requestMethod = requestMethods[actionName];
+    if (requestMethod) {
+      return requestMethod();
+    }
+  }
+
+	
+	
+	
+	
+	return;
+	
+	 /**
+   * Creates a resource object with insert and execute methods
+   * @param {string} table - The name of the table to interact with
+   * @param {Array} fields - The fields to include in the resource object
+   * @returns {Object} - The resource object
+   */
+  function createResource(table, fields) {
+    return {
+      fields: fields,
+
+      /**
+       * Inserts a new record into the table
+       * @param {Array} fields - The fields to insert
+       * @returns {string} - The sys_id of the inserted record
+       */
+      insert: function (fields) {
+        var gr = new GlideRecord(table);
+
+        fields.forEach(function (item) {
+          gr[item.alias || item.field] = item.value;
+        });
+
+        // Insert the new record into the table
+        return gr.insert();
+      },
+
+      /**
+       * Retrieves the columns of a GlideRecord table.
+       * @returns {Array} - An array of objects containing field, label, and type properties.
+       */
+      describe: function () {
+        var t = new GlideRecord(table); 
+				t.setLimit(1)
+				t.query();
+				t.next()
+				var fields = t.getElements(); //or getFields if global scope
+				var fieldList = [];
+
+				 
+				for (var i = 0; i < fields.length; i++) {
+					var glideElement = fields[i]; //or field.get(i) if global scope
+					var descriptor = glideElement.getED();
+
+					var fldName = glideElement.getName().toString();
+					var fldLabel = descriptor.getLabel().toString();
+					var fldType = descriptor.getInternalType().toString();
+					var canWrite = glideElement.canWrite();
+          var ref = glideElement.getRefRecord();
+          var choices = glideElement.getChoices()
+					
+					
+						console.log ({
+							fldName: fldName,
+							ref: ref
+						});
+						
+					var reference = null, children = null, fullName = fldName; 
+					if (ref) {
+						reference = glideElement.getReferenceTable() ;
+						
+						console.log ({
+							reference: reference,
+							table: table
+						});
+						
+						if (reference !== table) {
+							var resource = createResource(reference);
+							children = resource.describe();
+							fullName = reference + '.' + fldName;
+							console.log ({
+								children: children,
+								fullName: fullName
+							});
+						}
+					} 
+
+					fieldList.push({
+						name: fldName,
+						type: fldType,
+						label: fldLabel,
+						writable: canWrite,
+						choices: glideElement.getChoices(),
+						reference: reference === table ? null : reference,
+						children: children,
+						fullName: fullName
+					});
+					
+
+				}
+
+				return fieldList.sort(function(a,b) {
+					return a.name > b.name ? 1 : -1;
+				});
+
+				
+      },
+
+      count: function (conditions) {
+        var gr = new GlideRecord(table);
+        if (conditions) {
+          gr.addEncodedQuery(conditions);
+        }
+        gr.query();
+        return gr.getRowCount();
+      },
+
+      /**
+       * Executes a query on the table and returns the matching records
+       * @param {Array} conditions - The conditions to apply to the query
+       * @returns {Array} - The matching records
+       */
+      execute: function (conditions, page, size) {
+        var gr = new GlideRecord(table);
+				var pageSize = size || 10;
+
+        if (conditions) {
+          gr.addEncodedQuery(conditions);
+        }
+
+        // Order the records by descending sys_created_on field by default
+        // TODO: add variable sorting
+        gr.orderByDesc("sys_created_on");
+
+        var num = page || 1;
+        var start = pageSize * (num - 1);
+        var end = start + pageSize;
+
+        // setting a limit for sanity
+        gr.chooseWindow(start, end);
+        gr.query();
+
+        var records = [];
+
+        // Iterate through each record in the GlideRecord
+        while (gr.next()) {
+          var record = {};
+          console.log(1);
+          this.fields.forEach(function (field) {
+            if (field.indexOf(".") > 0) {
+              // handle reference fields
+              var both = field.split(".");
+              var ref = gr[both[0]].getRefRecord();
+              if (ref.isValidRecord()) {
+                record[field] = ref.getValue(both[1]);
+              }
+              return;
+            }
+            record[field] = gr.getValue(field);
+          });
+          records.push(record);
+        }
+
+        return records;
+      },
+    };
+  }
+	
+	
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-29 18:16:51</sys_created_on>
+        <sys_id>222bdd7947363110265ad698436d431b</sys_id>
+        <sys_mod_count>347</sys_mod_count>
+        <sys_name>Query Builder</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_widget_222bdd7947363110265ad698436d431b</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-01 17:44:43</sys_updated_on>
+        <template><![CDATA[<div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">ACoE Table Browser</a></li>
+      <li class="breadcrumb-item" ng-if="!!rows">
+        <span ng-if="!queryLines" href="#">{{selectedTable.label}}</span>
+        <a ng-if="!!queryLines" href="#">{{selectedTable.label}}</a>
+      </li>
+      <li class="breadcrumb-item" ng-repeat="line in queryLines">
+        <a ng-if="!$last" href="#">{{line}}</a>
+        <span ng-if="$last">{{line}}</span>
+      </li>
+    </ol>
+  </nav>
+
+<div class="flexible">
+    <h3 class="flexible">
+    <i class="glyphicon glyphicon-tasks"></i>
+    ACoE Table Browser
+  </h3>
+  
+  <ul  class="nav nav-tabs">
+    <li class="nav-item" ng-click="c.setTab($index)" 
+        ng-repeat="tab in queryTabs">
+    <a class="nav-link" href="#"
+            ng-class="{'active': $index === queryTabIndex}" >{{tab.title}}</a>
+    </li>
+    <li class="nav-item"  ng-click="c.addTab()">
+    <a class="nav-link" href="#">
+      <i class="glyphicon glyphicon-plus"></i>
+      </a></li>
+  </ul>
+  
+  </div>  
+  <!-- query result contaiker -->
+  <div ng-if="!!rows">
+    
+    
+    <!-- query result header -->
+    <div class="flexible">
+      <h3>{{selectedTable.label}}</h3>
+      <div class="badge">{{recordCount}} records</div>
+
+      <div style="flex-grow: 1">
+        <!-- spacer -->
+      </div>
+      
+      
+        <a class="badge" ng-click="c.resize(size)" 
+           ng-class="{ active: size === pageSize }"
+           ng-repeat="size in pageSizes">
+          {{size}}
+        </a>
+      
+      per page
+
+      <button
+        class="btn btn-sm"
+        data-toggle="modal"
+        data-target="#exampleModal"
+      >
+        <i class="glyphicon glyphicon-filter" />
+      </button>
+    </div>
+
+    <!-- query result grid -->
+    <table class="table" ng-class="{busy: busy}">
+      <thead>
+        <tr>
+          <th ng-repeat="column in fields">{{columnMap[column]}}</th>
+        </tr>
+        <tr>
+          <td ng-repeat="column in fields">
+            <input
+              ng-model="selectedFilters[column]"
+              ng-keypress="handleKeypress($event, column)"
+              class="form-control form-control-sm"
+              placeholder="Filter {{columnMap[column]}}"
+            />
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in rows">
+          <td ng-repeat="column in fields">{{item[column]}}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+
+    <!-- query result pagination -->
+    <div ng-if="recordCount > pageSize" class="flexible center">
+      <nav>
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li
+            class="page-item"
+            ng-class="{'active': n === pageNum}"
+            ng-repeat="n in pages"
+            ng-click="c.exec(n)"
+          >
+            <a class="page-link" href="#">{{ n }}</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+
+
+  <!-- table name search input -->
+  <div class="form-group" ng-show="!selectedTable">
+    <label>Table name</label>
+    <input
+      ng-show="!selectedTable"
+      ng-model="dataTable"
+      ng-change="c.search(dataTable)"
+      class="form-control form-control-sm"
+      placeholder="Find a table..."
+    />
+    <small class="form-text text-muted">Select a table to view</small>
+  </div>
+
+  <!-- table name search results -->
+  <div class="list-group" ng-if="!!dataTable && !selectedTable">
+    <a
+      ng-click="c.describe(item)"
+      href="#"
+      class="list-group-item list-group-item-action"
+      ng-repeat="item in response"
+    >
+      <b>{{item.label}}</b>
+      <div>{{item.name}}</div>
+    </a>
+  </div>
+
+  <!-- control buttons -->
+  <div ng-if="!!selectedTable">
+    <button class="btn btn-sm" ng-click="c.clear()">Cancel</button>
+    <button class="btn btn-sm btn-primary" ng-disabled="!fields.length" ng-click="c.exec()">
+      Run Query
+    </button>
+  </div>
+
+ 
+  <!-- column selector panel -->
+  <div class="column-panel" ng-if="!!selectedTable">
+    <hr />
+    Select colums from <b>{{selectedTable.label}}</b> to return in your query. <a ng-click="c.selectAll()" href="#">Select all</a>.
+
+    <table class="table" ng-class="{busy: busy}">
+      <thead>
+        <tr>
+          <th>Label</th>
+          <th>Name</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in columns">
+          <td ng-class="{active: !!selectedColumns[item.name]}">
+            <i
+              class="glyphicon glyphicon-chevron-right"
+              ng-class="{'glyphicon-chevron-down': !!expandedColumns[item.name]}"
+              ng-click="c.expand(item.name)"
+              ng-if="!!item.children"
+            ></i>
+
+            <input
+              class="form-check-input"
+              type="checkbox"
+              ng-click="c.announce(item.name)"
+              ng-checked="!!selectedColumns[item.name]"
+            />
+
+            <a
+              ng-click="c.announce(item.name)"
+              ng-class="{active: !!selectedColumns[item.name]}"
+              href="#"
+              >{{item.label}}</a
+            >
+
+            <div ng-if="!expandedColumns[item.name]">
+              <div
+                class="column-kid"
+                ng-click="c.announce(item.name + '.' + kid.name)"
+                ng-if="!!selectedColumns[item.name + '.' + kid.name]"
+                ng-repeat="kid in item.children"
+              >
+                <input class="form-check-input" type="checkbox" checked />
+                {{item.name}}.{{kid.name}}
+              </div>
+            </div>
+
+            <ul class="row" ng-if="!!expandedColumns[item.name]">
+              <li
+                ng-class="{active: !!selectedColumns[item.name + '.' + kid.name]}"
+                ng-repeat="kid in item.children"
+                ng-click="c.announce(item.name + '.' + kid.name)"
+              >
+                <b> {{kid.label}} </b>
+
+                <div>{{kid.name}}</div>
+              </li>
+            </ul>
+          </td>
+          <td ng-class="{active: !!selectedColumns[item.name]}">
+            {{item.name}}
+          </td>
+          <td ng-class="{active: !!selectedColumns[item.name]}">
+            {{item.type}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- filter modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Set Filter</h4>
+          <div class="spacer">
+            <!-- spacer -->
+          </div>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            Build a filter by adding conditions that contain a field, operator,
+            and value(s).
+          </div>
+
+          <div class="predicate" ng-repeat="pred in predicates">
+            <i ng-if="!pred.type" />
+            <div ng-if="!!pred.type"><b>{{pred.type}}</b></div>
+
+            <!-- field picker -->
+            <select
+              class="form-control"
+              ng-change="c.setPredicate(pred)"
+              ng-model="pred.field"
+            >
+              <option ng-value="column" ng-repeat="column in fields">
+                {{columnMap[column]}}
+              </option>
+            </select>
+
+            <!-- operator picker -->
+            <select
+              class="form-control"
+              ng-disabled="!pred.predOpts"
+              ng-model="pred.operator"
+              ng-change="c.updateQuery()"
+              ng-options="key as key for (key, value) in pred.predOpts"
+            ></select>
+
+            <!-- value entry -->
+            <div>
+              <input
+                ng-disabled="!!nullTypes.includes(pred.operator) || !pred.predOpts"
+                ng-model="pred.value"
+                ng-change="c.updateQuery()"
+                placeholder="Enter value"
+                class="form-control"
+                type="search"
+                list="datalist{{pred.field}}"
+                id="{{pred.field}}DataList"
+              />
+
+              <datalist id="datalist{{pred.field}}">
+                <option
+                  ng-repeat="choice in pred.choices"
+                  value="{{choice}}"
+                ></option>
+              </datalist>
+            </div>
+
+            <div class="flexible">
+              <button
+                ng-click="c.addPredicate('or')"
+                class="btn btn-sm btn-primary"
+              >
+                or
+              </button>
+              <button
+                ng-click="c.addPredicate('and')"
+                class="btn btn-sm btn-primary"
+              >
+                and
+              </button>
+              <i
+                ng-click="c.dropPredicate($index)"
+                class="glyphicon glyphicon-trash"
+              />
+            </div>
+          </div>
+        </div> 
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button
+            ng-click="c.setQuery()"
+            type="button"
+            data-dismiss="modal"
+            class="btn btn-primary"
+          >
+            Apply filters
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

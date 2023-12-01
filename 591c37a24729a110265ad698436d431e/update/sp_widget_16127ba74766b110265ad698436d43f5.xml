@@ -1,0 +1,1677 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function ($scope) {
+ 
+  var c = this;
+  var machine; 
+	
+  // initial data from the server
+	$scope.message = c.data.message;
+  $scope.records = c.data.records;
+  $scope.tickets = c.data.tickets;
+	
+	// dropdown data
+  $scope.deductionTypes = c.data.deductionTypes;
+  $scope.talentList = c.data.talent; 
+	
+	// misc UI params
+  $scope.showDetails = true;
+  $scope.talentParam = "";
+  $scope.deductionParam = "";
+  
+  $scope.handleTabClick = function () {
+    $scope.showDetails = !$scope.showDetails;
+  };
+
+	
+	/**
+	 * Create the state machine. 
+	 */
+	invokeResource("loadStateMachine", function(response) {
+		$scope.machine = response.data.machine;
+		machine = $scope.machine;
+		
+		// set machineState to the state machine initial state
+		$scope.machineState = machine.initial;
+		
+		var app = createMachine({
+			actions: createActions(),
+			guards: createGuards(),
+			services: createServices(),
+			controller: c,
+			$scope: $scope,
+		}); 
+		
+		// start the machine
+		c.send("home");
+	
+	});
+	
+ 
+
+	// DATA REQUESTS
+	// sends named requests to the server
+	
+  /**
+   * User is typing a search term in the Talent Name dropdown.
+   * If there is only one record, it changes the current record to the talent user.
+   * @param {Object} param - The parameter to update the talent data.
+   */
+  c.findTalent = function (param) {
+    function onTalentReponse(response) {
+      // whatever we get back is the current talent list
+      $scope.talentList = response.data.talent;
+
+      // Check if there is only one record
+      // we assume this means the user selected it from the list
+      if (response.data.talent.length === 1) {
+        // Change the current record to the talent user
+        c.changeRecord("talent_user", response.data.talent[0]);
+      }
+    }
+
+    // execute the request
+    invokeResource("findTalent", onTalentReponse, { param: param });
+  };
+
+  /**
+	 * User is typing a search term in the deductions search box.
+   * Finds deductions in the data and resets to page 1.
+   * @param {any} value - The value to search for.
+   */
+  c.findDeductions = function (value) {
+    function onDeductionResponse(response) {
+	    // route response from the server to the state machine
+      c.send({
+        type: "update",
+        value: response.data.message,
+      }); 
+    }
+    invokeResource("findDeductions", onDeductionResponse, {
+      deductionParam: value,
+    });
+  };
+ 
+	
+	// CHANGE RECORD VALUES
+	// helper functions to send changes to the machine
+	
+  /**
+   * Changes the deduction value for a specific field and index.
+   * @param {string} field - The field to change the deduction for.
+   * @param {number} index - The index of the deduction to change.
+   * @param {number} value - The new value for the deduction.
+   */
+  c.changeDeduction = function (field, index, value) {
+    c.send({
+      type: "change deduction",
+      value: value,
+      field: field,
+      index: index,
+    });
+  };
+
+  /**
+   * Changes a record by sending a request to the server.
+   * @param {string} field - The field to be changed.
+   * @param {any} value - The new value for the field.
+   */
+  c.changeRecord = function (field, value) {
+    // Send a request to the server to change the record
+    c.send({
+      type: "change record",
+      value: value,
+      field: field,
+    });
+  };
+
+	// create a simple watcher on machine.state to update the debugger UI
+  $scope.$watch(
+    "machineState",
+    function (newValue, oldValue) {  
+      console.log('moving to state "%s" from "%s"', newValue, oldValue);
+			localStorage.setItem('machine-state', newValue);
+      if (!!machine)  createDebugger(); 
+    },
+    true
+  );
+
+
+  return;
+
+	
+	// DATA CALL/RESPONSE
+
+  /**
+   * Callback function to be executed when the data is loaded.
+   * @param {Object} res - The response object containing the loaded data.
+   */
+  function onComplete(response) {
+    if (response.data && response.data.message) {
+      return c.send({
+        type: "data loaded",
+        value: response.data.message,
+      });
+    }
+  }
+
+ 
+	/**
+	 * Invokes a resource action with the given action name and options.
+	 * Calls the callback function with the response from the server.
+	 * @param {string} action - The name of the action to invoke.
+	 * @param {function} callback - The callback function to call with the server response.
+	 * @param {object} options - The options to pass to the action.
+	 */
+	function invokeResource(action, callback, options) { 
+		var payload = { actionName: action };
+
+		// If options are provided, add them to the payload object
+		if (options) {
+			Object.keys(options).forEach(function (key) {
+				payload[key] = options[key];
+			});
+		}
+
+		// Execute the function with the refreshed data
+		// this will send a 'data loaded' message to the
+		// state machine with the data response
+		c.server.update().then(function () {
+			c.server.get(payload)
+				.then(callback);
+		});
+	}
+
+	
+	// ------------------------------------------------------------------------
+	
+  /**
+   * ACTIONS/SERVICES/GUARDS
+   *  - Actions modify machine.context values
+   *  - Services invoke methods on external actors
+   *  - Guards control conditional transitions
+   */
+
+  function createActions() {
+
+		
+		
+    return {
+			
+			/**
+			 * Assigns tickets to an context.
+			 * @param {Object} _ - Placeholder for any unused parameters.
+			 * @param {Object} event - The event object containing the tickets to be assigned.
+			 * @returns {Object} - An object with the assigned tickets.
+			 */
+      assignTickets: function (_, event) {
+				return {
+					tickets: event.value,
+				};
+			}, 
+			
+			/**
+			 * Assigns page numbers to the context based on the given event.pageNum
+			 * @param {Object} context - The context object.
+			 * @param {Object} event - The event object.
+			 * @returns {Object} - The updated context object.
+			 */
+			assignPages: function (context, event) {
+				// Get the ticket list from the context
+				var ticketList = context.tickets;
+
+				// Get the page number from the event, default to 1 if not provided
+				var pageNum = event.pageNum || 1;
+
+				// If there is no ticket list, return the context as is
+				if (!ticketList) {
+					return context;
+				}
+
+				// Get the total number of records in the ticket list
+				var recordCount = ticketList.length;
+
+				// Calculate the total number of pages based on the page size
+				var pageCount = Math.ceil(recordCount / context.pageSize);
+
+				// Calculate the starting index of the visible tickets based on the page number and page size
+				var startNum = (pageNum - 1) * context.pageSize;
+
+				// Get the visible tickets based on the starting index and page size
+				var visible = ticketList.slice(startNum, startNum + context.pageSize);
+
+				// Return the updated context object with the current page number, record count, visible tickets, and page numbers
+				return {
+					currentPage: pageNum,
+					recordCount: recordCount,
+					visible: visible,
+					pages: getPages(pageNum, pageCount)
+				};
+			},
+
+      /**
+       * Increments the save_index by 1 and calculates the progress as a percentage.
+       * @param {Object} context - The context object containing the save_index and deductions array.
+       * @returns {Object} - An object containing the updated save_index and progress.
+       */
+      incrementIndex: function (context) {
+        // Increment the save_index by 1
+        var save_index = context.save_index + 1;
+
+        // Calculate the progress as a percentage
+        var progress = (save_index / context.deductions.length) * 100 + "%";
+
+        // Return an object containing the updated save_index and progress
+        return {
+          save_index: save_index,
+          progress: progress,
+					message: 'Saving deductions...'
+        };
+      },
+
+      assignLatestId: function (context, event) {
+        return {
+          sysId: event.value,
+					message: 'Getting deduction info...'
+        };
+      },
+
+      applySetting: function (context) {
+        return {
+          debug: !context.debug,
+        };
+      },
+
+      assignLatestDeduction: function (context, event) {
+				
+				// Update the latest deduction from the event response
+				var latestDeduction = event.value; 
+
+				// If there is no deduction, return
+				if (!latestDeduction) {
+					return;
+				}
+
+				// Create the previousRecord object with the relevant properties from the demo
+				var previousRecord = {
+					"Talent ID": latestDeduction.worker.enterprise_talent_id,
+					"Talent Name": latestDeduction.worker.full_name,
+					Status: latestDeduction.status,
+					"Created By": latestDeduction.sys_created_by,
+					"Created On": latestDeduction.sys_created_on,
+				};
+
+				// Get the keys of the previousRecord object
+				var recordKeys = Object.keys(previousRecord); 
+				
+        return {
+          latestDeduction: latestDeduction,
+					previousRecord: previousRecord,
+					recordKeys: recordKeys,
+					
+					// turn off the progress bar
+					message: null,
+          progress: false,
+        };
+      },
+
+      assignPreviewPref: function (context) {
+        return {
+          previewOnSave: !context.previewOnSave,
+        };
+      },
+
+      /**
+       * Updates a record with a new field value.
+       * @param {Object} context - The context object containing the current record.
+       * @param {Object} event - The event object containing the field and value to update.
+       * @returns {Object} - The updated record object.
+       */
+      updateRecord: function (context, event) {
+        var record = context.record || {};
+					
+        record[event.field] = event.value;
+        record.label = record.label || event.label;
+        record.id = record.id || event.id;
+
+        // Log a message to the console indicating the field and value that was set
+        console.log(
+          "%cSetting the value of '%s' to '%s'",
+          "border: dotted 1px magenta",
+          event.field,
+          event.value
+        );
+
+        // Return the updated record object
+        return { record: record };
+      },
+
+      /**
+       * Validates deductions in a given context and event.
+       * @param {Object} context - The context object.
+       * @param {Object} event - The event object.
+       * @returns {Object} - An object containing the validity of deductions.
+       */
+      validateDeductions: function (context, event) {
+        // Function to check if a deduction is incomplete
+        function isIncomplete(ded) {
+          return !(
+            Boolean(ded.deduction_type) && Number(ded.deduction_value) > 0
+          );
+        }
+
+        // Get the deductions from the context
+        var deductions = context.deductions;
+
+        // Check if any deductions are not valid
+        var deductionsNotValid = deductions.some(function (f) {
+          return (
+            Boolean(f.validation.deduction_value.length) ||
+            Boolean(f.validation.deduction_type.length) ||
+            isIncomplete(f)
+          );
+        });
+
+        // Return the validity of deductions
+        return { deductionsNotValid: deductionsNotValid };
+      },
+
+      /**
+       * Validates a deduction value or deduction type.
+       * @param {Object} context - The context object containing deductions.
+       * @param {Object} event - The event object containing index, field, and value.
+       * @returns {Object} - The updated deductions object with validation.
+       */
+      validateDeduction: function (context, event) {
+        var deductions = context.deductions;
+        //const { index, field, value } = event;
+        var index = event.index,
+          field = event.field,
+          value = event.value;
+
+        // Create an empty validation object
+        var validation = {
+          deduction_value: [],
+          deduction_type: [],
+        };
+
+        // Check if the field is deduction_value and the value is not
+        // a number or not greater than 0
+        if (field === "deduction_value" && isNaN(value)) {
+          // Add an exception message to the deduction_value validation array
+          validation.deduction_value = exception(
+            "Deduction Value must be a number."
+          );
+        } else if (field === "deduction_value" && Number(value) < 0) {
+          // Add an exception message to the deduction_value validation array
+          validation.deduction_value = exception(
+            "Deduction Value must be greater than zero."
+          );
+        } else if (field === "deduction_type" && !Boolean(value)) {
+          // Add an exception message to the deduction_type validation array
+          validation.deduction_type = exception("Select a Deduction Type.");
+        }
+
+        // Update the validation property of the deduction at the specified index
+        deductions[index].validation = validation;
+
+        // Return the updated deductions object
+        return { deductions: deductions };
+      },
+
+      /**
+       * Cleans up the context by setting the values to null or -1.
+       */
+      cleanUp: function () {
+        return {
+          sys_id: -1,
+          save_index: 0,
+          deductions: [
+            {
+              deduction_type: null,
+              deduction_value: null,
+              validation: {
+                deduction_type: [],
+                deduction_value: [],
+              },
+            },
+          ],
+          record: {},
+					message: null
+        };
+      },
+
+      /**
+       * Appends a new deduction to the deductions array.
+       * @param {Object} event - The event object containing the deduction information.
+       */
+      appendNewDeduction: function (context, event) {
+        var deductions = context.deductions;
+        deductions.push({
+          deduction_type: null,
+          deduction_value: null,
+          validation: {
+            deduction_type: [],
+            deduction_value: [],
+          },
+        });
+        var object = {
+          deductionsNotValid: true,
+          deductions: deductions,
+        };
+
+        return object;
+      },
+
+      /**
+       * Updates a deduction in the context object based on the given event.
+       * @param {Object} context - The context object containing deductions.
+       * @param {Object} event - The event object containing the index, field,
+       * and previous value.
+       * @returns {Object} - The updated context object with the deductions.
+       */
+      updateDeduction: function (context, event) {
+        // Destructure deductions from the context object
+        var deductions = context.deductions;
+
+        // Destructure index, field, and previous value from the event object
+        var index = event.index,
+          field = event.field,
+          value = event.value;
+        // Check if the field is 'deduction_value'
+        if (field === "deduction_value") {
+          // Convert the previous value to a number and round it to 2 decimal places
+          // Update the deduction value in the deductions array
+          deductions[index][field] = Number(value).toFixed(2);
+        } else {
+          // If the field is not 'deduction_value', use the previous value as is
+          deductions[index][field] = value;
+        }
+
+        // Return the updated context object with the deductions
+        return { deductions: deductions };
+      },
+
+      /**
+       * Drops a deduction from the deductions array in the machine context.
+       * @param {Object} machine - The machine object.
+       * @param {Function} setContext - The function to set the machine context.
+       */
+      dropDeduction: function (context) {
+        // Destructure deductions and deletedIndex from machine context
+        var deductions = context.deductions;
+        var deletedIndex = context.deletedIndex;
+
+        // Remove the deduction at the deletedIndex from the deductions array
+        deductions.splice(deletedIndex, 1);
+
+        // Update the machine context with the modified deductions array
+        return { deductions: deductions };
+      },
+
+      assignDroppedDeduction: function (_, event) {
+        return { deletedIndex: event.index };
+      },
+    };
+  }
+
+  function createGuards() {
+    return {
+      /**
+       * Checks if there are more items to save.
+       * @param {Object} context - The context object containing the save_index and deductions array.
+       * @returns {boolean} - True if there are more items to save, false otherwise.
+       */
+      "more items to save": function (context) {
+        return context.save_index < context.deductions.length;
+      },
+
+      /**
+       * Checks if preview on save is enabled in the context.
+       * @param {Object} context - The context object.
+       * @returns {boolean} - True if preview on save is enabled, false otherwise.
+       */
+      "preview on save": function (context) {
+        return Boolean(context.previewOnSave);
+      },
+      /**
+       * Checks if more input is needed based on the context and event.
+       * @param {Object} context - The context object.
+       * @param {Object} event - The event object.
+       * @returns {boolean} - True if more input is needed, false otherwise.
+       */
+      "need more input": function (context, event) {
+        var record = context.record || {};
+        var okay =
+          (event.field === "talent_user" && !!record.effective_date) ||
+          (event.field === "effective_date" && !!record.talent_user);
+
+        return !okay;
+      },
+    };
+  }
+
+  function createServices() {
+
+		/**
+		 * Launches a review by invoking the "getLatestDeduction" resource with the provided context.
+		 * @param {Object} context - The context object containing the sysId.
+		 */
+		function launchReview(context) { 
+			// Invoke the "getLatestDeduction" resource with the provided context 
+			// and onComplete function.
+			invokeResource("getLatestDeduction", onComplete, {
+				lastId: context.sysId,
+			});
+		}
+
+		/**
+		 * Saves a deduction by invoking the "createDeduction" resource.
+		 * @param {Object} context - The deduction context to be saved.
+		 */
+		function saveDeduction(context) { 
+			// Invoke the "createDeduction" resource with the deduction context 
+			// and the onComplete callback
+			invokeResource("createDeduction", onComplete, {
+				deduction: context,
+			});
+			shout('Your deduction has been saved.')
+		}
+
+		/**
+		 * Saves a deduction type to the server.
+		 * @param {Object} context - The context object containing the deductions and sysId.
+		 */
+		function saveDeductionType(context) {
+			// Get the deduction type to save
+			var deductionType = context.deductions[context.save_index];
+
+			// Create the data object to send to the server
+			var data = {
+				deductionType: deductionType,
+				sysId: context.sysId
+			};
+
+			// Invoke the createDeductionType resource with the data object and the onComplete callback
+			invokeResource("createDeductionType", onComplete, data);
+		}
+		
+		/**
+		 * Refreshes the tickets by invoking the "ticketRefresh" resource. 
+		 */
+		function refreshTickets() {
+			invokeResource("ticketRefresh", onComplete);
+		}
+		
+    return {
+      launchReview: launchReview,
+      saveDeduction: saveDeduction,
+      saveDeductionType: saveDeductionType, 
+      refreshTickets: refreshTickets,
+    };
+  }
+
+  /**
+   * HELPERS
+   */
+
+  /**
+   * Returns an array of page numbers based on the current page and total number of pages.
+   * @param {number} currentPage - The current page number.
+   * @param {number} totalPages - The total number of pages.
+   * @returns {array} - An array of page numbers.
+   */
+  function getPages(currentPage, totalPages) {
+    var pages = [];
+    var startPage = Math.max(currentPage - 5, 1);
+    var endPage = Math.min(startPage + 9, totalPages);
+
+    // Loop through the range of page numbers and push them to the 'pages' array
+    for (var i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
+  function exception(content) {
+    return [
+      { status: "critical", content: content, icon: "circle-exclamation-fill" },
+    ];
+  }
+
+	/**
+	 * This code takes the current state of a machine and generates a list of nodes
+	 * to display in a UI. Each node represents a different aspect of the machine's
+	 * state and properties.
+	 */
+	function createDebugger() {
+		// Get the current state of the machine
+		var present = machine.states[$scope.machineState];
+
+		// Check if the current state has any "on" events
+		if (present.on) {
+			// Generate an array of objects representing the next events
+			var nextEvents = Object.keys(present.on).map(function (f) {
+				return {
+					value: f,
+				};
+			});
+
+			// Generate an array of objects representing the state properties
+			var stateProps = Object.keys($scope.machine.context).map(function (key) {
+				return {
+					label: key,
+					value: JSON.stringify($scope.machine.context[key]),
+				};
+			});
+
+			// Create an array of nodes to display in the UI
+			var nodes = [
+				{
+					value: $scope.machine.id,
+				},
+				{
+					value: $scope.machine.description,
+				},
+				{
+					label: "State",
+					value: $scope.machineState,
+					surname: "Events",
+					children: nextEvents,
+				},
+				{
+					value:
+						$scope.machine.states[$scope.machineState].description ||
+						"No description",
+				},
+				{
+					value: "Values",
+					children: stateProps,
+				},
+			];
+
+			// Set the nodes array in the $scope for use in the UI
+			$scope.nodes = nodes;
+		}
+	}
+	
+	/**
+	 * Displays a message as an alert and clears it after a delay.
+	 * @param {string} message - The message to display.
+	 */
+	function shout(message) {
+		// Set the alert text to the given message
+		$scope.alertText = message;
+
+		// Clear the alert text after a delay of 3999 milliseconds
+		window.setTimeout(function() {
+			$scope.alertText = null;
+		}, 3999);
+	}
+
+	
+  /**
+	  DO NOT MODIFY BELOW THIS LINE
+	  State machine framewrk
+	*/ 
+	function createMachine(t){var n,e=t.actions,a=t.guards,r=t.services,o=t.controller,c=$scope.machine;function i(t,e){Array.isArray(t)?s(t.find(function(t){var e=a[t.cond],r=!!e&&Boolean(e(c.context,n));return!t.cond||r}),e):s(t,e)}function s(t,a){var o="object"==typeof n?n:{},s=u(o,{data:a}),v={context:c.context};function x(t){if(Array.isArray(t))t.forEach(function(t){var n=(0,e[t.type])(v.context,s);v.context=u(v.context,n)}),f(v.context);else{var n=(0,e[t.type])(v.context,s);v.context=u(v.context,n),f(v.context)}}c.states[c.state].exit&&x(c.states[c.state].exit),Boolean(t.target)&&($scope.machineState=t.target),t.actions&&x(t.actions);var h=c.states[t.target];h&&(h.entry&&x(h.entry),h.invoke&&function t(e,a){var o=r[e.src];if(o)try{var c=o(a,n);if(e.onDone)return i(e.onDone,c)}catch(s){if(e.onError)return i(e.onError,s)}}(h.invoke,v.context),h.always&&i(h.always))}function f(t){var n=u(c.context,t);c.context=n,$scope.machine=c}function u(t,n){for(var e in n)n.hasOwnProperty(e)&&(t[e]=n[e]);return t}return o.matches=function(t){return Array.isArray(t)?t.some(function(t){return $scope.machineState===t}):$scope.machineState===t},o.can=function(t){var n=$scope.machine.states[$scope.machineState];if(n.on)return Boolean(n.on[t])},o.send=function(t){var e=t.type||t;c.state=$scope.machineState,function t(e,a){var r=c.states[$scope.machineState];if(n=a,r){var o=r.on[e]||c.on[e];o&&i(o)}}(e,t)},o}
+	//function createMachine(t){var n,e=t.actions,a=t.guards,o=t.services,r=$scope.machine;function c(t,e){Array.isArray(t)?i(t.find(function(t){var e=a[t.cond],o=!!e&&Boolean(e(r.context,n));return!t.cond||o}),e):i(t,e)}function i(t,a){var i="object"==typeof n?n:{},u=f(i,{data:a}),v={context:r.context};function h(t){if(Array.isArray(t))t.forEach(function(t){var n=(0,e[t.type])(v.context,u);v.context=f(v.context,n)}),s(v.context);else{var n=(0,e[t.type])(v.context,u);v.context=f(v.context,n),s(v.context)}}r.states[r.state].exit&&h(r.states[r.state].exit),Boolean(t.target)&&($scope.machineState=t.target),t.actions&&h(t.actions);var x=r.states[t.target];x&&(x.entry&&h(x.entry),x.invoke&&function t(e,a){var r=o[e.src];if(r)try{var i=r(a,n);if(e.onDone)return console.log("Transitioning to ",e.onDone),c(e.onDone,i);console.log("No onDone event was found")}catch(s){if(e.onError)return c(e.onError,s)}}(x.invoke,v.context),x.always&&c(x.always))}function s(t){var n=f(r.context,t);r.context=n,$scope.machine=r}function f(t,n){for(var e in n)n.hasOwnProperty(e)&&(t[e]=n[e]);return t}var u={};return u.matches=function(t){return Array.isArray(t)?t.some(function(t){return $scope.machineState===t}):$scope.machineState===t},u.can=function(t){var n=$scope.machine.states[$scope.machineState];if(n.on)return Boolean(n.on[t])},u.send=function(t){var e=t.type||t;r.state=$scope.machineState,function t(e,a){var o=r.states[$scope.machineState];if(n=a,o){var i=o.on[e]||r.on[e];i&&c(i)}}(e,t)},{send:u.send,matches:u.matches,can:u.can}}
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.grid-container { 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 1rem; 
+  margin: 0.5rem;
+}
+.grid-container.small {  
+  grid-template-columns: 1fr 1fr 40px; 
+  align-items: flex-end;
+  width: 70%;
+}
+
+.deduction-flex {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.breadcrumb {
+  width: 100%;
+}
+
+li.indented {
+ 	margin-left: 2rem; 
+}
+
+.deduction-flex.start { 
+  align-items: flex-start;
+}
+
+.deduction-flex.between { 
+  justify-content: space-between;
+}
+
+.deduction-flex.center { 
+  justify-content: center;
+}
+
+td, th {
+	white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.deduction-list {
+ 	margin: 2rem 0;  
+}
+
+.row div  
+  display: flex;
+  align-items: center; 
+  padding: 0.5rem;
+}
+
+.vd-footer {
+ padding: 0.5rem; 
+}
+ 
+.vd-footer.right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+ 
+
+.invalid-feedback {
+  color: firebrick;
+  background-color: pink;
+  padding: 0 4px;
+}
+
+.preview {
+  border-radius: 0.25rem;
+  background-color: #e0e0e0;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.preview .inner {
+  border-radius: 0.25rem;
+  background-color: #fff;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.preview .top-part {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  grid-template-rows: auto;
+  gap: 1rem; 
+  margin: 0.5rem 0 1rem 0;
+  color: #000;
+}
+
+.text-bg-success {
+	color: #444;
+}
+
+.nav-link.active,
+.breadcrumb-item.active {
+	color: #000;
+  font-weight: 600
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>voluntary_deductions_poc</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Voluntary Deductions POC</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() { 
+	  
+  
+
+		/**
+		 * An object containing supported request methods from the client.
+		 */
+		var resourceRequestMethods = {
+			/**
+			 * Creates a deduction type and sets the message data property to the result.
+			 */
+			loadStateMachine: function () {
+				 data.machine = loadStateMachine();
+			},
+			/**
+			 * Creates a deduction type and sets the message data property to the result.
+			 */
+			createDeductionType: function () {
+				data.message = createDeductionType(input.deductionType, input.sysId);
+			},
+			/**
+			 * Creates a deduction and sets the message data property to the result.
+			 */
+			createDeduction: function () {
+				data.message = createDeduction(input.deduction);
+			},
+			/**
+			 * Gets a saved deduction for review and sets the message data 
+			 * property to the result.
+			 */
+			getLatestDeduction: function () {
+				data.message = getDeduction(input.lastId);
+			},
+			/**
+			 * Refreshes the deduction ticket list with all items.
+			 */
+			ticketRefresh: function () {
+				refreshDeductionTickets();
+			},
+			/**
+			 * Finds deductions based on the deduction parameter 
+			 * and refreshes deduction tickets.
+			 */
+			findDeductions: function () {
+				refreshDeductionTickets(input.deductionParam);
+			},
+			/**
+			 * Finds talent records based on the parameter and 
+			 * refreshes talent records.
+			 */
+			findTalent: function () {
+				refreshTalentRecords(input.param);
+			},
+		}
+
+		// execute the requested method if there is one
+		if (input) {
+			var requestMethod = resourceRequestMethods[input.actionName];
+			if (requestMethod) {
+				return requestMethod();
+			}
+		}
+
+	  // if nothing is requested by this point, return full lists
+	  // for tables and dropdowns 
+		refreshDeductionTickets(); 
+		refreshTalentRecords();
+		refreshDeductionTypes();
+
+		return; 
+	
+	 
+	
+	
+	/**
+	 * Creates a new deduction type record in the specified table.
+	 * @param {Object} object - The object containing the field values for the new record.
+	 * @param {string} sysId - The sys_id of the record to associate the deduction type with.
+	 * @returns {string} - The sys_id of the newly created record.
+	 */
+	function createDeductionType(object, sysId) {
+		var GLIDE_TABLE_NAME = "x_ebh_voluntary_0_deductions";
+		var gr = new GlideRecord(GLIDE_TABLE_NAME);
+
+		// Set the field values for the new record
+		gr.deduction_type = object.deduction_type.label;
+		gr.deduction_value = object.deduction_value;
+		gr.deduction_ticket_id = sysId;
+
+		// Insert the new record into the table
+		return gr.insert();
+	}
+
+	/**
+	 * Retrieves a deduction record based on the given sysId.
+	 * @param {string} sysId - The sysId of the deduction record.
+	 * @returns {object} - The deduction record.
+	 */
+	function getDeduction(sysId) { 
+		// Define table names
+		var TICKET_TABLE_NAME = "x_ebh_voluntary_0_deduction_tickets";
+		var TYPES_TABLE_NAME = "x_ebh_voluntary_0_deductions";
+		var TALENT_TABLE_NAME = "x_ebh_ccde_talent_core";
+
+		// Create GlideRecord objects for each table
+		var target = new GlideRecord(TICKET_TABLE_NAME);
+		var types = new GlideRecord(TYPES_TABLE_NAME);
+		var talent = new GlideRecord(TALENT_TABLE_NAME);
+
+		// Add query to target GlideRecord
+		target.addQuery('sys_id', sysId);
+
+		// Execute query on target GlideRecord
+		target.query();
+
+		// Create an empty record object
+		var record = {};
+		// Create an empty worker object
+		var worker = {};
+
+		// Iterate through the retrieved records
+		while (target.next()) {  
+			// Get the values of the desired fields and assign them to the record object
+			record.talent_user = target.getValue('talent_user');
+			record.effective_date = target.getValue('effective_date');
+			record.sys_created_by = target.getValue('sys_created_by');
+			record.sys_created_on = target.getValue('sys_created_on');
+			record.status = target.getValue('status');
+			record.number = target.getValue('number');
+			record.notes = target.getValue('notes');
+		}
+
+		// Add query to talent GlideRecord
+		talent.addQuery('sys_id', record.talent_user); 
+		// Execute query on talent GlideRecord
+		talent.query();
+
+		// Iterate through the retrieved records
+		while (talent.next()) {  
+			// Get the values of the desired fields and assign them to the worker object
+			worker.full_name = talent.getValue('full_name'); 
+			worker.enterprise_talent_id = talent.getValue('enterprise_talent_id'); 
+			worker.status_crm = talent.getValue('status_crm'); 
+			worker.full_name = talent.getValue('full_name'); 
+		}
+
+		// Assign the worker object to the record object
+		record.worker = worker;
+
+		// Add query to types GlideRecord
+		types.addQuery('deduction_ticket_id', sysId); 
+		// Execute query on types GlideRecord
+		types.query();
+
+		// Create an empty array to store rows
+		var rows = []; 
+		var total = 0;
+		// Iterate through the retrieved records
+		while (types.next()) { 
+			// Create a new row object and push it to the rows array
+			rows.push({
+				deduction_value: Number(types.getValue('deduction_value')).toFixed(2),
+				deduction_type: types.getValue('deduction_type')
+			}); 
+			total += Number(types.getValue('deduction_value'));
+		}
+
+		// Assign the rows array to the record object
+		record.rows = rows;
+		record.total = total.toFixed(2);
+
+		// Return the deduction record
+		return record;
+	}
+
+	/**
+	 * Creates a new deduction record in the specified table.
+	 * @param {Object} data - The data object containing the record information.
+	 * @returns {string|GlideRecord} - The inserted GlideRecord object or an error message.
+	 */
+	function createDeduction(data) {
+		try {
+			var GLIDE_TABLE_NAME = "x_ebh_voluntary_0_deduction_tickets"; 
+			var object = data.record;
+
+			// Create a new GlideRecord object for the specified table
+			var gr = new GlideRecord(GLIDE_TABLE_NAME);
+
+			// Set the field values for the new record
+			gr.talent_user = object.talent_user.sys_id;
+			gr.effective_date = object.effective_date;
+			gr.notes = object.notes;
+
+			// Insert the new record into the table
+			return gr.insert();
+		} catch (ex) {
+			return ex.message;
+		}
+	}
+	
+	/**
+	 * Refreshes the deduction types by querying the specified GlideRecord table.
+	 * @returns {Array} - An array of deduction type records.
+	 */
+	function refreshDeductionTypes() { 
+		var GLIDE_TABLE_NAME = "x_ebh_voluntary_0_deduction_type_list";
+		var gr = new GlideRecord(GLIDE_TABLE_NAME);
+		gr.query(); 
+		var records = [];
+
+		// Iterate through each record in the GlideRecord
+		while (gr.next()) {
+			var record = {
+				value: gr.getValue("value"),
+				label: gr.getValue("label"),
+				sys_id: gr.getValue("sys_id") 
+			};
+			records.push(record);  
+		}
+
+		// Assign the deduction types to the data object
+		data.deductionTypes = records; 
+
+		return records;
+  }
+
+	/**
+	 * Refreshes the deduction tickets list based on the given parameter.
+	 * @param {string} param - The parameter to filter the deduction tickets.
+	 * @returns {Array} - The refreshed deduction tickets.
+	 */
+	function refreshDeductionTickets(param) {
+		// Define the Glide table name
+		var GLIDE_TABLE_NAME = "x_ebh_voluntary_0_deduction_tickets";
+
+		// Create a new GlideRecord object
+		var gr = new GlideRecord(GLIDE_TABLE_NAME);
+
+		// Order the records by descending sys_created_on field
+		gr.orderByDesc('sys_created_on');
+
+		// Add query conditions if the parameter is provided
+		if (param) {
+			var qc = gr.addQuery('sys_created_by', 'CONTAINS', param);
+			qc.addOrCondition('talent_user.full_name', 'CONTAINS', param);
+			qc.addOrCondition('talent_user.enterprise_talent_id', 'CONTAINS', param);
+		}
+ 
+		// Execute the query
+		gr.query();
+
+		// Create an array to store the records
+		var records = [];
+
+		// Iterate through each record in the GlideRecord
+		while (gr.next()) {
+
+			// Create a record object with the required fields
+			var record = {
+				number: gr.getValue("number"),
+				effective_date: gr.getValue("effective_date"),
+				sys_created_by: gr.getValue("sys_created_by"),
+				sys_created_on: gr.getValue("sys_created_on"),
+				
+			// Get the display value of the talent_user field 
+				full_name: gr.getDisplayValue('talent_user'), 
+				status: gr.getValue("status"),
+				talent_user: gr.getValue("talent_user"),
+				sys_id: gr.getValue("sys_id")
+			};
+
+			// Add the record to the records array
+			records.push(record);
+		}
+
+		 // Assign the deduction tickets to the data object
+		 data.message = records; 
+		 // Return the refreshed deduction tickets
+		 return records;
+	}
+
+
+	
+	/**
+	 * Refreshes GlideRecords based on the given parameter.
+	 * @param {string} param - The parameter to query the GlideRecords.
+	 * @returns {Array} - An array of records.
+	 */
+	function refreshTalentRecords(param) { 
+		var GLIDE_TABLE_NAME = "x_ebh_ccde_talent_core";
+		var gr = new GlideRecord(GLIDE_TABLE_NAME);
+
+		// Add query if param is provided
+		if (param) { 
+			gr.addQuery('full_name', 'CONTAINS', param);
+		} 
+
+		gr.setLimit(25);
+		gr.query();
+
+		var records = [];
+
+		// Iterate through the GlideRecords and create record objects
+		while (gr.next()) {
+			var record = {
+				full_name: gr.getValue("full_name"),
+				enterprise_talent_id: gr.getValue("enterprise_talent_id"),
+				status_crm: gr.getValue("status_crm"),
+				sys_id: gr.getValue("sys_id")
+			};
+			records.push(record);
+		}
+
+		// Set the records in the data object
+		data.talent = records; 
+
+		return records;
+	}
+	
+	
+	/**
+	 * Loads the state machine from the Application Json table.
+	 * @returns {Object} The loaded state machine.
+	 */
+	function loadStateMachine() { 
+		var TABLE_NAME = "x_ebh_ccde_application_json";
+
+		// Create a new GlideRecord object for the specified table
+		var target = new GlideRecord(TABLE_NAME);
+
+		// Add a query to retrieve the record with the specified number
+		target.addQuery('number', 'APPJSON0001001');
+
+		// Execute the query
+		target.query();
+
+		var json;
+ 
+		while (target.next()) {
+			// Parse the JSON content of the record
+			json = JSON.parse(target.getValue('content'));
+		} 
+		// Return the parsed JSON content
+		return json;
+	}
+ 
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-23 05:29:58</sys_created_on>
+        <sys_id>16127ba74766b110265ad698436d43f5</sys_id>
+        <sys_mod_count>1096</sys_mod_count>
+        <sys_name>Voluntary Deductions POC</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_widget_16127ba74766b110265ad698436d43f5</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-11-27 21:09:14</sys_updated_on>
+        <template><![CDATA[<div>
+  
+  <!-- breadcrumbs visible in all views -->
+  <div class="deduction-flex start">
+    <button
+      ng-click="c.send('change setting')"
+      class="btn btn-secondary glyphicon glyphicon-menu-hamburger"
+      ng-class="{'btn-primary': machine.context.debug}"
+    ></button>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Apps</a></li>
+      <li 
+        class="breadcrumb-item"
+        ng-click="c.send('home')"
+        ng-class="{ 'active': c.matches('viewing ticket history') }"
+      >
+        <a ng-if="!c.matches('viewing ticket history')" href="#">Voluntary Deductions</a>
+        <span ng-if="c.matches('viewing ticket history')">Voluntary Deductions</span>
+      </li>
+      <li
+        class="breadcrumb-item"
+        ng-if="!c.matches('viewing ticket history')"
+        ng-class="{ 'active': !machine.context.debug }"
+      >
+        New Voluntary Deduction
+      </li>
+      <li class="breadcrumb-item" ng-if="machine.context.debug">
+        {{machineState}}
+      </li>
+    </ol>
+  </div>
+  
+  <div ng-if="alertText" class="alert alert-success" role="alert">
+    {{alertText}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  <div ng-if="machine.context.message">
+    {{machine.context.message}}
+  </div>
+
+  <!-- STATE: viewing ticket history
+    ticket history list -->
+  <div class="collapse" ng-class="{'show': c.can('create')}">
+  
+    <div class="deduction-flex between">
+      <h2>Deductions</h2>
+      <button
+        type="button"
+        ng-click="c.send('create')"
+        class="btn btn-sm btn-primary"
+      >
+        ADD NEW DEDUCTION 
+      </button>
+    </div>
+
+    <input
+      class="form-control"
+      ng-change="c.findDeductions(deductionParam)"
+      ng-model="deductionParam"
+      placeholder="Search by Talent Name or Created By"
+    />
+
+    
+    <div class="deduction-flex">
+      <h3>Deduction History</h3>
+      <span class="badge text-bg-success">{{machine.context.recordCount}} </span>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Deduction ID</th>
+          <th scope="col">Talent Name</th>
+          <th scope="col">Effective Date</th>
+          <th scope="col">Created By</th>
+          <th scope="col">Created On</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="ticket in machine.context.visible">
+          <td scope="row"><a ng-click="c.send({type: 'view', value: ticket.sys_id})" href="#">{{ticket.number}}</a></td>
+          <td>{{ticket.full_name}}</td>
+          <td>{{ticket.effective_date}}</td>
+          <td>{{ticket.sys_created_by}}</td>
+          <td>{{ticket.sys_created_on}}</td>
+          <td>{{ticket.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- list pagination -->
+    <div ng-if="machine.context.recordCount > machine.context.pageSize && c.can('page')" class="deduction-flex center">
+      <nav>
+        <ul class="pagination">
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="#"
+              aria-label="Previous"
+              ng-click="c.send({
+                        type: 'page',
+                        pageNum: 1
+                      })"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li
+            class="page-item"
+            ng-class="{'active': n === machine.context.currentPage}"
+            ng-click="c.send({
+                      type: 'page',
+                      pageNum: n
+                      })"
+            ng-repeat="n in machine.context.pages"
+          >
+            <a class="page-link" href="#">{{ n }}</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  
+  <!-- STATE: Initial state | adding deduction type
+    Deduction form title area -->
+  <div ng-if="c.matches(['Initial state', 'adding deduction type'])">
+    <h2>New Deduction</h2>
+    <h3>Deduction Details</h3>
+  </div>
+
+  <!-- STATE: wait for save | save type
+    progress bar -->
+  <div
+    ng-if="machine.context.progress"
+    class="progress"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    <div
+      class="progress-bar"
+      ng-style="{ 'width': machine.context.progress }"
+    ></div>
+  </div>
+
+  <!-- STATE: Initial state | adding deduction type 
+    Deduction form main info inputs -->
+  <div
+    class="grid-container"
+    ng-if="c.matches(['Initial state', 'adding deduction type'])"
+  >
+    <div>
+      <label for="talentDataList" class="form-label">Talent name</label>
+      <input
+        class="form-control"
+        ng-model="talentParam"
+        ng-change="c.findTalent(talentParam)"
+        list="datalistOptions"
+        id="talentDataList"
+        placeholder="Type to search..."
+      />
+      <datalist id="datalistOptions">
+        <option
+          ng-repeat="user in talentList"
+          value="{{user.full_name}}"
+        >    EID {{user.enterprise_talent_id}}, Status: {{user.status_crm}}</option>
+      </datalist>
+    </div>
+
+    <div>
+      <label class="form-label">Effective Date</label>
+      <input
+        type="date"
+        class="form-control"
+        ng-model="machine.context.record.effective_date"
+        ng-change="c.changeRecord('effective_date', machine.context.record.effective_date)"
+      />
+    </div>
+  </div>
+ 
+  <!--
+    STATE: adding deduction type
+    Deduction types panel -->
+  <div ng-if="c.matches(['adding deduction type'])">
+    <!-- deductions list -->
+    <div class="deduction-list">
+      <div ng-repeat="deduction in machine.context.deductions">
+        <div class="grid-container small">
+          <div>
+            <label ng-if="$index === 0" class="form-label"
+              >Deduction Type</label
+            >
+            <select
+              class="form-control"
+              ng-model="deduction.deduction_type"
+              ng-change="c.changeDeduction('deduction_type', $index, deduction.deduction_type)"
+              ng-options="item.label for item in deductionTypes track by item.value"
+            ></select>
+          </div>
+
+          <div>
+            <label ng-if="$index === 0" class="form-label"
+              >Deduction Amount</label
+            >
+            <input
+              type="text"
+              ng-model="deduction.deduction_value"
+              ng-blur="c.changeDeduction('deduction_value', $index, deduction.deduction_value)"
+              placeholder="0.00"
+              class="form-control form-control-sm"
+            />
+            <div
+              ng-if="deduction.validation.deduction_value.length"
+              class="invalid-feedback"
+            >
+              {{deduction.validation.deduction_value[0].content}}
+            </div>
+          </div>
+
+          <button
+            ng-disabled="$index === 0"
+            type="button"
+            ng-click="c.send({
+                    type: 'drop',
+                    index: $index
+                    })"
+            class="btn btn-primary"
+          >
+          <i class="glyphicon glyphicon-trash" />
+          </button>
+        </div>
+      </div>
+
+      <div class="vd-footer">
+        <!-- add deduction button -->
+        <button
+          type="button"
+          ng-click="c.send('add')"
+          class="btn btn-sm btn-primary"
+          ng-disabled="machine.context.deductionsNotValid"
+        >
+       <i class="glyphicon glyphicon-plus" />   ADD DEDUCTION
+        </button>
+      </div>
+    </div>
+
+    <!-- notes textarea -->
+    <div class="vd-footer">
+      <label for="notesText" class="form-label">Notes</label>
+      <textarea
+        class="form-control"
+        id="notesText"
+        rows="3"
+        ng-model="machine.context.record.notes"
+        ng-change="c.changeRecord('notes', machine.context.record.notes)"
+      ></textarea>
+    </div>
+
+    <!-- save button -->
+    <div class="vd-footer right">
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          ng-click="c.send('change setting')"
+          ng-checked="machine.context.debug"
+          role="switch"
+          id="flexSwitchCheckDefault"
+        />
+        <label class="form-check-label" for="flexSwitchCheckDefault"
+          >Debug mode</label
+        >
+      </div>
+
+      <button
+        ng-if="c.can('save')"
+        type="button"
+        ng-click="c.send('save')"
+        class="btn btn-sm btn-primary"
+        ng-disabled="machine.context.deductionsNotValid"
+      >
+        SAVE
+      </button>
+    </div>
+  </div>
+
+  <!-- 
+    STATE: viewing preview
+   save review back button  -->
+  <button
+    ng-if="c.can('done')"
+    type="button"
+    ng-click="c.send('done')"
+    class="btn btn-sm"
+  >
+  <i class=" glyphicon glyphicon-menu-left" />  BACK
+  </button>
+
+  <!-- 
+    STATE: viewing preview
+    save review container  -->
+  <div class="preview" ng-if="c.matches(['viewing preview', 'viewing ticket'])">
+    <h3>Deduction ID #{{machine.context.latestDeduction.number}}</h3>
+    <div class="deduction-flex">
+      <div ng-repeat="key in machine.context.recordKeys">
+        <div><b>{{key}}</b></div>
+        <div>{{machine.context.previousRecord[key]}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview" ng-if="c.matches(['viewing preview', 'viewing ticket'])">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          ng-click="handleTabClick()"
+          ng-class="{ 'active': showDetails }"
+          href="#"
+          >Details</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          ng-click="handleTabClick()"
+          ng-class="{ 'active': !showDetails }"
+          href="#"
+          >Notes</a
+        >
+      </li>
+    </ul>
+
+    <b ng-if="!showDetails">Deduction Notes</b>
+    <div class="inner" ng-if="!showDetails">{{machine.context.latestDeduction.notes}}</div>
+
+    <b ng-if="showDetails">Deduction Details</b>
+    <div class="inner" ng-if="showDetails">
+      <div class="grid-container">
+        <div><b>Deduction Type</b></div>
+        <div class="align-right"><b>Deduction Amount</b></div>
+      </div>
+      <div class="grid-container" ng-repeat="row in machine.context.latestDeduction.rows">
+        <div>{{row.deduction_type}}</div>
+        <div class="align-right"><b>$</b>{{row.deduction_value}}</div>
+      </div>
+      <div class="grid-container">
+        <div></div>
+        <div class="align-right"><b>Total $</b>{{machine.context.latestDeduction.total}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 
+    STATE: confirming inputs
+    save confirm modal  -->
+  <div ng-if="c.matches('confirming inputs')">
+    <div class="preview">
+      <div class="top-part">
+        <div>
+          <strong>Name</strong>
+        </div>
+        <div>{{machine.context.record.talent_user.full_name}}</div>
+        <div>
+          <strong> Talent Number</strong>
+        </div>
+        <div>{{machine.context.record.talent_user.enterprise_talent_id}}</div>
+        <div>
+          <strong> Effective Date</strong>
+        </div>
+        <div>{{machine.context.record.effective_date}}</div>
+      </div>
+
+      <strong>Deductions</strong>
+
+      <div
+        class="grid-container small"
+        ng-repeat="deduction in machine.context.deductions"
+      >
+        <div>{{deduction.deduction_type.label}}</div>
+        <div>{{deduction.deduction_value}}</div>
+      </div>
+     
+    </div>
+
+    <div class="deduction-flex">
+      <button 
+        type="button"
+        ng-click="c.send('cancel')"
+        class="btn btn-sm"
+        ng-disabled="machine.context.deductionsNotValid"
+      >
+        CANCEL
+      </button>
+      <button 
+        type="button"
+        ng-click="c.send('okay')"
+        class="btn btn-sm btn-primary"
+        ng-disabled="machine.context.deductionsNotValid"
+      >
+        CONFIRM
+      </button>
+
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          ng-click="c.send('toggle preview')"
+          ng-checked="machine.context.previewOnSave"
+          role="switch"
+          id="flexSwitchCheckDefault"
+        />
+        <label class="form-check-label" for="flexSwitchCheckDefault"
+          >Review after saving</label
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- 
+    STATE: confirming drop
+    delete confirm modal -->
+  <div ng-if="c.matches('confirming drop')">
+    <div>Really delete item?</div>
+    <button type="button" ng-click="c.send('cancel')" class="btn btn-sm">
+      cancel
+    </button>
+    <button
+      type="button"
+      ng-click="c.send('okay')"
+      class="btn btn-sm btn-primary"
+    >
+      delete
+    </button>
+  </div>
+
+  
+
+  <ul ng-if="machine.context.debug">
+    <li ng-repeat="node in nodes">
+      <b ng-if="node.label">{{node.label}}: </b>
+
+      {{node.value}}
+
+      <ul ng-if="node.children">
+        <li ng-if="node.surname"><b>{{node.surname}}</b></li>
+        <li
+          ng-class="{'indented': node.surname}"
+          ng-repeat="kid in node.children"
+        >
+          <b ng-if="kid.label">{{kid.label}}: </b>
+          {{kid.value}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

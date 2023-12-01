@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {  /* widget controller */  var c = this;};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>machine_new_misc_billing_search</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Machine New Misc Billing Search</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {  /* populate the 'data' object */  /* e.g., data.table = $sp.getValue('table'); */})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-11-28 12:02:16</sys_created_on>
+        <sys_id>21dbb251c3baf91011971d4ce00131a8</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Machine New Misc Billing Search</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_widget_21dbb251c3baf91011971d4ce00131a8</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-11-28 13:20:02</sys_updated_on>
+        <template><![CDATA[  <div ng-if="page.matches('new misc billing')">
+    <h2>New Miscellaneous Billing</h2>
+
+    <div class="misc-billing-search-form">
+      <label class="form-label"
+        >Create a new miscellaneous billing by searching for a new
+        account</label
+      >
+      <input
+        class="form-control"
+        ng-change="page.findAccount(accountParam)"
+        ng-model="accountParam"
+        placeholder="Search for an account name or account number"
+      />
+    </div>
+
+    <div class="distant" ng-if="page.machine.context.accountList.length">
+      <h4>Search results for "{{accountParam}}"</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Account Name</th>
+            <th scope="col">Account Id</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Branch Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="account in page.machine.context.visible">
+            <td
+              scope="row"
+              ng-click="page.send({type: 'create', value: account.sys_id})"
+            >
+              <a href="#">{{account.account_name}}</a>
+            </td>
+            <td>{{account.account_id}}</td>
+            <td>{{account.brand_name}}</td>
+            <td>{{account.branch_name}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+]]></template>
+    </sp_widget>
+</record_update>
