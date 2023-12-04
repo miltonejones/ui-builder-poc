@@ -1,244 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller = function ($scope) {
+        <client_script><![CDATA[/**
+ * client.js - experimental state machine application
+ *
+ * State machine diagram
+ * https://stately.ai/registry/editor/d8012c3d-6b85-4f71-bdbd-fa581ffb522b?machineId=501be2b1-f4f7-415c-9b00-24eb11607544
+ *
+ * Purpose:
+ * Defines the AngularJS controller and state machine for the query builder UI.
+ * Handles all UI interaction and state management.
+ *
+ * Sections:
+ *
+ * 1. Controller definition
+ *    - Binds to $scope
+ *    - Controller state variables
+ *    - Interactive functions
+ *
+ * 2. State machine creation
+ *    - Actions
+ *    - Guards
+ *    - Services
+ *    - Initialization
+ *
+ * 3. Helper functions
+ *    - Invoke resource
+ *    - Find column definitions
+ *    - Format predicates
+ *    - Misc utilities
+ *
+ * 4. State machine framework
+ *    - Handles transitions
+ *    - Calls actions and services
+ *    - Binds state to $scope
+ *
+ * Usage:
+ * - Import and add api.controller to Angular module dependencies
+ * - Connect UI elements to controller functions
+ * - State machine manages interaction and state
+ */
+
+api.controller = function ($scope) {
   /* widget controller */
   var c = this;
 
+  var COOKIE_NAME = "selected-column-settings";
 
-  function createTab() {
-		var dataTable = null;
-		var pageSize = 10;
-		var selectedTable = null;
-		var selectedColumns = {};
-		var selectedFilters = {};
-		var expandedColumns = {};
-		var pageNum = 1;
-		var predicates = [
-			{
-				field: null,
-				operator: null,
-				value: null,
-			},
-		];
-    return {
-      title: "New Query",
-      dataTable: dataTable,
-      pageSize: pageSize,
-      selectedTable: selectedTable,
-      selectedColumns: selectedColumns,
-      selectedFilters: selectedFilters,
-      expandedColumns: expandedColumns,
-      pageNum: pageNum,
-      predicates: predicates,
-      fields: [],
-      rows: null,
-      columns: null,
-      recordCount: 0,
-      columnMap: [],
-    };
-  }
-
-  var scopeProps = [
-    "dataTable",
-    "pageSize",
-    "selectedTable",
-    "selectedColumns",
-    "selectedFilters",
-    "expandedColumns",
-    "pageNum",
-    "predicates",
-    "fields",
-    "rows",
-    "columns",
-    "recordCount",
-    "queryLines",
-    "selectedFilters",
-    "columnMap",
-  ];
-
-  c.addTab = function () {
-    var index = $scope.queryTabs.length;
-    $scope.queryTabs.push(createTab());
-    c.setTab(index);
-  };
-	
-	function syncTab() {
-    $scope.queryTabs.forEach(function (tab, i) {
-      if (i === $scope.queryTabIndex) {
-        scopeProps.forEach(function (prop) {
-          tab[prop] = $scope[prop];
-        });
-      }
-    });
-	}
-
-  c.setTab = function (index) {
-		if (index === $scope.queryTabIndex) {
-			return;
-		}
-    $scope.queryTabs.forEach(function (tab, i) {
-      if (i === $scope.queryTabIndex && i !== index) {
-        scopeProps.forEach(function (prop) {
-          tab[prop] = $scope[prop];
-        });
-      }
-    });
-
-    $scope.queryTabIndex = index;
-    var tab = $scope.queryTabs[index];
-
-		/*$scope.fields = [];
-		$scope.selectedColumns = {};
-		$scope.expandedColumns = {};*/
-		
-    scopeProps.forEach(function (prop) {
-      $scope[prop] = tab[prop];
-    });
-		
-  };
-
-  $scope.queryTabs = [createTab()];
-  $scope.queryTabIndex = 0;
-
-	scopeProps.forEach(function (prop) {
-		$scope[prop] = $scope.queryTabs[0][prop];
-	});
-	
   $scope.pageSizes = [10, 25, 50];
   $scope.nullTypes = ["is empty", "is not empty", "is anything"];
 
-  invokeResource("getTables", function (response) {
-    $scope.response = response.data.message;
-    invokeResource("loadJson", function (response) {
-      $scope.filterTypes = response.data.message; 
-    });
-  });
-
-  c.clear = function () {
-    $scope.selectedColumns = {};
-    $scope.expandedColumns = {};
-    $scope.dataTable = null;
-    $scope.selectedTable = null;
-
-    $scope.recordCount = 0;
-    $scope.rows = null;
-		syncTab()
-  };
-
-  c.announce = function (col) {
-    $scope.selectedColumns[col] = !$scope.selectedColumns[col];
-    updateFields();
-  };
-
-  c.selectAll = function () {
-    $scope.columns.forEach(function (col) {
-      $scope.selectedColumns[col.name] = true;
-    });
-    updateFields();
-  };
-
-  c.expand = function (col) {
-    $scope.expandedColumns[col] = !$scope.expandedColumns[col];
-  };
-
+  // initialize first tab
+  $scope.queryTabs = [createTab()];
+  $scope.queryTabIndex = 0;
   $scope.handleKeypress = function (event, inputValue) {
     if (event.which === 13) {
-      // 13 is the code for the Enter key
-      // handle filter update
-      var array = $scope.predicates.filter(function (f) {
-        return !!f.field && f.field !== inputValue;
-      });
-
-      array.push({
+      // check if the key pressed is Enter key
+      c.send({
+        // send ad hoc query message to the machine
+        type: "ad hoc",
         field: inputValue,
-        operator: "is",
-        value: $scope.selectedFilters[inputValue],
       });
-
-      $scope.predicates = array;
-      c.updateQuery();
-      c.setQuery();
     }
   };
 
-  function updateFields() {
-    var fields = Object.keys($scope.selectedColumns)
-      .filter(function (f) {
-        return !!$scope.selectedColumns[f];
-      })
-      .map(function (f) {
-        return f;
+  // generated state machine automatically binds to the current tab
+  generateStateMachine(function (tabMachine) {
+    // start the machine for the first tab
+    tabMachine.send("begin");
+  });
+
+  // load any column settings from local storage
+  loadRememberedColumnSettings();
+
+  // Using 'c' functions send messages to the state machine workflow from the UI
+  // ---------------------------------------------------------------------------------/
+
+  /**
+   * Adds a new tab to the queryTabs array.
+   * If a table name is provided, checks if a tab with the same table name already exists.
+   * If a tab with the same table name exists, sets the current tab to that tab.
+   * Otherwise, creates a new tab and appends it to the queryTabs array.
+   * Sets the queryTabIndex to the index of the new tab.
+   * Generates a state machine and binds it to the current tab.
+   * If a table name is provided, sends an 'auto' event to the state machine with the table name.
+   * Otherwise, sends a 'begin' event to the state machine.
+   * @param {string} table - The name of the table to check for existing tabs.
+   */
+  c.addTab = function (table) {
+    var index = $scope.queryTabs.length;
+
+    if (table) {
+      var existingNames = $scope.queryTabs.map(function (tab) {
+        return tab.machine.context.selectedTable.name;
       });
-    $scope.fields = fields;
-    $scope.tableColumns = fields.map(function (col) {
-      var key = Object.keys($scope.selectedColumns).find(function (f) {
-        return f === col;
-      });
-      return $scope.selectedColumns[key];
+
+      var existingTabIndex = existingNames.indexOf(table);
+      if (existingTabIndex > -1) {
+        return c.setTab(existingTabIndex);
+      }
+    }
+
+    // create and append new tab
+    $scope.queryTabs.push(createTab());
+    $scope.queryTabIndex = index;
+
+    // generated state machine automatically binds to the current tab
+    generateStateMachine(function (tabMachine) {
+      if (table) {
+        return tabMachine.send({
+          type: "auto",
+          table: table,
+        });
+      }
+      tabMachine.send("begin");
     });
-		syncTab();
-  }
+  };
+
+  /**
+   * Sets the active tab and updates the state machine accordingly.
+   * @param {number} index - The index of the tab to set as active.
+   */
+  c.setTab = function (index) {
+    // Set the active tab index
+    $scope.queryTabIndex = index;
+
+    // Get the state machine from the selected tab
+    $scope.machine = $scope.queryTabs[index].machine;
+
+    // Update the machine state
+    $scope.machineState = $scope.machine.state;
+  };
+
+  c.openRecord = function (row, col) {
+    var column = $scope.machine.context.columnMap[col];
+    if (!column.reference) {
+      return;
+    }
+
+    c.send({
+      type: "open",
+      id: row[col],
+      name: column.reference,
+    });
+  };
+
+  c.announce = function (col) {
+    c.send({
+      type: "choose",
+      column: col,
+    });
+  };
+
+  c.expand = function (col) {
+    c.send({
+      type: "expand",
+      column: col,
+    });
+  };
 
   c.resize = function (n) {
-    $scope.pageSize = n;
-    c.exec();
+    c.send({
+      type: "run",
+      size: n,
+    });
   };
 
-  c.exec = function (n) {
-    updateFields();
-    var num = n || 1;
-    $scope.busy = true;
-    invokeResource(
-      "readTable",
-      function (response) {
-        $scope.rows = response.data.message;
-        $scope.recordCount = response.data.count;
-        $scope.busy = false;
-        updatePages(num);
-				syncTab()
-      },
-      {
-        table: $scope.selectedTable.name,
-        fields: $scope.fields,
-        size: $scope.pageSize,
-        page: num,
-        filter: $scope.filter,
-      }
-    );
+  c.selectAll = function () {
+    c.send({
+      type: "choose",
+      column: true,
+    });
   };
 
-  c.describe = function (table) {
-    $scope.selectedTable = table;
-    $scope.filter = null;
-    invokeResource(
-      "getTable",
-      function (response) {
-        $scope.columns = response.data.message;
-        $scope.columnMap = $scope.columns.reduce(function (out, col) {
-          out[col.name] = col.label;
-          if (col.children) {
-            col.children.forEach(function (kid) {
-              out[col.name + "." + kid.name] = kid.label;
-            });
-          }
-          return out;
-        }, {});
-				syncTab()
-			  $scope.queryTabs[$scope.queryTabIndex].title = table.label;
-      },
-      {
-        table: table.name,
-      }
-    );
-  };
-
+  // executes table search request
   c.search = function (param) {
     invokeResource(
       "getTables",
       function (response) {
-        $scope.response = response.data.message;
-				syncTab()
+        c.send({
+          type: "update",
+          value: response.data.message,
+        });
       },
       {
         filter: "sys_nameLIKE" + param,
@@ -246,118 +189,11 @@
     );
   };
 
-  c.setQuery = function () {
-    $scope.filter = $scope.queryLines.join("");
-    c.exec(1);
-  };
-
-  function findColumn(field) {
-    if (field.indexOf(".") < 0) {
-      return $scope.columns.find(function (f) {
-        return f.name === field;
-      });
-    }
-    var part = field.split(".");
-    var item = $scope.columns.find(function (f) {
-      return f.name === part[0];
-    });
-
-    console.log({
-      part: part,
-      columns: $scope.columns,
-      item: item,
-    });
-
-    return item.children.find(function (f) {
-      return f.name === part[1];
-    });
-  }
-
-  /**
-   * Updates the query based on the given predicates.
-   * @param {Object} n - The predicates to update the query with.
-   */
-  c.updateQuery = function (n) {
-    // Map over the predicates array
-    var lines = $scope.predicates.map(function (pred) {
-      // Check if field is not defined
-      if (!pred.field) return alert("Predicate has no field!");
-
-      // Find the item in columnList that matches the field
-      var item = findColumn(pred.field);
-
-      console.log({
-        item: item,
-      });
-
-      // Check if operator is not defined
-      if (!pred.operator) return alert("No operator was found");
-
-      // Get the predicate options based on the item type
-      var predOpts = $scope.filterTypes[item.type] || $scope.filterTypes.string;
-
-      // Check if predicate options are not defined
-      if (!predOpts)
-        return alert('No filterTypes for item "' + item.type + '"');
-
-      // Get the code for the operator
-      var code = predOpts[pred.operator];
-
-      // Get the operator based on the predicate type
-      var op = !pred.type ? null : pred.type === "or" ? "^OR" : "^";
-
-      $scope.selectedFilters[pred.field] = formatPredicate(pred);
-
-      // Filter out any falsy values and join the array elements
-      return [op, pred.field, code, pred.value].filter(Boolean).join("");
-    });
-
-    // Update the lines variable in the scope
-    $scope.queryLines = lines;
-  };
-
-  /**
-   * Formats a predicate based on its operator.
-   * @param {Object} pred - The predicate object.
-   * @param {string} pred.operator - The operator of the predicate.
-   * @param {string} pred.value - The value of the predicate.
-   * @returns {string} - The formatted predicate.
-   */
-  function formatPredicate(pred) {
-    switch (pred.operator) {
-      case "starts with":
-        return pred.value + "*";
-      case "ends with":
-        return "*" + pred.value;
-      case "contains":
-        return "*" + pred.value + "*";
-      default:
-        return pred.value;
-    }
-  }
-
-  /**
-   * Sets the predicate for a given field.
-   * @param {Object} pred - The predicate object.
-   * @param {string} pred.field - The field to set the predicate for.
-   */
   c.setPredicate = function (pred) {
-    // Find the item in columnList that matches the field of the predicate
-    var item = findColumn(pred.field);
-
-    $scope.filterTypes.choice = $scope.filterTypes.string;
-
-    // Get the predicate options for the item's type
-    var predOpts = $scope.filterTypes[item.type];
-
-    // If predicate options are not found, return
-    if (!predOpts) {
-      alert('Invalid field type "' + item.type + '"');
-    }
-
-    // Set the predicate options for the predicate
-    pred.predOpts = predOpts;
-    pred.choices = item.choices;
+    c.send({
+      type: "set",
+      predicate: pred,
+    });
   };
 
   /**
@@ -365,11 +201,9 @@
    * @param {string} type - The type of the predicate.
    */
   c.addPredicate = function (type) {
-    $scope.predicates.push({
-      field: null,
-      operator: null,
-      value: null,
-      type: type,
+    c.send({
+      type: "add",
+      predicateType: type,
     });
   };
 
@@ -378,31 +212,659 @@
    * @param {number} index - The index of the predicate to remove.
    */
   c.dropPredicate = function (index) {
-    $scope.predicates.splice(index, 1);
+    c.send({
+      type: "drop",
+      index: index,
+    });
   };
 
   return;
 
-  function updatePages(pageNum) {
-    // Get the ticket list from the context
+  // ---------------------------------------------------------------------------------/
 
-    // If there is no ticket list, return the context as is
-    if (!$scope.rows) {
-      return;
+  /**
+   * ACTIONS/SERVICES/GUARDS
+   *  - Actions modify machine.context values
+   *  - Services invoke methods on external actors
+   *  - Guards control conditional transitions
+   */
+
+  function createActions() {
+    /**
+     * Filters the predicates in the given context based on the event field.
+     * Adds a new predicate to the filtered predicates array.
+     * Returns the updated predicates array and the pageNum set to 1.
+     *
+     * @param {Object} context - The context object containing the predicates and selectedFilters.
+     * @param {Object} event - The event object containing the field.
+     * @returns {Object} - The updated predicates array and the pageNum set to 1.
+     */
+    function adhocQuery(context, event) {
+      // Filter the predicates array based on the event field
+      var filteredPredicates = context.predicates.filter(function (predicate) {
+        return !!predicate.field && predicate.field !== event.field;
+      });
+
+      // Get the selected filter value for the event field
+      var selectedFilter = context.selectedFilters[event.field];
+
+      // If the selected filter value is not a string, return
+      if (typeof selectedFilter !== "string") {
+        return;
+      }
+
+      // Determine the type of the new predicate based on the filtered predicates array
+      var type = !!filteredPredicates.length ? "and" : "";
+
+      // Create a new predicate object
+      var newPredicate = {
+        type: type,
+        field: event.field,
+        operator: getPredicateOperator(selectedFilter),
+        value: selectedFilter.replace(/\*/g, ""),
+      };
+
+      // Set the predicate operator types
+      setPredicateOperatorTypes(context, newPredicate);
+
+      // Add the new predicate to the filtered predicates array
+      filteredPredicates.push(newPredicate);
+
+      // Return the updated predicates array and the pageNum set to 1
+      return {
+        predicates: filteredPredicates,
+        pageNum: 1,
+      };
     }
 
-    // Get the page number from the event, default to 1 if not provided
-    $scope.pageNum = pageNum || 1;
+    /**
+     * Removes a predicate from the context's predicates array.
+     * @param {Object} context - The context object.
+     * @param {Object} event - The event object.
+     * @param {number} event.index - The index of the predicate to remove.
+     * @returns {Object} - The updated context object with the predicate removed.
+     */
+    function dropPredicate(context, event) {
+      // Copy the predicates array from the context object
+      var predicates = context.predicates.slice();
 
-    // Calculate the total number of pages based on the page size
-    var pageCount = Math.ceil($scope.recordCount / $scope.pageSize);
+      // Remove the predicate at the specified index
+      predicates.splice(event.index, 1);
 
-    // Calculate the starting index of the visible tickets based on the page number and page size
-    var startNum = ($scope.pageNum - 1) * $scope.pageSize;
+      // Return the updated context object
+      return {
+        predicates: predicates,
+      };
+    }
 
-    // Return the updated context object with the current page number, record count, visible tickets, and page numbers
+    /**
+     * Appends a new predicate to the context's predicates array.
+     * @param {Object} context - The context object.
+     * @param {Object} event - The event object.
+     * @returns {Object} - The updated context object.
+     */
+    function appendPredicate(context, event) {
+      // Get the predicates array from the context object
+      var predicates = context.predicates;
 
-    $scope.pages = getPages($scope.pageNum, pageCount);
+      // Push a new predicate object to the predicates array
+      predicates.push({
+        field: null,
+        operator: null,
+        value: null,
+        type: event.predicateType,
+      });
+
+      // Return the updated context object
+      return {
+        predicates: predicates,
+      };
+    }
+
+    function setPredicateOperatorTypes(context, predicate) {
+      var item = findColumn(context, predicate.field);
+
+      $scope.filterTypes.choice = $scope.filterTypes.string;
+
+      // Get the predicate options for the item's type
+      var predOpts = $scope.filterTypes[item.type];
+
+      // If predicate options are not found, return
+      if (!predOpts) {
+        alert('Invalid field type "' + item.type + '"');
+      }
+
+      // Set the predicate options for the predicate
+      predicate.predOpts = predOpts;
+      predicate.choices = item.choices;
+    }
+
+    function assignPredicate(context, event) {
+      var pred = event.predicate;
+
+      setPredicateOperatorTypes(context, pred);
+
+      var updatedPredicates = context.predicates.map(function (existing) {
+        if (existing.field === pred.field) {
+          return pred;
+        }
+        return existing;
+      });
+      return {
+        predicates: updatedPredicates,
+      };
+    }
+
+    function changePredicate(context) {
+      // Map over the predicates array
+      var lines = context.predicates.map(function (pred) {
+        // Check if field is not defined
+        if (!pred.field) return alert("Predicate has no field!");
+
+        // Find the item in columnList that matches the field
+        var item = findColumn(context, pred.field);
+
+        // Check if operator is not defined
+        if (!pred.operator) return; // alert("No operator was found");
+
+        // Get the predicate options based on the item type
+        var predOpts =
+          $scope.filterTypes[item.type] || $scope.filterTypes.string;
+
+        // Check if predicate options are not defined
+        if (!predOpts)
+          return alert('No filterTypes for item "' + item.type + '"');
+
+        // Get the code for the operator
+        var code = predOpts[pred.operator];
+
+        // Get the operator based on the predicate type
+        var op = !pred.type ? null : pred.type === "or" ? "^OR" : "^";
+
+        context.selectedFilters[pred.field] = formatPredicate(pred);
+
+        // Filter out any falsy values and join the array elements
+        return [op, pred.field, code, pred.value].filter(Boolean).join("");
+      });
+
+      // Update the lines variable in the scope
+      return {
+        queryLines: lines,
+        filter: lines.join(""),
+      };
+    }
+
+    /**
+     * Updates the fields and tableColumns based on the selectedColumns in the context.
+     * @param {Object} context - The context object containing the selectedColumns.
+     * @returns {Object} - An object containing the updated fields and tableColumns.
+     */
+    function updateFields(context) {
+      // Get the keys of the selectedColumns object
+      var keys = Object.keys(context.selectedColumns);
+
+      // Filter the keys to only include the ones with truthy values
+      var filteredKeys = keys.filter(function (key) {
+        return !!context.selectedColumns[key];
+      }); 
+			
+      return {
+        fields: filteredKeys, 
+      };
+    }
+		
+		function updateTableColumns(context) {
+			
+      // Map the filtered keys to their corresponding values in the selectedColumns object
+      var tableColumns = context.field.filter(function (key) {
+          return context.selectedColumns[key];
+        });
+
+      return {  
+        tableColumns: tableColumns,
+      };
+		}
+
+    /**
+     * Assigns page number, page size, sort direction, and sort key based on the given context and event.
+     * @param {Object} context - The current context.
+     * @param {Object} event - The event object containing page, size, and sort information.
+     * @returns {Object} - An object containing the assigned page number, page size, sort direction, and sort key.
+     */
+    function assignPageNum(context, event) {
+      // Assign page number, default to 1 if not provided
+      var pageNum = event.page || 1;
+
+      // Assign page size, default to context.pageSize if not provided
+      var pageSize = event.size || context.pageSize;
+
+      // Assign sort direction, default to context.sortDir if not provided
+      var sortDir = !event.sort
+        ? context.sortDir
+        : context.sortDir === "ASC"
+        ? "DESC"
+        : "ASC";
+
+      // Assign sort key, default to context.sortKey if not provided
+      var sortKey = event.sort || context.sortKey;
+
+      // Return an object containing the assigned values
+      return {
+        pageNum: pageNum,
+        pageSize: pageSize,
+        sortDir: sortDir,
+        sortKey: sortKey,
+      };
+    }
+
+    /**
+     * Toggles whether a table column is selected.
+     * @param {Object} context - The current context object.
+     * @param {Object} event - The event object containing the column to toggle.
+     * @returns {Object} - The updated context object.
+     */
+    function toggleColumn(context, event) {
+      var selectedColumns = context.selectedColumns;
+
+      // If the column is a boolean, show all columns
+      if (typeof event.column === "boolean") {
+        // Set all columns to true in selectedColumns
+        context.columns.forEach(function (col) {
+          selectedColumns[col.name] = true;
+        });
+
+        // HACK: since I didn't want to make a special event for this
+        // call the updateFields action manually from here
+       // var updatedContext = updateFields(context);
+       // updatedContext.selectedColumns = selectedColumns;
+        persistColumns(context.selectedTable.name, selectedColumns);
+        return {
+          selectedColumns: selectedColumns,
+        };
+      } else {
+        // Toggle the visibility of the column
+        selectedColumns[event.column] = !selectedColumns[event.column];
+        persistColumns(context.selectedTable.name, selectedColumns);
+        return {
+          selectedColumns: selectedColumns,
+        };
+      }
+    }
+
+    function persistColumns(label, selectedColumns) {
+      var memory = JSON.parse(localStorage.getItem(COOKIE_NAME) || "{}");
+      memory[label] = JSON.stringify(selectedColumns);
+      localStorage.setItem(COOKIE_NAME, JSON.stringify(memory));
+    }
+
+    function arrangeColumns(context, event) {
+      var array = context.tableColumns;
+      var itemIndex = event.index;
+      var newIndex = itemIndex + event.offset;
+      if (newIndex < 0 || newIndex >= array.length) {
+        return;
+      }
+      var newArray = array.slice();
+      var removedItem = newArray.splice(itemIndex, 1)[0];
+      newArray.splice(newIndex, 0, removedItem);
+      return { tableColumns: newArray };
+    }
+
+    /**
+     * Assigns columns to the context object based on the event value.
+     * @param {Object} context - The current context object.
+     * @param {Object} event - The event object containing the columns value.
+     * @returns {Object} - The updated context object.
+     */
+    function assignColumns(context, event) {
+      // Extract the columns value from the event object
+      var columns = event.value;
+
+      // Update the columns and create a column map and column keys
+      var columnMap = updateColumns(columns);
+      var columnKeys = Object.keys(columnMap);
+
+      // Create a fresh context object with the updated columns, column map, and column keys
+      var freshContext = {
+        columns: columns,
+        columnMap: columnMap,
+        columnKeys: columnKeys,
+        selectedColumns: {},
+        predicates: [
+          {
+            field: null,
+            operator: null,
+            value: null,
+          },
+        ],
+      };
+
+      // Retrieve the selected columns from local storage
+      var memoryColumns = JSON.parse(
+        localStorage.getItem(COOKIE_NAME) || "{}"
+      );
+      var selectedColumns = memoryColumns[context.selectedTable.name];
+
+      // If selected columns exist, update the fresh context object with the selected columns and fields
+      if (selectedColumns) {
+        freshContext.selectedColumns = JSON.parse(selectedColumns);
+        var updatedContext = updateFields(freshContext);
+        freshContext.fields = updatedContext.fields;
+      }
+
+      // Return the updated context object
+      return freshContext;
+    }
+
+    return {
+      dropPredicate: dropPredicate,
+      appendPredicate: appendPredicate,
+      assignPredicate: assignPredicate,
+      changePredicate: changePredicate,
+      adhocQuery: adhocQuery,
+      assignPageNum: assignPageNum,
+      arrangeColumns: arrangeColumns,
+      assignColumns: assignColumns,
+      updateFields: updateFields,
+      toggleColumn: toggleColumn,
+			updateTableColumns: updateTableColumns,
+
+      assignRecordId: function (_, event) {
+        return {
+          sysId: event.id,
+          refTableName: event.name,
+        };
+      },
+
+      assignReferenceColumns: function (_, event) {
+        var referenceColumns = event.value;
+        var referenceKeys = referenceColumns.reduce(function (out, col) {
+          out[col.name] = col;
+          return out;
+        }, {});
+        return {
+          referenceColumns: event.value,
+          referenceKeys: referenceKeys,
+        };
+      },
+
+      assignRecord: function (_, event) {
+        return {
+          record: event.value[0],
+        };
+      },
+
+      clearColumns: function () {
+        return {
+          tableColumns: null,
+        };
+      },
+
+      assignIssue: function (_, event) {
+        return {
+          error: event.value,
+        };
+      },
+
+      assignSort: function (_, event) {
+        return {
+          sortKey: event.field,
+        };
+      },
+
+      assignTableList: function (_, event) {
+        return {
+          tableList: event.value,
+        };
+      },
+
+      assignTableLabel: function (context, event) {
+        return {
+          selectedTable: {
+            label: event.value,
+            name: context.refTableName,
+          },
+          filter: null,
+        };
+      },
+
+      assignTableName: function (_, event) {
+        return {
+          refTableName: event.table,
+        };
+      },
+
+      assignTable: function (_, event) {
+        return {
+          selectedTable: event.table,
+          filter: null,
+        };
+      },
+
+      assignRows: function (context, event) {
+        var rows = event.value.rows;
+        var recordCount = event.value.count;
+
+        return {
+          rows: rows,
+          recordCount: recordCount,
+        };
+      },
+
+      updatePages: function (context, event) {
+        // Get the ticket list from the context
+
+        // Get the page number from the event, default to 1 if not provided
+        var pageNum = context.pageNum || 1;
+
+        // Calculate the total number of pages based on the page size
+        var pageCount = Math.ceil(context.recordCount / context.pageSize);
+
+        // Calculate the starting index of the visible tickets based on the page number and page size
+        var startNum = (pageNum - 1) * context.pageSize;
+
+        return {
+          currentPage: pageNum,
+          pages: getPages(pageNum, pageCount),
+        };
+      },
+
+      expandColumn: function (context, event) {
+        var expandedColumns = context.expandedColumns;
+        expandedColumns[event.column] = !expandedColumns[event.column];
+        return {
+          expandedColumns: expandedColumns,
+        };
+      },
+
+      clearTable: function () {
+        return {
+          selectedColumns: {},
+          expandedColumns: {},
+          dataTable: null,
+          selectedTable: {},
+          recordCount: 0,
+          rows: null,
+        };
+      },
+    };
+  }
+
+  function createGuards() {
+    return {
+      "no saved column list": function (context) {
+				// Retrieve the selected columns from local storage
+				var memoryColumns = JSON.parse(
+					localStorage.getItem(COOKIE_NAME) || "{}"
+				);
+				var selectedColumns = memoryColumns[context.selectedTable.name]; 
+        return !selectedColumns;
+      },
+    };
+  }
+
+  function createServices() {
+    return {
+      identifyTable: function (context) {
+        invokeResource("identifyTable", onComplete, {
+          table: context.refTableName,
+        });
+      },
+
+      describeReference: function (context) {
+        invokeResource("getTable", onComplete, {
+          table: context.refTableName,
+        });
+      },
+
+      saveReference: function (context) {
+        var writableProps = Object.keys(context.record)
+          .filter(function (key) {
+            return context.referenceKeys[key].writable;
+          })
+          .reduce(function (out, key) {
+            out[key] = context.record[key];
+            return out;
+          }, {});
+
+        invokeResource("setRecord", onComplete, {
+          table: context.refTableName,
+          sysId: context.sysId,
+          fields: writableProps,
+        });
+      },
+
+      openReference: function (context) {
+        var fields = context.referenceColumns.map(function (col) {
+          return col.name;
+        });
+
+        invokeResource("getRecord", onComplete, {
+          table: context.refTableName,
+          sysId: context.sysId,
+          fields: fields,
+        });
+      },
+
+      describeTable: function (context) {
+        invokeResource("getTable", onComplete, {
+          table: context.selectedTable.name,
+        });
+      },
+
+      executeQuery: function (context) {
+        invokeResource("readTable", onComplete, {
+          table: context.selectedTable.name,
+          fields: context.fields,
+          size: context.pageSize,
+          page: context.pageNum,
+          filter: context.filter,
+          sortKey: context.sortKey,
+          sortDir: context.sortDir === "ASC" ? "DESC" : "ASC",
+        });
+      },
+    };
+  }
+
+  // HELPERS
+  // ---------------------------------------------------------------------------------/
+
+  /**
+   * Loads remembered column settings from local storage
+   */
+  function loadRememberedColumnSettings() {
+    // Get the selectedColumns from local storage and parse it as JSON
+    var memory = JSON.parse(localStorage.getItem(COOKIE_NAME) || "{}");
+
+    // Get the keys of the memory object
+    var keys = Object.keys(memory);
+
+    // If there are keys in the memory object
+    if (keys.length) {
+      // Create a filter string by mapping each key to 'name=key' and joining them with '^OR'
+      var filter = keys
+        .map(function (key) {
+          return "name=" + key;
+        })
+        .join("^OR");
+
+      // Invoke the 'getTables' resource with the filter and a callback function
+      invokeResource(
+        "getTables",
+        function (res) {
+          // Set the $scope.memory to the response data message
+          $scope.memory = res.data.message;
+        },
+        {
+          filter: filter,
+        }
+      );
+    }
+  }
+
+  function generateStateMachine(callback) {
+    // get all the needed JSON objects from the database
+    invokeResource("loadJson", function (response) {
+      $scope.filterTypes = response.data.message.filter_types;
+
+      // assign state machine definition to scope
+      $scope.machine = response.data.message.query_builder_state_machine;
+
+      // set machineState to the state machine initial state
+      $scope.machineState = $scope.machine.initial;
+
+      // assign this machine to the currently open tab
+      $scope.queryTabs[$scope.queryTabIndex].machine = $scope.machine;
+
+      // create State Machine workflow using the JSON definition
+      var workflow = createMachine({
+        actions: createActions(),
+        guards: createGuards(),
+        services: createServices(),
+        controller: c,
+        $scope: $scope,
+      });
+
+      if (callback) {
+        callback(workflow);
+      }
+    });
+  }
+
+  function updateColumns(columns) {
+    // Reduce the columns array to create a column map
+    return columns.reduce(function (out, col) {
+      out[col.name] = col;
+      if (col.children) {
+        col.children.forEach(function (kid) {
+          // kid.reference = col.reference;
+          out[col.name + "." + kid.name] = kid;
+        });
+      }
+      return out;
+    }, {});
+  }
+
+  /**
+   * Function to handle completion of an API response.
+   * @param {Object} response - The API response object.
+   */
+  function onComplete(response) {
+    // Check if the response has data and a message property
+    if (response.data && response.data.message) {
+      // Send a message with the data loaded event type and the message value
+      return c.send({
+        type: "data loaded",
+        value: response.data.message,
+      });
+    }
+    if (response.data && response.data.error) {
+      // Send a message with the data loaded event type and the message value
+      return c.send({
+        type: "data error",
+        value: response.data.error,
+      });
+    }
   }
 
   /**
@@ -448,10 +910,87 @@
       c.server.get(payload).then(callback);
     });
   }
+
+  /**
+   * Finds a column in the $scope.columns array based on the given field.
+   * @param {string} field - The field to search for in the columns array.
+   * @returns {object} - The found column object, or undefined if not found.
+   */
+  function findColumn(context, field) {
+    // Check if the field does not contain a dot (.)
+    if (field.indexOf(".") < 0) {
+      // Find the column with the matching name in the $scope.columns array
+      return context.columns.find(function (column) {
+        return column.name === field;
+      });
+    }
+
+    // Split the field by dot (.) to get the parent and child names
+    var parts = field.split(".");
+
+    // Find the parent column with the matching name in the $scope.columns array
+    var parentColumn = context.columns.find(function (column) {
+      return column.name === parts[0];
+    });
+
+    // Find the child column with the matching name in the parent column's children array
+    var childColumn = parentColumn.children.find(function (column) {
+      return column.name === parts[1];
+    });
+
+    return childColumn;
+  }
+
+  function createTab() {
+    return {
+      title: "Untitled Query-1",
+      machine: {},
+      app: {},
+    };
+  }
+
+  /**
+   * Formats a predicate based on its operator.
+   * @param {Object} pred - The predicate object.
+   * @param {string} pred.operator - The operator of the predicate.
+   * @param {string} pred.value - The value of the predicate.
+   * @returns {string} - The formatted predicate.
+   */
+  function formatPredicate(pred) {
+    switch (pred.operator) {
+      case "starts with":
+        return pred.value + "*";
+      case "ends with":
+        return "*" + pred.value;
+      case "contains":
+        return "*" + pred.value + "*";
+      default:
+        return pred.value;
+    }
+  }
+
+  function getPredicateOperator(str) {
+    if (str.startsWith("*") && str.endsWith("*")) {
+      return "contains";
+    } else if (str.startsWith("*")) {
+      return "ends with";
+    } else if (str.endsWith("*")) {
+      return "starts with";
+    } else {
+      return "is";
+    }
+  }
+
+  /**
+	  DO NOT MODIFY BELOW THIS LINE
+	  State machine framework
+	*/
+  function createMachine(t){var n,e=t.actions,a=t.guards,r=t.services,c=t.controller;function o(t,e){var r=$scope.machine;Array.isArray(t)?i(t.find(function(t){var e=a[t.cond],c=!!e&&Boolean(e(r.context,n));return!t.cond||c}),e):i(t,e)}function i(t,a){var c=$scope.machine,i="object"==typeof n?n:{},u=f(i,{data:a}),h={context:c.context};function v(t){if(Array.isArray(t))t.forEach(function(t){var n=(0,e[t.type])(h.context,u);h.context=f(h.context,n)}),s(h.context);else{var n=(0,e[t.type])(h.context,u);h.context=f(h.context,n),s(h.context)}}c.states[c.state].exit&&v(c.states[c.state].exit),Boolean(t.target)&&($scope.machineState=t.target,c.state=t.target,localStorage.setItem("machine-state",t.target)),t.actions&&v(t.actions);var m=c.states[t.target];m&&(m.entry&&v(m.entry),m.invoke&&function t(e,a){var c=r[e.src];if(c)try{var i=c(a,n);if(e.onDone)return o(e.onDone,i)}catch(s){if(e.onError)return o(e.onError,s)}}(m.invoke,h.context),m.always&&o(m.always))}function s(t){var n=$scope.machine,e=f(n.context,t);n.context=e,$scope.machine=n}function f(t,n){for(var e in n)t[e]=n[e];return t}return c.matches=function(t){return Array.isArray(t)?t.some(function(t){return $scope.machineState===t}):$scope.machineState===t},c.can=function(t){var n=$scope.machine.states[$scope.machineState];if(n.on)return Boolean(n.on[t])},c.send=function(t){var e=t.type||t;$scope.machine.state=$scope.machineState,function t(e,a){var r=$scope.machine,c=r.states[$scope.machineState];if(n=a,c){var i=c.on[e]||r.on[e];i&&o(i)}}(e,t)},c}
 };
 ]]></client_script>
         <controller_as>c</controller_as>
-        <css>.column-grid {
+        <css>.record-grid,
+.column-grid {
   margin: 1rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -460,6 +999,12 @@
   white-space: nowrap
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+
+.record-grid {
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
 }
 
 .column-grid div {
@@ -475,8 +1020,17 @@
    font-weight: 600;
    color: blue;
 }
- 
-.badge.active ,
+
+.num {
+  text-align: right;
+}
+
+.ref {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #2a6496;
+}
+  
 td.active {
   color: blue;
 }
@@ -508,10 +1062,26 @@ td {
   overflow: hidden;
   text-overflow: ellipsis; 
   max-width: 280px;
+  color: #222;
 }
 
+ul.selector {
+  height: 400px;
+  overflow: auto;
+}
+
+ul.selector ,
 ul.row {
  list-style: none; 
+}
+
+.list-group {
+  width: 480px; 
+}
+
+
+ul.selector li.indent {
+  margin-left: 2rem; 
 }
 
 ul.row li { 
@@ -522,6 +1092,10 @@ ul.row li.active {
   color: blue;
 }
 
+.tab-container {
+  border-bottom: solid 1px #d0d0d0; 
+  flex-grow: 1;
+}
 
 .flexible {
   display: flex;
@@ -532,11 +1106,7 @@ ul.row li.active {
 .flexible.center {
   justify-content: center;
 }
-
-.badge {
-  color: #444;
-}
-
+ 
 .predicate {
   display: grid;
   grid-template-columns: 40px 1fr 1fr 1fr 100px;
@@ -544,6 +1114,113 @@ ul.row li.active {
   gap: 1rem;
   padding: 1rem;
 }
+
+
+
+.input-group {
+    display: table;
+    border-collapse: separate;
+}
+
+.input-group-addon, .form-control {
+    display: table-cell;
+    margin-bottom: 0;
+}
+
+.input-group-addon {
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0 4px 4px 0; 
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    text-align: center;
+}
+
+.input-group .form-control { 
+    border-radius: 4px 0 0 4px; 
+    border-right: 0;
+    border-color:  #ccc;
+}
+
+/* Add focus state */
+.form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.query-wrapper {
+  position: relative;
+  height: 100vh;
+  /*outline: dotted 1px gray;*/
+}
+
+.drawer-panel {
+  position: fixed;
+  left: 0;
+  opacity: 0.4;
+  top: 100%; 
+  bottom: -100px;
+  width: 80vw;
+  margin: 0 10vw;
+  background-color: aliceblue;
+  border: 1px solid #ccc;
+  padding: 1rem; 
+  border-radius: 1rem; 
+  transition: all 0.25s linear;
+  min-height: 400px;
+  overflow: auto;
+}
+
+.drawer-panel.loading { 
+  opacity: 1;
+  top: 80%; 
+  bottom: 100px;
+}
+
+
+.drawer-panel.ready { 
+  opacity: 1;
+  top: 40px;
+  height: calc(100vh - 80px);
+}
+
+ 
+
+.badge { 
+  font-weight: 400; 
+  background-color: #f5f5f5; 
+  color: #222; 
+}
+
+.badge.active { 
+  font-weight: 600; 
+  color: #222; 
+  background-color: #fff;
+  border: solid 1px #222;
+}
+
+.badge.badge-primary { 
+  color: #fff; 
+  background-color: #007bff;
+}
+
+.badge.active.badge-primary { 
+  color: #007bff; 
+  background-color: #fff;
+  border: solid 1px #007bff;
+}
+
+
+
+
+
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -569,15 +1246,40 @@ ul.row li.active {
 		data.message = resource.execute(input.filter)
 	}
 	
+	function getRecord() {
+		var resource = createResource(input.table, input.fields); 
+		data.message = resource.execute('sys_id=' + input.sysId);   
+	}
+	
+	function setRecord() {
+		var resource = createResource(input.table); 
+		try {
+		  data.message = resource.update(input.sysId, input.fields);
+		} catch (ex) {
+			data.error = ex.message;
+		}
+	}
+	
 	function getTable() {
 		var resource = createResource(input.table); 
 		data.message = resource.describe()
 	}
 	
+	function identifyTable() { 
+		var resource = createResource('sys_db_object', ['label']); 
+		var records = resource.execute('name=' + input.table);
+		data.message = records[0].label
+	}
+	
 	function readTable() { 
 		var resource = createResource(input.table, input.fields); 
-		data.message = resource.execute(input.filter, input.page, input.size)
-		data.count = resource.count(input.filter)
+		var rows = resource.execute(input.filter, input.page, input.size, input.sortKey, input.sortDir)
+		var count = resource.count(input.filter);
+		
+		data.message =  {
+			rows: rows,
+			count: count
+		}
 	}
 	
 	function loadJson() {
@@ -588,7 +1290,7 @@ ul.row li.active {
 			]);
 
     // Execute the resource with the application filter
-    var response = resource.execute('title=filter_types'); 
+    var response = resource.execute('title=filter_types^ORtitle=query_builder_state_machine'); 
 		 
     var object = {};
     // Iterate over the response rows and parse the content as JSON
@@ -597,7 +1299,7 @@ ul.row li.active {
     });
 
     // Return the object containing the JSON data
-    data.message = object.filter_types;
+    data.message = object;
 
 	}
 	
@@ -606,7 +1308,10 @@ ul.row li.active {
   var requestMethods = { 
 		getTables: getTables,
 		getTable: getTable,
+		getRecord: getRecord,
 		readTable: readTable,
+		setRecord: setRecord,
+		identifyTable: identifyTable,
 		loadJson: loadJson
   };
 
@@ -651,6 +1356,15 @@ ul.row li.active {
         return gr.insert();
       },
 
+      update: function (sysId, fields) {
+        var gr = new GlideRecord(table); 
+				gr.get(sysId);
+        Object.keys(fields).forEach(function (item) {
+				  gr.setValue(item, fields[item]); 
+        }); 
+				return gr.update(); 
+      },
+
       /**
        * Retrieves the columns of a GlideRecord table.
        * @returns {Array} - An array of objects containing field, label, and type properties.
@@ -674,21 +1388,14 @@ ul.row li.active {
 					var canWrite = glideElement.canWrite();
           var ref = glideElement.getRefRecord();
           var choices = glideElement.getChoices()
-					
-					
-						console.log ({
-							fldName: fldName,
-							ref: ref
-						});
+					 
 						
 					var reference = null, children = null, fullName = fldName; 
 					if (ref) {
 						reference = glideElement.getReferenceTable() ;
-						
-						console.log ({
-							reference: reference,
-							table: table
-						});
+					console.log ({
+						reference: reference
+					})	 
 						
 						if (reference !== table) {
 							var resource = createResource(reference);
@@ -717,9 +1424,7 @@ ul.row li.active {
 
 				return fieldList.sort(function(a,b) {
 					return a.name > b.name ? 1 : -1;
-				});
-
-				
+				}); 
       },
 
       count: function (conditions) {
@@ -736,23 +1441,28 @@ ul.row li.active {
        * @param {Array} conditions - The conditions to apply to the query
        * @returns {Array} - The matching records
        */
-      execute: function (conditions, page, size) {
+      execute: function (conditions, page, size, sortby, sortdir) {
         var gr = new GlideRecord(table);
 				var pageSize = size || 10;
 
         if (conditions) {
           gr.addEncodedQuery(conditions);
         }
-
-        // Order the records by descending sys_created_on field by default
-        // TODO: add variable sorting
-        gr.orderByDesc("sys_created_on");
-
+				
+				if (sortdir && sortby) {
+					if (sortdir === 'DESC') {
+            gr.orderByDesc(sortby);
+					} else {
+            gr.orderBy(sortby); 
+					}
+				} else {
+          gr.orderByDesc("sys_created_on"); 
+				}
+				
         var num = page || 1;
         var start = pageSize * (num - 1);
         var end = start + pageSize;
-
-        // setting a limit for sanity
+ 
         gr.chooseWindow(start, end);
         gr.query();
 
@@ -760,8 +1470,7 @@ ul.row li.active {
 
         // Iterate through each record in the GlideRecord
         while (gr.next()) {
-          var record = {};
-          console.log(1);
+          var record = {}; 
           this.fields.forEach(function (field) {
             if (field.indexOf(".") > 0) {
               // handle reference fields
@@ -789,72 +1498,93 @@ ul.row li.active {
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-29 18:16:51</sys_created_on>
         <sys_id>222bdd7947363110265ad698436d431b</sys_id>
-        <sys_mod_count>347</sys_mod_count>
+        <sys_mod_count>874</sys_mod_count>
         <sys_name>Query Builder</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sp_widget_222bdd7947363110265ad698436d431b</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-12-01 17:44:43</sys_updated_on>
-        <template><![CDATA[<div>
+        <sys_updated_on>2023-12-04 12:47:36</sys_updated_on>
+        <template><![CDATA[<div class="query-wrapper">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">ACoE Table Browser</a></li>
-      <li class="breadcrumb-item" ng-if="!!rows">
-        <span ng-if="!queryLines" href="#">{{selectedTable.label}}</span>
-        <a ng-if="!!queryLines" href="#">{{selectedTable.label}}</a>
+      <li class="breadcrumb-item"><a href="#">ACoE Table Browser!</a></li>
+      <li class="breadcrumb-item" ng-if="!!machine.context.rows">
+        <span ng-if="!machine.context.queryLines.length" href="#"
+          >{{machine.context.selectedTable.label}}</span
+        >
+        <a ng-if="!!machine.context.queryLines.length" href="#"
+          >{{machine.context.selectedTable.label}}</a
+        >
       </li>
-      <li class="breadcrumb-item" ng-repeat="line in queryLines">
+      <li
+        class="breadcrumb-item"
+        ng-repeat="line in machine.context.queryLines"
+      >
         <a ng-if="!$last" href="#">{{line}}</a>
         <span ng-if="$last">{{line}}</span>
       </li>
     </ol>
   </nav>
 
-<div class="flexible">
+  <!-- application header -->
+  <div class="flexible">
     <h3 class="flexible">
-    <i class="glyphicon glyphicon-tasks"></i>
-    ACoE Table Browser
-  </h3>
-  
-  <ul  class="nav nav-tabs">
-    <li class="nav-item" ng-click="c.setTab($index)" 
-        ng-repeat="tab in queryTabs">
-    <a class="nav-link" href="#"
-            ng-class="{'active': $index === queryTabIndex}" >{{tab.title}}</a>
-    </li>
-    <li class="nav-item"  ng-click="c.addTab()">
-    <a class="nav-link" href="#">
-      <i class="glyphicon glyphicon-plus"></i>
-      </a></li>
-  </ul>
-  
-  </div>  
+      <i class="glyphicon glyphicon-tasks"></i>
+      ACoE Table Browser
+    </h3>
+
+    <div class="tab-container">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" ng-repeat="tab in queryTabs">
+          <a
+            class="nav-link"
+            href="#"
+            ng-class="{'active': $index === queryTabIndex}"
+          >
+            <span ng-click="c.setTab($index)"
+              >{{tab.machine.context.selectedTable.label || tab.title}}</span
+            >
+            <span aria-hidden="true">&times;</span></a
+          >
+        </li>
+        <li class="nav-item" ng-click="c.addTab()">
+          <a class="nav-link" href="#">
+            <i class="glyphicon glyphicon-plus"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <!-- query result contaiker -->
-  <div ng-if="!!rows">
-    
-    
+  <div
+    ng-if="c.matches(['wait for query results', 'viewing query results', 'editing query filter'])"
+  >
     <!-- query result header -->
     <div class="flexible">
-      <h3>{{selectedTable.label}}</h3>
-      <div class="badge">{{recordCount}} records</div>
+      <h3>{{machine.context.selectedTable.label}}</h3>
+      <div class="badge">{{machine.context.recordCount}} records</div>
 
       <div style="flex-grow: 1">
         <!-- spacer -->
       </div>
-      
-      
-        <a class="badge" ng-click="c.resize(size)" 
-           ng-class="{ active: size === pageSize }"
-           ng-repeat="size in pageSizes">
-          {{size}}
-        </a>
-      
+
+      <a
+        class="badge"
+        ng-click="c.resize(size)"
+        ng-class="{ active: size === machine.context.pageSize }"
+        ng-repeat="size in pageSizes"
+      >
+        {{size}}
+      </a>
+
       per page
 
       <button
         class="btn btn-sm"
+        ng-click="c.send('filter')"
         data-toggle="modal"
         data-target="#exampleModal"
       >
@@ -863,32 +1593,53 @@ ul.row li.active {
     </div>
 
     <!-- query result grid -->
-    <table class="table" ng-class="{busy: busy}">
+    <table class="table" ng-class="{busy: c.matches('wait for query results')}">
       <thead>
         <tr>
-          <th ng-repeat="column in fields">{{columnMap[column]}}</th>
+          <th ng-repeat="column in machine.context.tableColumns">
+            <a href="#" ng-click="c.send({type: 'run', sort: column})"
+              >{{machine.context.columnMap[column].label}}</a
+            >
+
+            <i
+              class="glyphicon"
+              ng-if="column === machine.context.sortKey"
+              ng-class="{'glyphicon-chevron-up': machine.context.sortDir === 'DESC',
+                       'glyphicon-chevron-down': machine.context.sortDir !== 'DESC'}"
+            ></i>
+          </th>
         </tr>
         <tr>
-          <td ng-repeat="column in fields">
+          <td ng-repeat="column in machine.context.tableColumns">
             <input
-              ng-model="selectedFilters[column]"
+              ng-disabled="machine.context.columnMap[column].type === 'reference'"
+              ng-model="machine.context.selectedFilters[column]"
               ng-keypress="handleKeypress($event, column)"
               class="form-control form-control-sm"
-              placeholder="Filter {{columnMap[column]}}"
+              placeholder="Filter {{machine.context.columnMap[column].label}}"
             />
           </td>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in rows">
-          <td ng-repeat="column in fields">{{item[column]}}</td>
+        <tr ng-repeat="item in machine.context.rows">
+          <td
+            ng-repeat="column in machine.context.tableColumns"
+            ng-click="c.openRecord(item, column)"
+            ng-class="{ ref: !!machine.context.columnMap[column].reference,
+                        num: machine.context.columnMap[column].type === 'integer' || machine.context.columnMap[column].type === 'number' }"
+          >
+            {{item[column]}}
+          </td>
         </tr>
       </tbody>
     </table>
-    
 
     <!-- query result pagination -->
-    <div ng-if="recordCount > pageSize" class="flexible center">
+    <div
+      ng-if="machine.context.recordCount > machine.context.pageSize"
+      class="flexible center"
+    >
       <nav>
         <ul class="pagination">
           <li class="page-item">
@@ -898,9 +1649,9 @@ ul.row li.active {
           </li>
           <li
             class="page-item"
-            ng-class="{'active': n === pageNum}"
-            ng-repeat="n in pages"
-            ng-click="c.exec(n)"
+            ng-class="{'active': n === machine.context.pageNum}"
+            ng-repeat="n in machine.context.pages"
+            ng-click="c.send({type: 'run', page: n})"
           >
             <a class="page-link" href="#">{{ n }}</a>
           </li>
@@ -912,30 +1663,50 @@ ul.row li.active {
         </ul>
       </nav>
     </div>
-
   </div>
 
-
   <!-- table name search input -->
-  <div class="form-group" ng-show="!selectedTable">
+  <div class="form-group" ng-show="c.can('update')">
     <label>Table name</label>
-    <input
-      ng-show="!selectedTable"
-      ng-model="dataTable"
-      ng-change="c.search(dataTable)"
-      class="form-control form-control-sm"
-      placeholder="Find a table..."
-    />
-    <small class="form-text text-muted">Select a table to view</small>
+    <div>
+      <small class="form-text text-muted">Select a table to view</small>
+    </div>
+
+    <div class="input-group">
+      <input
+        ng-model="machine.context.dataTable"
+        ng-change="c.search(machine.context.dataTable)"
+        class="form-control form-control-sm"
+        placeholder="Find a table..."
+      />
+      <span class="input-group-addon">
+        <i class="glyphicon glyphicon-search"></i>
+      </span>
+    </div>
+
+    <div ng-if="memory" class="flexible">
+      Recent tables
+      <small
+        ng-click="c.send({type: 'next', table: item})"
+        href="#"
+        ng-repeat="item in memory"
+        class="badge"
+      >
+        {{item.label}}
+      </small>
+    </div>
   </div>
 
   <!-- table name search results -->
-  <div class="list-group" ng-if="!!dataTable && !selectedTable">
+  <div
+    class="list-group"
+    ng-if="!!machine.context.dataTable && !machine.context.selectedTable.name"
+  >
     <a
-      ng-click="c.describe(item)"
+      ng-click="c.send({type: 'next', table: item})"
       href="#"
       class="list-group-item list-group-item-action"
-      ng-repeat="item in response"
+      ng-repeat="item in machine.context.tableList"
     >
       <b>{{item.label}}</b>
       <div>{{item.name}}</div>
@@ -943,20 +1714,64 @@ ul.row li.active {
   </div>
 
   <!-- control buttons -->
-  <div ng-if="!!selectedTable">
-    <button class="btn btn-sm" ng-click="c.clear()">Cancel</button>
-    <button class="btn btn-sm btn-primary" ng-disabled="!fields.length" ng-click="c.exec()">
+  <div ng-if="!!machine.context.selectedTable.name">
+    <button class="btn btn-sm" ng-click="c.send('cancel')">Cancel</button>
+    <button
+      class="btn btn-sm btn-primary"
+      ng-if="c.can('save')"
+      ng-click="c.send('save')"
+    >
+      Save Record
+    </button>
+    <button
+      class="btn btn-sm btn-primary"
+      ng-disabled="!machine.context.fields.length || !c.can('run')"
+      ng-click="c.send('run')"
+    >
       Run Query
     </button>
   </div>
 
- 
-  <!-- column selector panel -->
-  <div class="column-panel" ng-if="!!selectedTable">
+  <div class="column-panel" ng-if="c.matches('viewing query results')">
     <hr />
-    Select colums from <b>{{selectedTable.label}}</b> to return in your query. <a ng-click="c.selectAll()" href="#">Select all</a>.
+    Set the order for colums from
+    <b>{{machine.context.selectedTable.label}}</b> .
+    <a ng-if="c.can('choose again')" ng-click="c.send('choose again')" href="#"
+      >Select columns.</a
+    >
 
-    <table class="table" ng-class="{busy: busy}">
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        ng-repeat="key in machine.context.tableColumns"
+        style="display: flex; gap: 1rem"
+      >
+        <div>
+          <div>{{ machine.context.columnMap[key].label}}</div>
+          <small> {{key}} </small>
+        </div>
+        <div style="flex-grow: 1">
+          <!-- spacer -->
+        </div>
+        <i
+          ng-click="c.send({type: 'arrange', index: $index, offset: -1})"
+          class="glyphicon glyphicon-chevron-up"
+        ></i>
+        <i
+          ng-click="c.send({type: 'arrange', index: $index, offset: 1})"
+          class="glyphicon glyphicon-chevron-down"
+        ></i>
+      </li>
+    </ul>
+  </div>
+
+  <!-- column selector panel -->
+  <div class="column-panel" ng-if="c.matches('select columns')">
+    <hr />
+    Select colums from <b>{{machine.context.selectedTable.label}}</b> to return
+    in your query. <a ng-click="c.selectAll()" href="#">Select all</a>.
+
+    <table class="table">
       <thead>
         <tr>
           <th>Label</th>
@@ -965,11 +1780,11 @@ ul.row li.active {
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in columns">
-          <td ng-class="{active: !!selectedColumns[item.name]}">
+        <tr ng-repeat="item in machine.context.columns">
+          <td ng-class="{active: !!machine.context.selectedColumns[item.name]}">
             <i
               class="glyphicon glyphicon-chevron-right"
-              ng-class="{'glyphicon-chevron-down': !!expandedColumns[item.name]}"
+              ng-class="{'glyphicon-chevron-down': !!machine.context.expandedColumns[item.name]}"
               ng-click="c.expand(item.name)"
               ng-if="!!item.children"
             ></i>
@@ -978,21 +1793,21 @@ ul.row li.active {
               class="form-check-input"
               type="checkbox"
               ng-click="c.announce(item.name)"
-              ng-checked="!!selectedColumns[item.name]"
+              ng-checked="!!machine.context.selectedColumns[item.name]"
             />
 
             <a
               ng-click="c.announce(item.name)"
-              ng-class="{active: !!selectedColumns[item.name]}"
+              ng-class="{active: !!machine.context.selectedColumns[item.name]}"
               href="#"
               >{{item.label}}</a
             >
 
-            <div ng-if="!expandedColumns[item.name]">
+            <div ng-if="!machine.context.expandedColumns[item.name]">
               <div
                 class="column-kid"
                 ng-click="c.announce(item.name + '.' + kid.name)"
-                ng-if="!!selectedColumns[item.name + '.' + kid.name]"
+                ng-if="!!machine.context.selectedColumns[item.name + '.' + kid.name]"
                 ng-repeat="kid in item.children"
               >
                 <input class="form-check-input" type="checkbox" checked />
@@ -1000,9 +1815,12 @@ ul.row li.active {
               </div>
             </div>
 
-            <ul class="row" ng-if="!!expandedColumns[item.name]">
+            <ul
+              class="row"
+              ng-if="!!machine.context.expandedColumns[item.name]"
+            >
               <li
-                ng-class="{active: !!selectedColumns[item.name + '.' + kid.name]}"
+                ng-class="{active: !!machine.context.selectedColumns[item.name + '.' + kid.name]}"
                 ng-repeat="kid in item.children"
                 ng-click="c.announce(item.name + '.' + kid.name)"
               >
@@ -1012,10 +1830,10 @@ ul.row li.active {
               </li>
             </ul>
           </td>
-          <td ng-class="{active: !!selectedColumns[item.name]}">
+          <td ng-class="{active: !!machine.context.selectedColumns[item.name]}">
             {{item.name}}
           </td>
-          <td ng-class="{active: !!selectedColumns[item.name]}">
+          <td ng-class="{active: !!machine.context.selectedColumns[item.name]}">
             {{item.type}}
           </td>
         </tr>
@@ -1040,6 +1858,7 @@ ul.row li.active {
             <!-- spacer -->
           </div>
           <button
+            ng-click="c.send('cancel')"
             type="button"
             class="close"
             data-dismiss="modal"
@@ -1054,7 +1873,7 @@ ul.row li.active {
             and value(s).
           </div>
 
-          <div class="predicate" ng-repeat="pred in predicates">
+          <div class="predicate" ng-repeat="pred in machine.context.predicates">
             <i ng-if="!pred.type" />
             <div ng-if="!!pred.type"><b>{{pred.type}}</b></div>
 
@@ -1064,8 +1883,11 @@ ul.row li.active {
               ng-change="c.setPredicate(pred)"
               ng-model="pred.field"
             >
-              <option ng-value="column" ng-repeat="column in fields">
-                {{columnMap[column]}}
+              <option
+                ng-value="column"
+                ng-repeat="column in machine.context.fields"
+              >
+                {{machine.context.columnMap[column].label}}
               </option>
             </select>
 
@@ -1074,7 +1896,7 @@ ul.row li.active {
               class="form-control"
               ng-disabled="!pred.predOpts"
               ng-model="pred.operator"
-              ng-change="c.updateQuery()"
+              ng-change="c.send('change')"
               ng-options="key as key for (key, value) in pred.predOpts"
             ></select>
 
@@ -1083,7 +1905,7 @@ ul.row li.active {
               <input
                 ng-disabled="!!nullTypes.includes(pred.operator) || !pred.predOpts"
                 ng-model="pred.value"
-                ng-change="c.updateQuery()"
+                ng-change="c.send('change')"
                 placeholder="Enter value"
                 class="form-control"
                 type="search"
@@ -1118,13 +1940,18 @@ ul.row li.active {
               />
             </div>
           </div>
-        </div> 
+        </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <button
+            ng-click="c.send('cancel')"
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >
             Close
           </button>
           <button
-            ng-click="c.setQuery()"
+            ng-click="c.send('run')"
             type="button"
             data-dismiss="modal"
             class="btn btn-primary"
@@ -1135,6 +1962,84 @@ ul.row li.active {
       </div>
     </div>
   </div>
+
+  <!-- record viewer modal -->
+  <div
+    class="drawer-panel"
+    ng-class="{ loading: c.matches(['wait for reference data', 'wait for record']), 
+                   ready: c.matches('viewing record') }"
+  >
+    <div class="flexible">
+      <div
+        class="badge badge-primary"
+        ng-click="c.addTab(machine.context.refTableName)"
+      >
+        Open table "{{machine.context.refTableName}}"
+        <i class="glyphicon glyphicon-new-window"></i>
+      </div>
+
+      <div class="spacer">
+        <!-- spacer -->
+      </div>
+
+      <a href="#" ng-click="c.send('cancel')">
+        Close
+        <i class="glyphicon glyphicon-remove"></i
+      ></a>
+    </div>
+
+    <h3>Record Viewer</h3>
+
+    <div class="record-grid">
+      <div ng-repeat="(key, value) in machine.context.record">
+        <div>{{machine.context.referenceKeys[key].label}}</div>
+        <div>
+          <small
+            ><i>{{machine.context.referenceKeys[key].type}}</i>
+            {{machine.context.referenceKeys[key].name}}</small
+          >
+        </div>
+        <input
+          class="form-control"
+          ng-disabled="!machine.context.referenceKeys[key].writable"
+          type="{{machine.context.referenceKeys[key].type === 'glide_date' ? 'date' : 'text' }}"
+          ng-value="machine.context.record[key]"
+        />
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="progress" ng-if="c.can('data loaded')">
+    <div
+      class="progress-bar progress-bar-striped progress-bar-animated"
+      role="progressbar"
+      aria-valuenow="75"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      style="width: 100%"
+    ></div>
+  </div>
+
+  <h4>State Machines</h4>
+  Tab: {{queryTabIndex}}
+  <table class="table">
+    <tr>
+      <th>#</th>
+      <th>table</th>
+      <th>state</th>
+      <th>columns</th>
+      <th>context</th>
+    </tr>
+    <tr ng-repeat="tab in queryTabs">
+      <td>{{$index}}</td>
+      <td>{{tab.machine.context.selectedTable.label || 'Untitled Query'}}</td>
+      <td>{{tab.machine.state}}</td>
+      <td>{{tab.machine.context.tableColumns}}</td>
+      <td>{{tab.machine.context}}</td>
+    </tr>
+  </table>
 </div>
 ]]></template>
     </sp_widget>
