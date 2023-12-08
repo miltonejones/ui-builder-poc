@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget">
+    <m2m_sp_ng_pro_sp_widget action="INSERT_OR_UPDATE">
+        <sp_angular_provider display_value="machineStateLineItem">06b9e498c3c7351011971d4ce0013186</sp_angular_provider>
+        <sp_widget display_value="State Machine Starter Project">b7841850c347351011971d4ce00131ee</sp_widget>
+        <sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-07 09:07:18</sys_created_on>
+        <sys_id>5e1a6018c3c7351011971d4ce0013113</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>machineStateLineItem.State Machine Starter Project</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>m2m_sp_ng_pro_sp_widget_5e1a6018c3c7351011971d4ce0013113</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-07 09:07:18</sys_updated_on>
+    </m2m_sp_ng_pro_sp_widget>
+</record_update>

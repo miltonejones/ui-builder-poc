@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[/* Starter State Machine widget
+ * ----------------------------------------------------------------------------------/
+ * Starter implementation of the createMachine function for angularjs.
+ *  - Clone this project to create new state machine-based widgets
+ *  - Register a state machine in the Application JSON table
+ *  - Load and start the machine
+ * 
+ * View the Stop Light state machine diagram here:
+ *
+ *    https://bit.ly/stately-stoplight 
+ */
+api.controller=function($scope) {
+
+  var c = this ;
+	
+	// sample messages to send to the state machine
+	$scope.messages = ['START', 'NEXT', 'STOP'];
+
+	// load and start the machine
+	invokeResource("loadJson", handleJsonLoaded); 
+
+	
+	// END MAIN SCRIPT
+  // ---------------------------------------------------------------------------------/
+	return;
+
+  /**
+   * ACTIONS/SERVICES/GUARDS
+   * ---------------------------------------------------------------------------------/
+   *  - Actions modify machine.context values
+   *  - Services invoke methods on external actors
+   *  - Guards control conditional transitions
+   */
+
+  function createActions() {
+    return { 
+			// TODO: add your actions here
+		};
+  }
+
+  function createGuards() {
+    return {
+			// TODO: add your guards here
+		};
+  }
+
+  function createServices() {
+		return {
+			// TODO: add your services here
+		} 
+	}
+
+
+	// HELPERS
+  // ---------------------------------------------------------------------------------/
+
+	
+  /**
+   * Function to handle loading of the app JSON.
+   * @param {Object} response - The API response object.
+   */
+  function handleJsonLoaded(response) { 
+		// assign state machine definition to scope
+		$scope.machine = response.data.message.starter_machine; 
+		
+		// create State Machine workflow using the JSON definition
+		createMachine({
+			
+			// pass in the scope and controller
+			controller: c,
+			$scope: $scope,
+			
+			// supply actions/guards/services to the machine
+			actions: createActions(),
+			guards: createGuards(),
+			services: createServices(),
+		});
+		
+		// start the machine
+		c.send('STOP'); // first event in the machine/optional
+  }
+
+  /**
+   * Invokes a resource action with the given action name and options.
+   * Calls the callback function with the response from the server.
+   * @param {string} action - The name of the action to invoke.
+   * @param {function} callback - The callback function to call with the server response.
+   * @param {object} options - The options to pass to the action.
+   */
+  function invokeResource(action, callback, options) {
+    var payload = { actionName: action };
+
+    // If options are provided, add them to the payload object
+    if (options) {
+      Object.keys(options).forEach(function (key) {
+        payload[key] = options[key];
+      });
+    }
+		
+		function updateComplete () {
+      c.server.get(payload).then(callback);
+    }
+ 
+    c.server.update().then(updateComplete);
+  }
+	
+	
+	/**
+	  DO NOT MODIFY BELOW THIS LINE
+	  State machine framework
+	*/
+  function createMachine(t){var n,e=t.actions,a=t.guards,c=t.services,r=t.controller;function i(t,e){var c=$scope.machine;Array.isArray(t)?o(t.find(function(t){var e=a[t.cond],r=!!e&&Boolean(e(c.context,n));return!t.cond||r}),e):o(t,e)}function o(t,a){var r=$scope.machine,o="object"==typeof n?n:{},u=f(o,{data:a}),h={context:r.context};function m(t){if(Array.isArray(t))t.forEach(function(t){var n=(0,e[t.type])(h.context,u);h.context=f(h.context,n)}),s(h.context);else{var n=(0,e[t.type])(h.context,u);h.context=f(h.context,n),s(h.context)}}r.states[r.state].exit&&m(r.states[r.state].exit),Boolean(t.target)&&($scope.machineState=t.target,r.state=t.target,localStorage.setItem("machine-state",t.target)),t.actions&&m(t.actions);var v=r.states[t.target];v&&(v.entry&&m(v.entry),v.invoke&&function t(e,a){var r=c[e.src];if(r)try{var o=r(a,n);if(e.onDone)return i(e.onDone,o)}catch(s){if(e.onError)return i(e.onError,s)}}(v.invoke,h.context),v.always&&i(v.always))}function s(t){var n=$scope.machine,e=f(n.context,t);n.context=e,$scope.machine=n}function f(t,n){for(var e in n)t[e]=n[e];return t}return r.matches=function(t){return Array.isArray(t)?t.some(function(t){return $scope.machineState===t}):$scope.machineState===t},r.can=function(t){var n=$scope.machine.states[$scope.machineState];if(n.on)return Boolean(n.on[t])},r.send=function(t){var e=t.type||t;$scope.machine.state=$scope.machineState,function t(e,a){var c=$scope.machine,r=c.states[$scope.machineState];if(n=a,r){var o=r.on[e]||c.on[e];o&&i(o)}}(e,t)},$scope.machineState=$scope.machine.initial,$scope.machine.state=$scope.machineState,r}	
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.btn {
+  margin: .25rem;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>state_machine_starter_project</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>State Machine Starter Project</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[/* Base Server Script
+ * ----------------------------------------------------------------------------------/
+ *   - requestMethods: Object contains available server methods
+ *   - createResource: Class implements table query functionality
+ *   - loadJson: Function uses createResource to load any application JSON
+ */
+(function () { 
+	
+	// implement request methods here
+  var requestMethods = { 
+    loadJson: loadJson, 
+  }; 
+	
+  // execute the requested method if there is one
+  if (input) { 
+    var requestMethod = requestMethods[input.actionName];
+    if (requestMethod) {
+      return requestMethod();
+    }
+  }
+  
+	// END MAIN SCRIPT
+  // ---------------------------------------------------------------------------------/
+	return;
+
+	
+	// HELPERS
+  // ---------------------------------------------------------------------------------/
+
+  function loadJson() {
+    // Create a resource object with the specified table and fields
+    var resource = createResource("x_ebh_ccde_application_json", [
+      "title",
+      "content",
+    ]);
+
+    // Execute the resource with the application filter
+    var response = resource.execute("title=starter_machine");
+
+    var object = {};
+    // Iterate over the response rows and parse the content as JSON
+    response.forEach(function (row) {
+      object[row.title] = JSON.parse(row.content);
+    });
+
+    // Return the object containing the JSON data
+    data.message = object;
+  }
+	 
+	
+  /**
+   * Creates a resource object with insert, update and execute methods
+   * @param {string} table - The name of the table to interact with
+   * @param {Array} fields - The fields to include in the resource object
+   * @returns {Object} - The resource object
+   */
+  function createResource(table, fields) {
+    return {
+      fields: fields,
+
+      /**
+       * Inserts a new record into the table
+       * @param {Array} fields - The fields to insert
+       * @returns {string} - The sys_id of the inserted record
+       */
+      insert: function (fields) {
+        var gr = new GlideRecord(table);
+
+        fields.forEach(function (item) {
+          gr[item.alias || item.field] = item.value;
+        });
+
+        // Insert the new record into the table
+        return gr.insert();
+      },
+
+			/**
+			 * Updates a record in the specified table with the given fields.
+			 * @param {string} sysId - The sys_id of the record to be updated.
+			 * @param {Object} fields - An object containing the fields to be updated and their new values.
+			 * @returns {boolean} - True if the record was successfully updated, false otherwise.
+			 */
+      update: function (sysId, fields) {
+				// Create a new GlideRecord object for the specified table
+				var gr = new GlideRecord(table);
+
+				// Get the record with the specified sys_id
+				gr.get(sysId);
+
+				// Loop through each field in the fields object
+				Object.keys(fields).forEach(function (item) {
+					// Set the value of the field in the GlideRecord object
+					gr.setValue(item, fields[item]);
+				});
+
+				// Update the record and return the result
+				return gr.update();
+			}, 
+
+      /**
+       * Retrieves the columns of a GlideRecord table.
+       * @returns {Array} - An array of objects containing field, label, and type properties.
+       */
+      describe: function () {
+        var t = new GlideRecord(table);
+        t.setLimit(1);
+        t.query();
+        t.next();
+        var fields = t.getElements(); //or getFields if global scope
+        var fieldList = [];
+
+        for (var i = 0; i < fields.length; i++) {
+          var glideElement = fields[i]; //or field.get(i) if global scope
+          var descriptor = glideElement.getED();
+
+          var fldName = glideElement.getName().toString();
+          var fldLabel = descriptor.getLabel().toString();
+          var fldType = descriptor.getInternalType().toString();
+          var canWrite = glideElement.canWrite();
+          var ref = glideElement.getRefRecord();
+          var choices = glideElement.getChoices();
+
+          var reference = null,
+            children = null,
+            fullName = fldName;
+          if (ref) {
+            reference = glideElement.getReferenceTable();
+            if (reference !== table) {
+              var resource = createResource(reference);
+              children = resource.describe();
+              fullName = reference + "." + fldName;
+            }
+          }
+
+          fieldList.push({
+            name: fldName,
+            type: fldType,
+            label: fldLabel,
+            writable: canWrite,
+            choices: glideElement.getChoices(),
+            reference: reference === table ? null : reference,
+            children: children,
+            fullName: fullName,
+          });
+        }
+
+        return fieldList.sort(function (a, b) {
+          return a.name > b.name ? 1 : -1;
+        });
+      },
+
+      count: function (conditions) {
+        var gr = new GlideRecord(table);
+        if (conditions) {
+          gr.addEncodedQuery(conditions);
+        }
+        gr.query();
+        return gr.getRowCount();
+      },
+
+      /**
+       * Executes a query on the table and returns the matching records
+       * @param {Array} conditions - The conditions to apply to the query
+       * @returns {Array} - The matching records
+       */
+      execute: function (conditions, page, size, sortby, sortdir) {
+        var gr = new GlideRecord(table);
+        var pageSize = size || 10;
+
+        if (conditions) {
+          gr.addEncodedQuery(conditions);
+        }
+
+        if (sortdir && sortby) {
+          if (sortdir === "DESC") {
+            gr.orderByDesc(sortby);
+          } else {
+            gr.orderBy(sortby);
+          }
+        } else {
+          gr.orderByDesc("sys_created_on");
+        }
+
+        var num = page || 1;
+        var start = pageSize * (num - 1);
+        var end = start + pageSize;
+
+      //  gr.chooseWindow(start, end);
+        gr.query();
+
+        var records = [];
+
+        // Iterate through each record in the GlideRecord
+        while (gr.next()) {
+          var record = {
+            _row_data: {
+              sysId: gr.getValue("sys_id"),
+            },
+          };
+
+          this.fields.forEach(function (field) {
+            if (field.indexOf(".") > 0) {
+              // handle reference fields
+              var both = field.split(".");
+              var ref = gr[both[0]].getRefRecord();
+              if (ref.isValidRecord()) {
+                record[field] = ref.getValue(both[1]);
+              }
+              return;
+            }
+
+            var glideElement = gr.getElement(field);
+            var reference = glideElement.getRefRecord();
+            if (reference) {
+              record[field] = {
+                label: gr.getDisplayValue(field),
+                value: gr.getValue(field),
+                table: glideElement.getReferenceTable(),
+              };
+            } else {
+              record[field] = gr.getValue(field);
+            }
+          });
+          records.push(record);
+        }
+
+        return records;
+      },
+    };
+  }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-07 07:33:12</sys_created_on>
+        <sys_id>b7841850c347351011971d4ce00131ee</sys_id>
+        <sys_mod_count>146</sys_mod_count>
+        <sys_name>State Machine Starter Project</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_widget_b7841850c347351011971d4ce00131ee</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-07 16:08:14</sys_updated_on>
+        <template><![CDATA[<!-- 
+Starter State Machine Widget 
+Angular view bound to JSON state machine.
+	  I. Custom Angular directive pageHead
+   II. Buttons to send messages to the machine
+  III. Current machine state
+   IV. Events available in the current state 
+-->
+<div> 
+  
+  <!-- I. page head custom directive --> 
+  <page-head key="machine.id"></page-head>
+  
+  
+  <!-- II. each button is disabled if it's message cannot be sent in the current state --> 
+  <button class="btn btn-primary" 
+     ng-repeat="message in messages"
+     ng-disabled="!c.can(message)"
+     ng-click="c.send(message)"
+  >
+    {{message}}
+  </button> 
+  
+  
+  <!-- III. current state and description --> 
+  <h3>
+    {{ machine.state }} <small class="text-muted"> {{machine.states[machine.state].description}}</small>
+  </h3>
+  
+  
+  <!-- IV. event messages that can be sent in the current state --> 
+  <ul class="list-group">
+    
+    <!-- list header -->
+    <li class="list-group-item active">Available events in <b>{{ machine.state }}</b> state</li>
+    
+    <!-- line item custom directive -->
+    <machine-state-line-item 
+      key="key" 
+      value="value" 
+      ng-repeat="(key, value) in machine.states[machine.state].on"
+    ></machine-state-line-item>
+    
+  </ul>
+  
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

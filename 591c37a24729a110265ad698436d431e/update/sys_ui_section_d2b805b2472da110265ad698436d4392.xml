@@ -3,56 +3,56 @@
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>deduction_type</element>
             <position>0</position>
-            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
-            <sys_created_on>2023-04-27 14:51:29</sys_created_on>
-            <sys_id>b3b45098c3a2615011971d4ce0013130</sys_id>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-08 12:46:17</sys_created_on>
+            <sys_id>37c5ae60478bb110265ad698436d43f1</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_ebh_voluntary_0_deductions" sys_domain="global" view="Default view">d2b805b2472da110265ad698436d4392</sys_ui_section>
-            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-04-27 14:51:29</sys_updated_on>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-08 12:46:17</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>deduction_ticket_id</element>
             <position>1</position>
-            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
-            <sys_created_on>2023-04-27 14:51:29</sys_created_on>
-            <sys_id>b7b45098c3a2615011971d4ce0013130</sys_id>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-08 12:46:17</sys_created_on>
+            <sys_id>3fc5ae60478bb110265ad698436d43f1</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_ebh_voluntary_0_deductions" sys_domain="global" view="Default view">d2b805b2472da110265ad698436d4392</sys_ui_section>
-            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-04-27 14:51:29</sys_updated_on>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-08 12:46:17</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.split</element>
             <position>2</position>
-            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
-            <sys_created_on>2023-04-27 14:51:29</sys_created_on>
-            <sys_id>bbb45098c3a2615011971d4ce0013130</sys_id>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-08 12:46:17</sys_created_on>
+            <sys_id>33c5ae60478bb110265ad698436d43f2</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_ebh_voluntary_0_deductions" sys_domain="global" view="Default view">d2b805b2472da110265ad698436d4392</sys_ui_section>
-            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-04-27 14:51:29</sys_updated_on>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-08 12:46:17</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>deduction_amount</element>
+            <element>deduction_value</element>
             <position>3</position>
-            <sys_created_by>bryan.rodriguez@employbridge.com</sys_created_by>
-            <sys_created_on>2023-04-27 14:51:29</sys_created_on>
-            <sys_id>bfb45098c3a2615011971d4ce0013130</sys_id>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-08 12:46:17</sys_created_on>
+            <sys_id>37c5ae60478bb110265ad698436d43f2</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_ebh_voluntary_0_deductions" sys_domain="global" view="Default view">d2b805b2472da110265ad698436d4392</sys_ui_section>
-            <sys_updated_by>bryan.rodriguez@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-04-27 14:51:29</sys_updated_on>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-08 12:46:17</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

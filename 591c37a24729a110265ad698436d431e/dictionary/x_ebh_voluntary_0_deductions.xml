@@ -5,7 +5,7 @@
         <element label="Deduction Amount" max_length="40" name="deduction_amount" type="integer"/>
         <element label="Deduction Amount Formatted" max_length="40" name="deduction_amount_formatted" type="string"/>
         <element label="Deduction Ticket ID" max_length="32" name="deduction_ticket_id" reference="x_ebh_voluntary_0_deduction_tickets" type="reference"/>
-        <element choice="1" label="Deduction Type" max_length="40" name="deduction_type" type="string">
+        <element choice="1" label="Deduction Type" mandatory="true" max_length="40" name="deduction_type" type="string">
             <choice>
                 <element inactive_on_update="false" label="UWAY - United Way" sequence="0" value="UWAY"/>
                 <element inactive_on_update="false" label="VADV - Temp Advance" sequence="1" value="VADV"/>
@@ -23,7 +23,7 @@
                 <element inactive_on_update="false" label="VUNI - Uniform Deduction" sequence="13" value="VUNI"/>
             </choice>
         </element>
-        <element label="Deduction Value" max_length="40" name="deduction_value" type="currency"/>
+        <element default="0.00" label="Deduction Value" mandatory="true" max_length="40" name="deduction_value" type="currency"/>
         <element display="true" formula="CONCATENATE(deduction_type, &quot; : $&quot; , deduction_amount)" label="Display Value" max_length="40" name="display_value" type="string" virtual="true" virtual_type="formula"/>
         <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Deduction ID" max_length="40" name="number" read_only="true" type="string"/>
         <element label="(Ref) Created By" max_length="32" name="ref_created_by" reference="sys_user" type="reference"/>

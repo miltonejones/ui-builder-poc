@@ -1,14 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
     <sp_page action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <css/>
+        <css>body, td, th, a, button {
+  font-family: Lato, Arial, sans-serif;
+}
+
+td, th {
+  font-size: 1.1em;
+  border-top: .1rem solid #f2f5fe
+}
+
+.btn {
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.95em;
+  letter-spacing: 0.02857em;
+  padding: 8px 16px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.btn-primary {
+  background-color: #3f51b5;
+  color: #fff;
+  box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+}
+
+.btn-primary:hover {
+  background-color: #303f9f;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+
+.btn-primary:active {
+  box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);
+}
+
+.btn-primary:focus {
+  box-shadow: 0px 0px 0px 2px rgba(63,81,181, 0.5);
+}
+
+
+.badge {
+  font-weight: 400;
+  background-color: #f5f5f5;
+  color: #222;
+}
+
+.badge.active {
+  font-weight: 600;
+  color: #222;
+  background-color: #fff;
+  border: solid 1px #222;
+}
+
+.badge.badge-primary {
+  color: #fff;
+  background-color: #007bff;
+}
+
+.badge.active.badge-primary {
+  color: #007bff;
+  background-color: #fff;
+  border: solid 1px #007bff;
+}
+
+a,
+a:hover,
+a:visited {
+  color: #001a76;
+}
+
+.table &gt; tbody &gt; tr:nth-of-type(odd) {
+  background-color: #f2f5fe;
+  border-top: .1rem solid #f2f5fe
+}
+</css>
         <draft>false</draft>
         <dynamic_title_structure/>
         <human_readable_url_structure/>
         <id>voluntary_deductions_poc</id>
         <internal>false</internal>
         <omit_watcher>false</omit_watcher>
-        <public>false</public>
+        <public>true</public>
         <roles/>
         <seo_script/>
         <short_description/>
@@ -16,14 +90,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-23 05:29:58</sys_created_on>
         <sys_id>12127ba74766b110265ad698436d43fa</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_name>voluntary_deductions_poc</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sp_page_12127ba74766b110265ad698436d43fa</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-23 05:29:58</sys_updated_on>
+        <sys_updated_on>2023-12-08 13:43:45</sys_updated_on>
         <title>Voluntary Deductions POC - Test Page</title>
         <use_seo_script>false</use_seo_script>
     </sp_page>

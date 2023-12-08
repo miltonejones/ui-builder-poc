@@ -5,13 +5,13 @@
         <attributes/>
         <audit>false</audit>
         <calculation/>
-        <choice>0</choice>
+        <choice/>
         <choice_field/>
         <choice_table/>
         <column_label>Deduction Value</column_label>
         <comments/>
         <create_roles/>
-        <default_value/>
+        <default_value>0.00</default_value>
         <defaultsort/>
         <delete_roles/>
         <dependent/>
@@ -28,7 +28,7 @@
         <function_definition/>
         <function_field>false</function_field>
         <internal_type display_value="Currency">currency</internal_type>
-        <mandatory>false</mandatory>
+        <mandatory>true</mandatory>
         <max_length>40</max_length>
         <name>x_ebh_voluntary_0_deductions</name>
         <next_element/>
@@ -53,7 +53,7 @@
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_dictionary_x_ebh_voluntary_0_deductions_deduction_value</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-05-26 15:28:50</sys_updated_on>
+        <sys_updated_on>2023-12-08 01:47:05</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

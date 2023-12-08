@@ -3,154 +3,70 @@
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>talent_user</element>
             <position>0</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>f86757f2c3aa711011971d4ce00131ca</sys_id>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-08 09:45:26</sys_created_on>
+            <sys_id>be6c39a047c7b110265ad698436d43b9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-08 09:45:26</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>talent_id</element>
+            <element>talent_user.enterprise_talent_id</element>
             <position>1</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>f06757f2c3aa711011971d4ce00131cb</sys_id>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-08 09:45:26</sys_created_on>
+            <sys_id>b26c39a047c7b110265ad698436d43ba</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-08 09:45:26</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.split</element>
             <position>2</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>f46757f2c3aa711011971d4ce00131cb</sys_id>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-08 09:45:26</sys_created_on>
+            <sys_id>b66c39a047c7b110265ad698436d43ba</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-08 09:45:26</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>effective_date</element>
             <position>3</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>f86757f2c3aa711011971d4ce00131cb</sys_id>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-08 09:45:26</sys_created_on>
+            <sys_id>ba6c39a047c7b110265ad698436d43ba</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-08 09:45:26</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>deductions</element>
+            <element>status</element>
             <position>4</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>fc6757f2c3aa711011971d4ce00131cb</sys_id>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-08 09:45:26</sys_created_on>
+            <sys_id>be6c39a047c7b110265ad698436d43ba</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>.end_split</element>
-            <position>5</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>f06757f2c3aa711011971d4ce00131cc</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
-            <sys_user/>
-            <type>.end_split</type>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>number</element>
-            <position>6</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>f46757f2c3aa711011971d4ce00131cc</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>notes</element>
-            <position>7</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>f86757f2c3aa711011971d4ce00131cc</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>trace_id</element>
-            <position>8</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>fc6757f2c3aa711011971d4ce00131cc</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>span_id</element>
-            <position>9</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>f06757f2c3aa711011971d4ce00131cd</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>created_by</element>
-            <position>10</position>
-            <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
-            <sys_created_on>2023-11-20 19:37:50</sys_created_on>
-            <sys_id>f46757f2c3aa711011971d4ce00131cd</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Deduction Ticket" display_value="Deduction Ticket" name="x_ebh_voluntary_0_deduction_tickets" sys_domain="global" view="Default view">94c98fd9c31e291011971d4ce00131a6</sys_ui_section>
-            <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-            <sys_updated_on>2023-11-20 19:37:50</sys_updated_on>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-08 09:45:26</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

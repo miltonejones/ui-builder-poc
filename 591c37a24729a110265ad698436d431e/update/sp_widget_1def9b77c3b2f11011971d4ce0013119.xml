@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+  /* widget controller */
+  var c = this ;
+	
+
+	// get all the needed JSON objects from the database
+	invokeResource("loadJson", function (response) { 
+
+		// assign state machine definition to scope
+		$scope.machine = response.data.message.migration_state_machine;
+
+		// set machineState to the state machine initial state
+		$scope.machineState = $scope.machine.initial; 
+		// create State Machine workflow using the JSON definition
+		var workflow = createMachine({
+			actions: createActions(),
+			guards: createGuards(),
+			services: createServices(),
+			controller: c,
+			$scope: $scope,
+		});
+		
+		c.send('begin');
+	});
+
+
+	return;
+	
+  function createActions() {
+    return { 
+			iterateIndex: function (context) {
+				return {
+					index: context.index + 1
+				}
+			},
+			
+			assignBillingSysId: function (context, event) {
+				var record = context.record;
+				record.billing_location_ref = event.value;
+				return {
+					record: record
+				};
+			},
+			
+			assignWorksiteSysId: function (context, event) { 
+				var record = context.record;
+				record.work_location_ref = event.value; 
+				return {
+					record: record
+				};
+			},
+			
+			
+			assignBlankRecord: function (context) {
+				return {
+					record: {
+						sys_id: context.billings[context.index].sys_id
+					}, 
+					current: context.billings[context.index]
+				};
+			},
+			
+			
+			assignLegacyBillings: function (_, event) {
+				return {
+					billings: event.value,
+					index: 0
+				};
+			}
+			
+			
+		};
+  }
+
+  function createGuards() {
+    return { 
+		'more records': function (context) {
+				return context.index < context.billings.length;
+			}
+		};
+  }
+
+  function createServices() {
+		return {
+			getLocation: function (context) {
+				var filters = {
+					worksite: 'location_name=' + context.current.work_location + '^location_type=Worksite' ,
+					billing: 'location_name=' + context.current.billing_location + '^location_type=Billing'  
+				}
+				var filter = !context.record.work_location_ref ? filters.worksite : filters.billing;
+	 
+				invokeResource('getLocation', onComplete, {
+					filter: filter
+				})
+			},
+			modifyRecord: function(context) {
+				invokeResource('modifyRecord', onComplete, {
+					sysId: context.record.sys_id,
+					fields: {
+						work_location_ref: context.record.work_location_ref,
+						billing_location_ref: context.record.billing_location_ref
+					}
+				})
+				return true;
+			},
+			getLegacyBillings: function() {
+				invokeResource('getLegacyBillings', onComplete)
+			}
+		}
+	}
+	
+	
+	// HELPERS
+	
+	
+  /**
+   * Function to handle completion of an API response.
+   * @param {Object} response - The API response object.
+   */
+  function onComplete(response) {
+    // Check if the response has data and a message property
+    if (response.data && response.data.message) {
+      // Send a message with the data loaded event type and the message value
+      return c.send({
+        type: "data loaded",
+        value: response.data.message,
+      });
+    }
+    if (response.data && response.data.error) {
+      // Send a message with the data loaded event type and the message value
+      return c.send({
+        type: "data error",
+        value: response.data.error,
+      });
+    }
+  }
+
+  /**
+   * Invokes a resource action with the given action name and options.
+   * Calls the callback function with the response from the server.
+   * @param {string} action - The name of the action to invoke.
+   * @param {function} callback - The callback function to call with the server response.
+   * @param {object} options - The options to pass to the action.
+   */
+  function invokeResource(action, callback, options) {
+    var payload = { actionName: action };
+
+    // If options are provided, add them to the payload object
+    if (options) {
+      Object.keys(options).forEach(function (key) {
+        payload[key] = options[key];
+      });
+    }
+
+    // Execute the function with the refreshed data
+    // this will send a 'data loaded' message to the
+    // state machine with the data response
+    c.server.update().then(function () {
+      c.server.get(payload).then(callback);
+    });
+  }
+	  /**
+	  DO NOT MODIFY BELOW THIS LINE
+	  State machine framework
+	*/
+   function createMachine(t){var n,e=t.actions,a=t.guards,r=t.services,c=t.controller;function o(t,e){var r=$scope.machine;Array.isArray(t)?i(t.find(function(t){var e=a[t.cond],c=!!e&&Boolean(e(r.context,n));return!t.cond||c}),e):i(t,e)}function i(t,a){var c=$scope.machine,i="object"==typeof n?n:{},u=f(i,{data:a}),h={context:c.context};function v(t){if(Array.isArray(t))t.forEach(function(t){var n=(0,e[t.type])(h.context,u);h.context=f(h.context,n)}),s(h.context);else{var n=(0,e[t.type])(h.context,u);h.context=f(h.context,n),s(h.context)}}c.states[c.state].exit&&v(c.states[c.state].exit),Boolean(t.target)&&($scope.machineState=t.target,c.state=t.target,localStorage.setItem("machine-state",t.target)),t.actions&&v(t.actions);var m=c.states[t.target];m&&(m.entry&&v(m.entry),m.invoke&&function t(e,a){var c=r[e.src];if(c)try{var i=c(a,n);if(e.onDone)return o(e.onDone,i)}catch(s){if(e.onError)return o(e.onError,s)}}(m.invoke,h.context),m.always&&o(m.always))}function s(t){var n=$scope.machine,e=f(n.context,t);n.context=e,$scope.machine=n}function f(t,n){for(var e in n)t[e]=n[e];return t}return c.matches=function(t){return Array.isArray(t)?t.some(function(t){return $scope.machineState===t}):$scope.machineState===t},c.can=function(t){var n=$scope.machine.states[$scope.machineState];if(n.on)return Boolean(n.on[t])},c.send=function(t){var e=t.type||t;$scope.machine.state=$scope.machineState,function t(e,a){var r=$scope.machine,c=r.states[$scope.machineState];if(n=a,c){var i=c.on[e]||r.on[e];i&&o(i)}}(e,t)},c}
+
+	
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>storybook</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Storybook</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function () {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+  //sys_db_object
+ 
+  function loadJson() {
+    // Create a resource object with the specified table and fields
+    var resource = createResource("x_ebh_ccde_application_json", [
+      "title",
+      "content",
+    ]);
+
+    // Execute the resource with the application filter
+    var response = resource.execute(
+      "title=migration_state_machine"
+    );
+
+    var object = {};
+    // Iterate over the response rows and parse the content as JSON
+    response.forEach(function (row) {
+      object[row.title] = JSON.parse(row.content);
+    });
+
+    // Return the object containing the JSON data
+    data.message = object;
+  }
+	
+	function getLocation() {
+		var resource = createResource('x_ebh_ccde_client_location', ['sys_id'])
+		var record = resource.execute(input.filter);
+		if (record && record.length) {
+			data.message = record[0].sys_id;
+			console.log ({m: data.message})
+			return;
+		}
+		data.message = -1;
+	}
+
+	function getLegacyBillings() {
+		var resource = createResource('x_ebh_billing_pa_0_billing_entry', ['sys_id', 'billing_location', 'work_location'])
+		data.message = resource.execute('work_location_refISEMPTY');
+		console.log ({m: data.message})
+	}
+
+	function modifyRecord() {
+		var resource = createResource('x_ebh_billing_pa_0_billing_entry')
+		data.message = resource.update(input.sysId, input.fields);
+		console.log ({m: data.message})
+	}
+
+  var requestMethods = { 
+    loadJson: loadJson,
+		getLegacyBillings: getLegacyBillings,
+		getLocation: getLocation,
+		modifyRecord: modifyRecord
+  };
+
+  // execute the requested method if there is one
+  if (input) {
+    var actionName = input.actionName;
+    var requestMethod = requestMethods[actionName];
+    if (requestMethod) {
+      return requestMethod();
+    }
+  }
+
+  return;
+
+  /**
+   * Creates a resource object with insert and execute methods
+   * @param {string} table - The name of the table to interact with
+   * @param {Array} fields - The fields to include in the resource object
+   * @returns {Object} - The resource object
+   */
+  function createResource(table, fields) {
+    return {
+      fields: fields,
+
+      /**
+       * Inserts a new record into the table
+       * @param {Array} fields - The fields to insert
+       * @returns {string} - The sys_id of the inserted record
+       */
+      insert: function (fields) {
+        var gr = new GlideRecord(table);
+
+        fields.forEach(function (item) {
+          gr[item.alias || item.field] = item.value;
+        });
+
+        // Insert the new record into the table
+        return gr.insert();
+      },
+
+      update: function (sysId, fields) {
+        var gr = new GlideRecord(table);
+        gr.get(sysId);
+        Object.keys(fields).forEach(function (item) {
+          gr.setValue(item, fields[item]);
+        });
+        return gr.update();
+      },
+
+      /**
+       * Retrieves the columns of a GlideRecord table.
+       * @returns {Array} - An array of objects containing field, label, and type properties.
+       */
+      describe: function () {
+        var t = new GlideRecord(table);
+        t.setLimit(1);
+        t.query();
+        t.next();
+        var fields = t.getElements(); //or getFields if global scope
+        var fieldList = [];
+
+        for (var i = 0; i < fields.length; i++) {
+          var glideElement = fields[i]; //or field.get(i) if global scope
+          var descriptor = glideElement.getED();
+
+          var fldName = glideElement.getName().toString();
+          var fldLabel = descriptor.getLabel().toString();
+          var fldType = descriptor.getInternalType().toString();
+          var canWrite = glideElement.canWrite();
+          var ref = glideElement.getRefRecord();
+          var choices = glideElement.getChoices();
+
+          var reference = null,
+            children = null,
+            fullName = fldName;
+          if (ref) {
+            reference = glideElement.getReferenceTable();
+            if (reference !== table) {
+              var resource = createResource(reference);
+              children = resource.describe();
+              fullName = reference + "." + fldName;
+            }
+          }
+
+          fieldList.push({
+            name: fldName,
+            type: fldType,
+            label: fldLabel,
+            writable: canWrite,
+            choices: glideElement.getChoices(),
+            reference: reference === table ? null : reference,
+            children: children,
+            fullName: fullName,
+          });
+        }
+
+        return fieldList.sort(function (a, b) {
+          return a.name > b.name ? 1 : -1;
+        });
+      },
+
+      count: function (conditions) {
+        var gr = new GlideRecord(table);
+        if (conditions) {
+          gr.addEncodedQuery(conditions);
+        }
+        gr.query();
+        return gr.getRowCount();
+      },
+
+      /**
+       * Executes a query on the table and returns the matching records
+       * @param {Array} conditions - The conditions to apply to the query
+       * @returns {Array} - The matching records
+       */
+      execute: function (conditions, page, size, sortby, sortdir) {
+        var gr = new GlideRecord(table);
+        var pageSize = size || 10;
+
+        if (conditions) {
+          gr.addEncodedQuery(conditions);
+        }
+
+        if (sortdir && sortby) {
+          if (sortdir === "DESC") {
+            gr.orderByDesc(sortby);
+          } else {
+            gr.orderBy(sortby);
+          }
+        } else {
+          gr.orderByDesc("sys_created_on");
+        }
+
+        var num = page || 1;
+        var start = pageSize * (num - 1);
+        var end = start + pageSize;
+
+      //  gr.chooseWindow(start, end);
+        gr.query();
+
+        var records = [];
+
+        // Iterate through each record in the GlideRecord
+        while (gr.next()) {
+          var record = {
+            _row_data: {
+              sysId: gr.getValue("sys_id"),
+            },
+          };
+
+          this.fields.forEach(function (field) {
+            if (field.indexOf(".") > 0) {
+              // handle reference fields
+              var both = field.split(".");
+              var ref = gr[both[0]].getRefRecord();
+              if (ref.isValidRecord()) {
+                record[field] = ref.getValue(both[1]);
+              }
+              return;
+            }
+
+            var glideElement = gr.getElement(field);
+            var reference = glideElement.getRefRecord();
+            if (reference) {
+              record[field] = {
+                label: gr.getDisplayValue(field),
+                value: gr.getValue(field),
+                table: glideElement.getReferenceTable(),
+              };
+            } else {
+              record[field] = gr.getValue(field);
+            }
+          });
+          records.push(record);
+        }
+
+        return records;
+      },
+    };
+  }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-06 09:04:38</sys_created_on>
+        <sys_id>1def9b77c3b2f11011971d4ce0013119</sys_id>
+        <sys_mod_count>49</sys_mod_count>
+        <sys_name>Storybook</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_widget_1def9b77c3b2f11011971d4ce0013119</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 14:50:54</sys_updated_on>
+        <template><![CDATA[<div>
+ {{ machineState }}
+  <hr />	
+  {{machine.context.current}}
+  <hr />
+  {{machine.context.index}}
+  <hr />
+  {{machine.context.record}}
+</div>]]></template>
+    </sp_widget>
+</record_update>

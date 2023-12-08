@@ -4,14 +4,14 @@
         <acls/>
         <active>true</active>
         <annotation/>
-        <attributes/>
+        <attributes>browserActivatedIn=chrome,integrationActivatedIn=standalone,labelCacheCleanUpExecuted=true,timeFromCreateToActivate=5293128000,viewActivatedIn=naturalLanguage</attributes>
         <callable_by_client_api>false</callable_by_client_api>
         <category/>
         <copied_from/>
         <copied_from_name/>
         <description>If CRM status changes to assigned in talent core table</description>
         <internal_name>status_update_to_sent_vd_status_crm</internal_name>
-        <label_cache>[{"name":"d288c85d-b130-4a5c-8dab-dcb6a7fa05c2.Record","label":"1 - Look Up Record➛Deduction Tickets Record","reference":"x_ebh_voluntary_0_deduction_tickets","reference_display":"Deduction Tickets","type":"reference","base_type":"reference","attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}},{"name":"Created or Updated_1.current.sys_id","label":"Trigger - Record Created or Updated➛Talent Core Record➛Sys ID","reference":"","reference_display":"Sys ID","type":"GUID","base_type":"GUID","parent_table_name":"x_ebh_ccde_talent_core","column_name":"sys_id"}]</label_cache>
+        <label_cache>[{"name":"2d448cba-b6ad-44c3-bc48-537b935c3381.record","label":"2 - Update Record➛Deduction Tickets Record","reference":"x_ebh_voluntary_0_deduction_tickets","reference_display":"Deduction Tickets","type":"reference","base_type":"reference","attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}},{"name":"Created or Updated_1.current","label":"Trigger - Record Created or Updated➛Talent Core Record","reference":"x_ebh_ccde_talent_core","reference_display":"Talent Core","type":"reference","base_type":"reference","attributes":{}},{"name":"d288c85d-b130-4a5c-8dab-dcb6a7fa05c2.Record","label":"1 - Look Up Record➛Deduction Tickets Record","reference":"x_ebh_voluntary_0_deduction_tickets","reference_display":"Deduction Tickets","type":"reference","base_type":"reference","attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}},{"name":"Created or Updated_1.current.sys_id","label":"Trigger - Record Created or Updated➛Talent Core Record➛Sys ID","reference":"","reference_display":"Sys ID","type":"GUID","base_type":"GUID","parent_table_name":"x_ebh_ccde_talent_core","column_name":"sys_id"}]</label_cache>
         <master_snapshot>f291529847bdb510265ad698436d4395</master_snapshot>
         <name>Status Update to sent (VD status CRM)</name>
         <natlang/>
@@ -30,15 +30,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>421f8e9447bdb510265ad698436d433e</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>11</sys_mod_count>
         <sys_name>Status Update to sent (VD status CRM)</sys_name>
         <sys_overrides/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_hub_flow_421f8e9447bdb510265ad698436d433e</sys_update_name>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:05</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:57</sys_updated_on>
         <type>flow</type>
     </sys_hub_flow>
     <sys_translated_text action="delete_multiple" query="documentkey=421f8e9447bdb510265ad698436d433e"/>
@@ -74,15 +74,15 @@
         <data>{"run_flow_in":"background","run_when_user_list":[],"run_when_setting":"both","run_when_user_setting":"any","run_on_extended":"false"}</data>
         <identifier>421f8e9447bdb510265ad698436d433e</identifier>
         <runner>FDTriggerRunner</runner>
-        <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
-        <sys_created_on>2023-10-06 13:21:04</sys_created_on>
-        <sys_id>cb91929847bdb510265ad698436d431a</sys_id>
-        <sys_mod_count>1</sys_mod_count>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:04</sys_updated_on>
+        <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-06 18:28:56</sys_created_on>
+        <sys_id>6301a148c38bf11011971d4ce0013155</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:56</sys_updated_on>
         <trigger display_value="">0391929847bdb510265ad698436d431a</trigger>
     </sys_trigger_runner_mapping>
-    <sys_trigger_runner_mapping action="delete_multiple" query="identifier=421f8e9447bdb510265ad698436d433e^sys_idNOT INcb91929847bdb510265ad698436d431a"/>
+    <sys_trigger_runner_mapping action="delete_multiple" query="identifier=421f8e9447bdb510265ad698436d433e^sys_idNOT IN6301a148c38bf11011971d4ce0013155"/>
     <sys_hub_trigger_instance action="delete_multiple" query="flow=421f8e9447bdb510265ad698436d433e^sys_idNOT IN86215a5847bdb510265ad698436d43b1"/>
     <sys_hub_trigger_instance action="INSERT_OR_UPDATE">
         <comment/>
@@ -93,10 +93,10 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:19:06</sys_created_on>
         <sys_id>86215a5847bdb510265ad698436d43b1</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>10</sys_mod_count>
         <sys_scope/>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:04</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:57</sys_updated_on>
         <trigger_definition display_value="Created or Updated">a45d9180c32222002841b63b12d3aea7</trigger_definition>
         <trigger_inputs/>
         <trigger_outputs/>
@@ -308,14 +308,14 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:19:05</sys_created_on>
         <sys_id>42215a5847bdb510265ad698436d43a4</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:04</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:56</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -392,14 +392,14 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:19:05</sys_created_on>
         <sys_id>c6215a5847bdb510265ad698436d43ac</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:04</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:56</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -415,7 +415,44 @@
     <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=c6215a5847bdb510265ad698436d43ac"/>
     <sys_hub_flow_output action="delete_multiple" query="model=421f8e9447bdb510265ad698436d433e"/>
     <sys_hub_alias_mapping action="delete_multiple" query="source_id=421f8e9447bdb510265ad698436d433e"/>
-    <sys_hub_action_instance action="delete_multiple" query="flow=421f8e9447bdb510265ad698436d433e^sys_idNOT IN5191129847bdb510265ad698436d437f,82215a5847bdb510265ad698436d43bb"/>
+    <sys_hub_action_instance action="delete_multiple" query="flow=421f8e9447bdb510265ad698436d433e^sys_idNOT IN2d2069c4c38bf11011971d4ce00131e4,5191129847bdb510265ad698436d437f,82215a5847bdb510265ad698436d43bb"/>
+    <sys_hub_action_instance action="INSERT_OR_UPDATE">
+        <action_inputs/>
+        <action_inputs/>
+        <action_type display_value="Upload Voluntary Deduction topic">2055c4f247d63d50265ad698436d439e</action_type>
+        <action_type_parent display_value="Upload Voluntary Deduction topic">e9b408b247d63d50265ad698436d43d3</action_type_parent>
+        <attributes/>
+        <comment/>
+        <display_text/>
+        <flow display_value="Status Update to sent (VD status CRM)">421f8e9447bdb510265ad698436d433e</flow>
+        <order>3</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance</sys_class_name>
+        <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-06 18:24:59</sys_created_on>
+        <sys_id>2d2069c4c38bf11011971d4ce00131e4</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:30:33</sys_updated_on>
+        <ui_id>8f81259b-2df3-4987-bb53-cae9c6d7e83a</ui_id>
+    </sys_hub_action_instance>
+    <sys_variable_value action="delete_multiple" query="document_key=2d2069c4c38bf11011971d4ce00131e4"/>
+    <sys_element_mapping action="delete_multiple" query="id=2d2069c4c38bf11011971d4ce00131e4"/>
+    <sys_element_mapping action="INSERT_OR_UPDATE">
+        <field>voluntary_deduction</field>
+        <id>2d2069c4c38bf11011971d4ce00131e4</id>
+        <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-06 18:24:59</sys_created_on>
+        <sys_id>e12069c4c38bf11011971d4ce00131e6</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:47</sys_updated_on>
+        <table>var__m_sys_hub_action_input_2055c4f247d63d50265ad698436d439e</table>
+        <value>{{2d448cba-b6ad-44c3-bc48-537b935c3381.record}}</value>
+    </sys_element_mapping>
+    <sys_hub_input_scripts action="delete_multiple" query="instance=2d2069c4c38bf11011971d4ce00131e4"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=2d2069c4c38bf11011971d4ce00131e4"/>
     <sys_hub_action_instance action="INSERT_OR_UPDATE">
         <action_inputs/>
         <action_inputs/>
@@ -431,10 +468,10 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:20:57</sys_created_on>
         <sys_id>5191129847bdb510265ad698436d437f</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>28</sys_mod_count>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_updated_by>system</sys_updated_by>
-        <sys_updated_on>2023-11-14 14:50:21</sys_updated_on>
+        <sys_updated_on>2023-12-06 18:30:33</sys_updated_on>
         <ui_id>2d448cba-b6ad-44c3-bc48-537b935c3381</ui_id>
     </sys_hub_action_instance>
     <sys_variable_value action="delete_multiple" query="document_key=5191129847bdb510265ad698436d437f"/>
@@ -520,10 +557,10 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:19:06</sys_created_on>
         <sys_id>82215a5847bdb510265ad698436d43bb</sys_id>
-        <sys_mod_count>12</sys_mod_count>
+        <sys_mod_count>30</sys_mod_count>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_updated_by>system</sys_updated_by>
-        <sys_updated_on>2023-11-14 14:50:21</sys_updated_on>
+        <sys_updated_on>2023-12-06 18:30:33</sys_updated_on>
         <ui_id>d288c85d-b130-4a5c-8dab-dcb6a7fa05c2</ui_id>
     </sys_hub_action_instance>
     <sys_variable_value action="delete_multiple" query="document_key=82215a5847bdb510265ad698436d43bb"/>
@@ -657,7 +694,7 @@
         <copied_from_name/>
         <description>If CRM status changes to assigned in talent core table</description>
         <internal_name>status_update_to_sent_vd_status_crm</internal_name>
-        <label_cache>[{"name":"d288c85d-b130-4a5c-8dab-dcb6a7fa05c2.Record","label":"1 - Look Up Record➛Deduction Tickets Record","reference":"x_ebh_voluntary_0_deduction_tickets","reference_display":"Deduction Tickets","type":"reference","base_type":"reference","attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}},{"name":"Created or Updated_1.current.sys_id","label":"Trigger - Record Created or Updated➛Talent Core Record➛Sys ID","reference":"","reference_display":"Sys ID","type":"GUID","base_type":"GUID","parent_table_name":"x_ebh_ccde_talent_core","column_name":"sys_id"}]</label_cache>
+        <label_cache>[{"name":"2d448cba-b6ad-44c3-bc48-537b935c3381.record","label":"2 - Update Record➛Deduction Tickets Record","reference":"x_ebh_voluntary_0_deduction_tickets","reference_display":"Deduction Tickets","type":"reference","base_type":"reference","attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}},{"name":"Created or Updated_1.current","label":"Trigger - Record Created or Updated➛Talent Core Record","reference":"x_ebh_ccde_talent_core","reference_display":"Talent Core","type":"reference","base_type":"reference","attributes":{}},{"name":"d288c85d-b130-4a5c-8dab-dcb6a7fa05c2.Record","label":"1 - Look Up Record➛Deduction Tickets Record","reference":"x_ebh_voluntary_0_deduction_tickets","reference_display":"Deduction Tickets","type":"reference","base_type":"reference","attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}},{"name":"Created or Updated_1.current.sys_id","label":"Trigger - Record Created or Updated➛Talent Core Record➛Sys ID","reference":"","reference_display":"Sys ID","type":"GUID","base_type":"GUID","parent_table_name":"x_ebh_ccde_talent_core","column_name":"sys_id"}]</label_cache>
         <master>true</master>
         <name>Status Update to sent (VD status CRM)</name>
         <natlang/>
@@ -674,15 +711,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>f291529847bdb510265ad698436d4395</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name/>
         <sys_overrides/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:03</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:54</sys_updated_on>
         <type>flow</type>
     </sys_hub_flow_snapshot>
     <sys_translated_text action="delete_multiple" query="documentkey=f291529847bdb510265ad698436d4395"/>
@@ -697,10 +734,10 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:21:04</sys_created_on>
         <sys_id>cb91529847bdb510265ad698436d43f6</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_scope/>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:04</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:56</sys_updated_on>
         <trigger_definition display_value="Created or Updated">a45d9180c32222002841b63b12d3aea7</trigger_definition>
         <trigger_inputs/>
         <trigger_outputs/>
@@ -769,7 +806,7 @@
         <active>true</active>
         <array>false</array>
         <array_denormalized>false</array_denormalized>
-        <attributes>child_label=FDChangeDetails,child_name=FDChangeDetails,child_type=object,child_type_label=Object,element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,pwd2droppable=true,uiType=array.object,uiTypeLabel=Array.Object</attributes>
+        <attributes>child_label=FDChangeDetails,child_name=FDChangeDetails,child_type=object,child_type_label=Object,co_type_name=FDCollection,element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,pwd2droppable=true,uiType=array.object,uiTypeLabel=Array.Object</attributes>
         <audit>false</audit>
         <calculation><![CDATA[(function calculatedFieldValue(current) {
 
@@ -828,14 +865,14 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:21:03</sys_created_on>
         <sys_id>3291529847bdb510265ad698436d43d1</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:03</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:25:08</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -853,7 +890,7 @@
         <active>true</active>
         <array>false</array>
         <array_denormalized>false</array_denormalized>
-        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=document_id,uiTypeLabel=Document ID</attributes>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=document_id</attributes>
         <audit>false</audit>
         <calculation><![CDATA[(function calculatedFieldValue(current) {
 
@@ -912,14 +949,14 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:21:03</sys_created_on>
         <sys_id>3a91529847bdb510265ad698436d4397</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:03</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:54</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -937,7 +974,7 @@
         <active>true</active>
         <array>false</array>
         <array_denormalized>false</array_denormalized>
-        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,test_input_hidden=true,uiType=table_name,uiTypeLabel=Table Name</attributes>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,test_input_hidden=true,uiType=table_name</attributes>
         <audit>false</audit>
         <calculation><![CDATA[(function calculatedFieldValue(current) {
 
@@ -996,14 +1033,14 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:21:04</sys_created_on>
         <sys_id>7291529847bdb510265ad698436d43d9</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:04</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:54</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -1019,7 +1056,7 @@
     <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=7291529847bdb510265ad698436d43d9"/>
     <sys_hub_flow_output action="delete_multiple" query="model=f291529847bdb510265ad698436d4395"/>
     <sys_hub_alias_mapping action="delete_multiple" query="source_id=f291529847bdb510265ad698436d4395"/>
-    <sys_hub_action_instance action="delete_multiple" query="flow=f291529847bdb510265ad698436d4395^sys_idNOT IN4391529847bdb510265ad698436d43ed,cb91529847bdb510265ad698436d43f4"/>
+    <sys_hub_action_instance action="delete_multiple" query="flow=f291529847bdb510265ad698436d4395^sys_idNOT IN4391529847bdb510265ad698436d43ed,bb202dc4c38bf11011971d4ce0013147,cb91529847bdb510265ad698436d43f4"/>
     <sys_hub_action_instance action="INSERT_OR_UPDATE">
         <action_inputs/>
         <action_inputs/>
@@ -1035,10 +1072,10 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:21:04</sys_created_on>
         <sys_id>4391529847bdb510265ad698436d43ed</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>10</sys_mod_count>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:04</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:54</sys_updated_on>
         <ui_id>d288c85d-b130-4a5c-8dab-dcb6a7fa05c2</ui_id>
     </sys_hub_action_instance>
     <sys_variable_value action="delete_multiple" query="document_key=4391529847bdb510265ad698436d43ed"/>
@@ -1086,6 +1123,43 @@
     <sys_hub_action_instance action="INSERT_OR_UPDATE">
         <action_inputs/>
         <action_inputs/>
+        <action_type display_value="Upload Voluntary Deduction topic">2055c4f247d63d50265ad698436d439e</action_type>
+        <action_type_parent display_value="Upload Voluntary Deduction topic">e9b408b247d63d50265ad698436d43d3</action_type_parent>
+        <attributes/>
+        <comment/>
+        <display_text/>
+        <flow display_value="Status Update to sent (VD status CRM)">f291529847bdb510265ad698436d4395</flow>
+        <order>3</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance</sys_class_name>
+        <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-06 18:25:08</sys_created_on>
+        <sys_id>bb202dc4c38bf11011971d4ce0013147</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:54</sys_updated_on>
+        <ui_id>8f81259b-2df3-4987-bb53-cae9c6d7e83a</ui_id>
+    </sys_hub_action_instance>
+    <sys_variable_value action="delete_multiple" query="document_key=bb202dc4c38bf11011971d4ce0013147"/>
+    <sys_element_mapping action="delete_multiple" query="id=bb202dc4c38bf11011971d4ce0013147"/>
+    <sys_element_mapping action="INSERT_OR_UPDATE">
+        <field>voluntary_deduction</field>
+        <id>bb202dc4c38bf11011971d4ce0013147</id>
+        <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-06 18:25:08</sys_created_on>
+        <sys_id>f7202dc4c38bf11011971d4ce0013148</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:54</sys_updated_on>
+        <table>var__m_sys_hub_action_input_2055c4f247d63d50265ad698436d439e</table>
+        <value>{{2d448cba-b6ad-44c3-bc48-537b935c3381.record}}</value>
+    </sys_element_mapping>
+    <sys_hub_input_scripts action="delete_multiple" query="instance=bb202dc4c38bf11011971d4ce0013147"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=bb202dc4c38bf11011971d4ce0013147"/>
+    <sys_hub_action_instance action="INSERT_OR_UPDATE">
+        <action_inputs/>
+        <action_inputs/>
         <action_type display_value="Update Record">f9d01dd2c31332002841b63b12d3aea1</action_type>
         <action_type_parent display_value="Update Record">baf174c8c3c232002841b63b12d3aee4</action_type_parent>
         <attributes/>
@@ -1098,10 +1172,10 @@
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:21:04</sys_created_on>
         <sys_id>cb91529847bdb510265ad698436d43f4</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>10</sys_mod_count>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:04</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:54</sys_updated_on>
         <ui_id>2d448cba-b6ad-44c3-bc48-537b935c3381</ui_id>
     </sys_hub_action_instance>
     <sys_variable_value action="delete_multiple" query="document_key=cb91529847bdb510265ad698436d43f4"/>
@@ -1252,24 +1326,24 @@
     <sys_hub_flow action="UPDATE">
         <sys_id>421f8e9447bdb510265ad698436d433e</sys_id>
         <latest_snapshot>f291529847bdb510265ad698436d4395</latest_snapshot>
-        <compiler_build>glide-vancouver-07-06-2023__patch2-hotfix1-10-04-2023_10-06-2023_1235.zip</compiler_build>
+        <compiler_build>glide-vancouver-07-06-2023__patch2-hotfix1a-10-30-2023_11-09-2023_1854.zip</compiler_build>
     </sys_hub_flow>
     <sys_flow_trigger_plan action="delete_multiple" query="plan_id=421f8e9447bdb510265ad698436d433e^sys_idNOT INcf91929847bdb510265ad698436d431b"/>
     <sys_flow_trigger_plan action="INSERT_OR_UPDATE">
         <binding_strategy>com.snc.process_flow.engine.binding.Every</binding_strategy>
         <plan>{"persistor":{"@class":".ChunkingPlanPersistor","table":"sys_flow_trigger_plan","id":"cf91929847bdb510265ad698436d431b","name":"plan","plan_signature":null}}</plan>
         <plan_id>421f8e9447bdb510265ad698436d433e</plan_id>
-        <snapshot>430c93b8c362751011971d4ce001314a</snapshot>
+        <snapshot>9b612d48c38bf11011971d4ce00131e1</snapshot>
         <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
         <sys_created_on>2023-10-06 13:21:04</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>cf91929847bdb510265ad698436d431b</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_overrides/>
         <sys_scope/>
-        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 13:21:04</sys_updated_on>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-06 18:28:56</sys_updated_on>
         <trigger display_value="">0391929847bdb510265ad698436d431a</trigger>
     </sys_flow_trigger_plan>
     <sys_flow_subflow_plan action="delete_multiple" query="plan_id=421f8e9447bdb510265ad698436d433e"/>

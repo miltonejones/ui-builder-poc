@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_angular_provider">
+    <sp_angular_provider action="INSERT_OR_UPDATE">
+        <name>pocButton</name>
+        <script><![CDATA[function pocButton() {
+  return {
+    restrict: "E",
+    replace: true,
+    scope: {
+      type: "@",
+      size: "@",
+      state: "@",
+      icon: "@",
+    },
+    template:
+      "<button class=\"btn\" ng-disabled=\"state === 'disabled'\"" + 
+      "  ng-class=\"{'btn-primary': type === 'primary', " + 
+      "  'btn-secondary': type === 'secondary', 'btn-link': type === 'text'," + 
+      "  'btn-sm': size === 'small', 'hover': state === 'hover'," + 
+      "  'has-icon-left': icon === 'left', 'has-icon-right': icon === 'right'" + 
+      " }\"><i ng-if=\"icon === 'left'\" class=\"glyphicon glyphicon-arrow-left\">" + 
+      "</i> button <i ng-if=\"icon === 'right'\" class=\"glyphicon glyphicon-plus\">" + 
+      "</i></button>",
+    link: function (scope, element) {
+      // implement later maybe
+    },
+  };
+}
+]]></script>
+        <sys_class_name>sp_angular_provider</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-07 01:57:32</sys_created_on>
+        <sys_id>10478388c303351011971d4ce00131e2</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>pocButton</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_angular_provider_10478388c303351011971d4ce00131e2</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-07 06:56:35</sys_updated_on>
+        <type>directive</type>
+    </sp_angular_provider>
+</record_update>

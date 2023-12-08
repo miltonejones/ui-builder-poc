@@ -132,7 +132,44 @@ api.controller = function ($scope) {
     $scope.machineState = $scope.machine.state;
   };
 
-  c.openRecord = function (row, col) {
+  c.navigateRecord = function (index) { 
+		if (index === 0) {
+			return c.send('cancel')
+		}
+		
+		var node = $scope.machine.context.recordCrumbs[index];
+		
+		 
+		if (node.table) {
+			return c.send({
+				type: 'open',
+				id: node.label,
+				name: node.table,
+				index: index
+			});
+		}
+		
+		c.addTab(node.label);
+		
+  };
+
+  c.openRecord = function (row, col) { 
+		// info click event for current record
+		if (!col && !!row._row_data && !!row._row_data.sysId) { 
+			return c.send({
+				type: "open",
+				id: row._row_data.sysId,
+				name: $scope.machine.context.selectedTable.name,
+			});
+		} 
+		// event for referenced record
+		c.send({
+			type: 'open',
+			id: row[col].value,
+			name: row[col].table
+		});
+		
+		/*
     var column = $scope.machine.context.columnMap[col];
     if (!column.reference) {
       return;
@@ -142,7 +179,7 @@ api.controller = function ($scope) {
       type: "open",
       id: row[col],
       name: column.reference,
-    });
+    }); */
   };
 
   c.announce = function (col) {
@@ -416,7 +453,7 @@ api.controller = function ($scope) {
 		function updateTableColumns(context) {
 			
       // Map the filtered keys to their corresponding values in the selectedColumns object
-      var tableColumns = context.field.filter(function (key) {
+      var tableColumns = context.fields.filter(function (key) {
           return context.selectedColumns[key];
         });
 
@@ -493,6 +530,7 @@ api.controller = function ($scope) {
 
     function persistColumns(label, selectedColumns) {
       var memory = JSON.parse(localStorage.getItem(COOKIE_NAME) || "{}");
+		
       memory[label] = JSON.stringify(selectedColumns);
       localStorage.setItem(COOKIE_NAME, JSON.stringify(memory));
     }
@@ -502,11 +540,12 @@ api.controller = function ($scope) {
       var itemIndex = event.index;
       var newIndex = itemIndex + event.offset;
       if (newIndex < 0 || newIndex >= array.length) {
-        return;
+        return alert('Invalid index' + itemIndex);
       }
       var newArray = array.slice();
       var removedItem = newArray.splice(itemIndex, 1)[0];
       newArray.splice(newIndex, 0, removedItem);
+		//	alert (JSON.stringify(newArray))
       return { tableColumns: newArray };
     }
 
@@ -537,6 +576,7 @@ api.controller = function ($scope) {
             value: null,
           },
         ],
+				sourceIsSettings: false
       };
 
       // Retrieve the selected columns from local storage
@@ -555,7 +595,53 @@ api.controller = function ($scope) {
       // Return the updated context object
       return freshContext;
     }
+		
+		/**
+		 * Assigns a record ID and updates the record crumbs based on the given context and event.
+		 * @param {Object} context - The current context.
+		 * @param {Object} event - The event object.
+		 * @returns {Object} - An object containing the assigned record ID, reference table name, and updated record crumbs.
+		 */
+		function assignRecordId(context, event) {
+			// Get the record crumbs from the context or initialize an empty array
+			var crumbs = context.recordCrumbs || [];
 
+			if (event.child) {
+				// If the event has a child, add the child's label and ID to the record crumbs
+				crumbs.push({
+					label: event.name
+				}, {
+					label: event.id,
+					table: event.name
+				});
+			} else if (event.index) {
+				// If the event has an index, update the record crumbs by slicing the array up to the index
+				crumbs = crumbs.slice(0, event.index + 1);
+			} else {
+				// If the event has neither a child nor an index
+				crumbs = [
+					{
+						label: context.selectedTable.label
+					},
+					// If the selected table name is different from the event name, add the event name to the record crumbs
+					context.selectedTable.name === event.name ? null : {
+						label: event.name
+					},
+					{
+						label: event.id,
+						table: event.name
+					}
+				].filter(Boolean);
+			}
+
+			return {
+				sysId: event.id,
+				refTableName: event.name,
+				recordCrumbs: crumbs
+			};
+		}
+		
+		
     return {
       dropPredicate: dropPredicate,
       appendPredicate: appendPredicate,
@@ -567,14 +653,8 @@ api.controller = function ($scope) {
       assignColumns: assignColumns,
       updateFields: updateFields,
       toggleColumn: toggleColumn,
-			updateTableColumns: updateTableColumns,
-
-      assignRecordId: function (_, event) {
-        return {
-          sysId: event.id,
-          refTableName: event.name,
-        };
-      },
+			updateTableColumns: updateTableColumns, 
+      assignRecordId: assignRecordId,
 
       assignReferenceColumns: function (_, event) {
         var referenceColumns = event.value;
@@ -588,6 +668,11 @@ api.controller = function ($scope) {
         };
       },
 
+      assignColumnSrc: function (_, event) {
+        return {
+          sourceIsSettings: true,
+        };
+      },
       assignRecord: function (_, event) {
         return {
           record: event.value[0],
@@ -690,8 +775,12 @@ api.controller = function ($scope) {
     };
   }
 
+	
   function createGuards() {
     return {
+			"source was ready state": function (context) {
+				return !context.sourceIsSettings;
+			},
       "no saved column list": function (context) {
 				// Retrieve the selected columns from local storage
 				var memoryColumns = JSON.parse(
@@ -703,6 +792,7 @@ api.controller = function ($scope) {
     };
   }
 
+	
   function createServices() {
     return {
       identifyTable: function (context) {
@@ -783,6 +873,8 @@ api.controller = function ($scope) {
     if (keys.length) {
       // Create a filter string by mapping each key to 'name=key' and joining them with '^OR'
       var filter = keys
+			   .reverse()
+			   .slice(0,5)
         .map(function (key) {
           return "name=" + key;
         })
@@ -996,19 +1088,18 @@ api.controller = function ($scope) {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   gap: 0.25rem;
-  white-space: nowrap
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-
 .record-grid {
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
 }
 
 .column-grid div {
-  white-space: nowrap
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -1017,8 +1108,8 @@ api.controller = function ($scope) {
 }
 
 .nav-link.active {
-   font-weight: 600;
-   color: blue;
+  font-weight: 600;
+  color: blue;
 }
 
 .num {
@@ -1030,17 +1121,37 @@ api.controller = function ($scope) {
   cursor: pointer;
   color: #2a6496;
 }
-  
+
 td.active {
   color: blue;
 }
 
 .column-panel {
-  margin: 1rem 0;
+  position: absolute;
+  top: -120vh;
+  left: 0;
+
+  width: 50%;
+  margin: 0 25%;
+
+  height: 480px;
+
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 1rem;
+  transition: all 0.55s linear;
+  overflow: auto;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.column-panel.open {
+  top: 20vh;
 }
 
 .column-kid {
-   margin-left: 2rem; 
+  margin-left: 2rem;
 }
 
 .busy {
@@ -1060,7 +1171,7 @@ th,
 td {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
   max-width: 280px;
   color: #222;
 }
@@ -1070,30 +1181,25 @@ ul.selector {
   overflow: auto;
 }
 
-ul.selector ,
+ul.selector,
 ul.row {
- list-style: none; 
+  list-style: none;
 }
-
-.list-group {
-  width: 480px; 
-}
-
 
 ul.selector li.indent {
-  margin-left: 2rem; 
+  margin-left: 2rem;
 }
 
-ul.row li { 
+ul.row li {
   padding: 0 1rem;
 }
 
-ul.row li.active { 
+ul.row li.active {
   color: blue;
 }
 
 .tab-container {
-  border-bottom: solid 1px #d0d0d0; 
+  border-bottom: solid 1px #d0d0d0;
   flex-grow: 1;
 }
 
@@ -1106,7 +1212,7 @@ ul.row li.active {
 .flexible.center {
   justify-content: center;
 }
- 
+
 .predicate {
   display: grid;
   grid-template-columns: 40px 1fr 1fr 1fr 100px;
@@ -1115,44 +1221,45 @@ ul.row li.active {
   padding: 1rem;
 }
 
-
-
 .input-group {
-    display: table;
-    border-collapse: separate;
+  display: table;
+  border-collapse: separate;
 }
 
-.input-group-addon, .form-control {
-    display: table-cell;
-    margin-bottom: 0;
+.input-group-addon,
+.form-control {
+  display: table-cell;
+  margin-bottom: 0;
 }
 
 .input-group-addon {
-    width: 1%;
-    white-space: nowrap;
-    vertical-align: middle;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 0 4px 4px 0; 
-    padding: 6px 12px;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1;
-    text-align: center;
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0 4px 4px 0;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1;
+  text-align: center;
 }
 
-.input-group .form-control { 
-    border-radius: 4px 0 0 4px; 
-    border-right: 0;
-    border-color:  #ccc;
+.input-group .form-control {
+  border-radius: 4px 0 0 4px;
+  border-right: 0;
+  border-color: #ccc;
 }
 
 /* Add focus state */
 .form-control:focus {
-    border-color: #66afe9;
-    outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
 }
 
 .query-wrapper {
@@ -1165,62 +1272,64 @@ ul.row li.active {
   position: fixed;
   left: 0;
   opacity: 0.4;
-  top: 100%; 
+  top: 100%;
   bottom: -100px;
   width: 80vw;
   margin: 0 10vw;
-  background-color: aliceblue;
+  background-color: #fff;
   border: 1px solid #ccc;
-  padding: 1rem; 
-  border-radius: 1rem; 
-  transition: all 0.25s linear;
+  padding: 1rem;
+  border-radius: 1rem;
+  transition: all 0.5s ease-in;
   min-height: 400px;
   overflow: auto;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 
-.drawer-panel.loading { 
+.drawer-panel.loading {
   opacity: 1;
-  top: 80%; 
+  top: 80%;
   bottom: 100px;
 }
 
-
-.drawer-panel.ready { 
+.drawer-panel.ready {
   opacity: 1;
   top: 40px;
-  height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
 }
 
- 
-
-.badge { 
-  font-weight: 400; 
-  background-color: #f5f5f5; 
-  color: #222; 
+.badge {
+  font-weight: 400;
+  background-color: #f5f5f5;
+  color: #222;
 }
 
-.badge.active { 
-  font-weight: 600; 
-  color: #222; 
+.badge.active {
+  font-weight: 600;
+  color: #222;
   background-color: #fff;
   border: solid 1px #222;
 }
 
-.badge.badge-primary { 
-  color: #fff; 
+.badge.badge-primary {
+  color: #fff;
   background-color: #007bff;
 }
 
-.badge.active.badge-primary { 
-  color: #007bff; 
+.badge.active.badge-primary {
+  color: #007bff;
   background-color: #fff;
   border: solid 1px #007bff;
 }
 
-
-
-
-
+.glyphinfo .glyphicon-info-sign {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+.glyphinfo .glyphicon-info-sign:hover {
+  opacity: 1;
+}
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -1242,7 +1351,7 @@ ul.row li.active {
 	
 	
 	function getTables() {
-		var resource = createResource('sys_db_object', ['sys_name','label','name'])
+		var resource = createResource('sys_db_object', ['sys_name','label','name', 'create_access', 'read_access', 'delete_access', 'update_access'])
 		data.message = resource.execute(input.filter)
 	}
 	
@@ -1392,19 +1501,11 @@ ul.row li.active {
 						
 					var reference = null, children = null, fullName = fldName; 
 					if (ref) {
-						reference = glideElement.getReferenceTable() ;
-					console.log ({
-						reference: reference
-					})	 
-						
+						reference = glideElement.getReferenceTable() ;  
 						if (reference !== table) {
 							var resource = createResource(reference);
 							children = resource.describe();
-							fullName = reference + '.' + fldName;
-							console.log ({
-								children: children,
-								fullName: fullName
-							});
+							fullName = reference + '.' + fldName; 
 						}
 					} 
 
@@ -1417,9 +1518,7 @@ ul.row li.active {
 						reference: reference === table ? null : reference,
 						children: children,
 						fullName: fullName
-					});
-					
-
+					}); 
 				}
 
 				return fieldList.sort(function(a,b) {
@@ -1470,7 +1569,13 @@ ul.row li.active {
 
         // Iterate through each record in the GlideRecord
         while (gr.next()) {
-          var record = {}; 
+					
+          var record = {
+						_row_data: {
+							sysId: gr.getValue('sys_id')
+						}
+					}; 
+					
           this.fields.forEach(function (field) {
             if (field.indexOf(".") > 0) {
               // handle reference fields
@@ -1481,7 +1586,20 @@ ul.row li.active {
               }
               return;
             }
-            record[field] = gr.getValue(field);
+						
+						
+				
+						var glideElement = gr.getElement(field); 
+						var reference = glideElement.getRefRecord(); 
+						if (reference) {
+              record[field] = {
+								label: gr.getDisplayValue(field),
+								value: gr.getValue(field),
+								table: glideElement.getReferenceTable(),
+							}; 
+						} else {
+              record[field] = gr.getValue(field);
+						}
           });
           records.push(record);
         }
@@ -1498,14 +1616,14 @@ ul.row li.active {
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-29 18:16:51</sys_created_on>
         <sys_id>222bdd7947363110265ad698436d431b</sys_id>
-        <sys_mod_count>874</sys_mod_count>
+        <sys_mod_count>995</sys_mod_count>
         <sys_name>Query Builder</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sp_widget_222bdd7947363110265ad698436d431b</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-12-04 12:47:36</sys_updated_on>
+        <sys_updated_on>2023-12-06 13:00:53</sys_updated_on>
         <template><![CDATA[<div class="query-wrapper">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -1560,7 +1678,7 @@ ul.row li.active {
 
   <!-- query result contaiker -->
   <div
-    ng-if="c.matches(['wait for query results', 'viewing query results', 'editing query filter'])"
+    ng-if="c.matches(['wait for query results', 'viewing query results', 'editing query filter', 'edit column settings'])"
   >
     <!-- query result header -->
     <div class="flexible">
@@ -1572,7 +1690,7 @@ ul.row li.active {
       </div>
 
       <a
-        class="badge"
+        class="badge success"
         ng-click="c.resize(size)"
         ng-class="{ active: size === machine.context.pageSize }"
         ng-repeat="size in pageSizes"
@@ -1584,6 +1702,12 @@ ul.row li.active {
 
       <button
         class="btn btn-sm"
+        ng-click="c.send('settings')" 
+      >
+        <i class="glyphicon glyphicon-cog" />
+      </button>
+      <button
+        class="btn btn-sm"
         ng-click="c.send('filter')"
         data-toggle="modal"
         data-target="#exampleModal"
@@ -1593,9 +1717,12 @@ ul.row li.active {
     </div>
 
     <!-- query result grid -->
-    <table class="table" ng-class="{busy: c.matches('wait for query results')}">
+    <table class="table table-striped" ng-class="{busy: c.matches('wait for query results')}">
       <thead>
         <tr>
+          <th>
+          	&nbsp;
+          </th>
           <th ng-repeat="column in machine.context.tableColumns">
             <a href="#" ng-click="c.send({type: 'run', sort: column})"
               >{{machine.context.columnMap[column].label}}</a
@@ -1610,6 +1737,9 @@ ul.row li.active {
           </th>
         </tr>
         <tr>
+          <td>
+          	&nbsp;
+          </td>
           <td ng-repeat="column in machine.context.tableColumns">
             <input
               ng-disabled="machine.context.columnMap[column].type === 'reference'"
@@ -1623,13 +1753,16 @@ ul.row li.active {
       </thead>
       <tbody>
         <tr ng-repeat="item in machine.context.rows">
+          <td class="glyphinfo">
+          	<i ng-click="c.openRecord(item)" class="glyphicon glyphicon-info-sign"></i>
+          </td>
           <td
             ng-repeat="column in machine.context.tableColumns"
             ng-click="c.openRecord(item, column)"
             ng-class="{ ref: !!machine.context.columnMap[column].reference,
                         num: machine.context.columnMap[column].type === 'integer' || machine.context.columnMap[column].type === 'number' }"
           >
-            {{item[column]}}
+            {{item[column].table ? item[column].label : item[column]}}
           </td>
         </tr>
       </tbody>
@@ -1710,11 +1843,21 @@ ul.row li.active {
     >
       <b>{{item.label}}</b>
       <div>{{item.name}}</div>
+      <div class="flexible">
+        <small>Permissions:</small>
+        <div ng-repeat="access in ['create', 'update', 'read', 'delete']"
+             class="badge" ng-class="{active: '1' === item[access + '_access'].toString()}">
+          {{access}} 
+        </div>  
+       </div>
     </a>
   </div>
 
   <!-- control buttons -->
-  <div ng-if="!!machine.context.selectedTable.name">
+  <div ng-if="!!machine.context.selectedTable.name" class="flexible">
+    <div class="spacer">
+      <!-- spacer -->
+    </div>
     <button class="btn btn-sm" ng-click="c.send('cancel')">Cancel</button>
     <button
       class="btn btn-sm btn-primary"
@@ -1732,8 +1875,15 @@ ul.row li.active {
     </button>
   </div>
 
-  <div class="column-panel" ng-if="c.matches('viewing query results')">
-    <hr />
+  <div class="column-panel" ng-class="{open: c.matches('edit column settings')}">
+  
+    <div class="flexible">
+      <div class="spacer">
+        <!-- spacer -->
+      </div>
+      <button class="btn btn-sm" ng-click="c.send('cancel')">&times;</button> 
+    </div>
+
     Set the order for colums from
     <b>{{machine.context.selectedTable.label}}</b> .
     <a ng-if="c.can('choose again')" ng-click="c.send('choose again')" href="#"
@@ -1754,6 +1904,7 @@ ul.row li.active {
           <!-- spacer -->
         </div>
         <i
+           ng-if="c.can('arrange')"
           ng-click="c.send({type: 'arrange', index: $index, offset: -1})"
           class="glyphicon glyphicon-chevron-up"
         ></i>
@@ -1766,8 +1917,8 @@ ul.row li.active {
   </div>
 
   <!-- column selector panel -->
-  <div class="column-panel" ng-if="c.matches('select columns')">
-    <hr />
+  <div class="column-panel open" ng-if="c.matches('select columns')">
+
     Select colums from <b>{{machine.context.selectedTable.label}}</b> to return
     in your query. <a ng-click="c.selectAll()" href="#">Select all</a>.
 
@@ -1781,7 +1932,7 @@ ul.row li.active {
       </thead>
       <tbody>
         <tr ng-repeat="item in machine.context.columns">
-          <td ng-class="{active: !!machine.context.selectedColumns[item.name]}">
+          <td>
             <i
               class="glyphicon glyphicon-chevron-right"
               ng-class="{'glyphicon-chevron-down': !!machine.context.expandedColumns[item.name]}"
@@ -1839,6 +1990,23 @@ ul.row li.active {
         </tr>
       </tbody>
     </table>
+    
+    
+    <div class="flexible" ng-if="!!machine.context.selectedTable.name">
+      <div class="spacer">
+        <!-- spacer -->
+      </div>
+      <button class="btn btn-sm" ng-click="c.send('cancel')">Cancel</button>
+
+      <button
+        class="btn btn-sm btn-primary"
+        ng-disabled="!machine.context.fields.length || !c.can('run')"
+        ng-click="c.send('run')"
+      >
+        Run Query
+      </button>
+    </div>
+
   </div>
 
   <!-- filter modal -->
@@ -1970,13 +2138,13 @@ ul.row li.active {
                    ready: c.matches('viewing record') }"
   >
     <div class="flexible">
-      <div
+     <!-- <div
         class="badge badge-primary"
         ng-click="c.addTab(machine.context.refTableName)"
       >
         Open table "{{machine.context.refTableName}}"
         <i class="glyphicon glyphicon-new-window"></i>
-      </div>
+      </div> -->
 
       <div class="spacer">
         <!-- spacer -->
@@ -1987,11 +2155,23 @@ ul.row li.active {
         <i class="glyphicon glyphicon-remove"></i
       ></a>
     </div>
+    
+    
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item" ng-click="c.navigateRecord($index)" ng-repeat="crumb in machine.context.recordCrumbs"
+            ><a ng-if="!$last" href="#">{{crumb.label}}</a>
+          <span ng-if="$last">{{crumb.label}}</span> 
+        </li> 
+      </ol>
+    </nav>
+
+    
 
     <h3>Record Viewer</h3>
 
     <div class="record-grid">
-      <div ng-repeat="(key, value) in machine.context.record">
+      <div ng-if="!!machine.context.referenceKeys[key].label" ng-repeat="(key, value) in machine.context.record">
         <div>{{machine.context.referenceKeys[key].label}}</div>
         <div>
           <small
@@ -1999,17 +2179,44 @@ ul.row li.active {
             {{machine.context.referenceKeys[key].name}}</small
           >
         </div>
-        <input
+        
+        
+        <div class="input-group" ng-if="!!value.table && !machine.context.referenceKeys[key].choices.length">
+          <input
+            class="form-control"
+            ng-disabled="!machine.context.referenceKeys[key].writable" 
+            ng-value="machine.context.record[key].label"
+          />
+          <span class="input-group-addon">
+            <i class="glyphicon"
+               ng-class="{'glyphicon-question-sign': !value.label, 'glyphicon-new-window': !!value.label}"
+               ng-click="c.send({type: 'open', child: true, id: machine.context.record[key].value, name: machine.context.record[key].table})"
+               ></i>
+          </span>
+        </div>
+
+
+        <input ng-if="!value.table && !machine.context.referenceKeys[key].choices.length"
           class="form-control"
           ng-disabled="!machine.context.referenceKeys[key].writable"
           type="{{machine.context.referenceKeys[key].type === 'glide_date' ? 'date' : 'text' }}"
           ng-value="machine.context.record[key]"
-        />
+        /> 
+        
+        
+        <select ng-if="!!machine.context.referenceKeys[key].choices.length"
+          class="form-control"
+          ng-disabled="!machine.context.referenceKeys[key].writable" 
+          ng-model="machine.context.record[key]"
+        >
+          <option>--None--</option>
+          <option ng-repeat="choice in machine.context.referenceKeys[key].choices" ng-value="choice">{{choice}}</option>
+        </select>
+        
+        
       </div>
     </div>
   </div>
-
-  <hr />
 
   <div class="progress" ng-if="c.can('data loaded')">
     <div
@@ -2021,6 +2228,9 @@ ul.row li.active {
       style="width: 100%"
     ></div>
   </div>
+<div ng-if="showMachines">
+  
+  <hr />
 
   <h4>State Machines</h4>
   Tab: {{queryTabIndex}}
@@ -2040,6 +2250,7 @@ ul.row li.active {
       <td>{{tab.machine.context}}</td>
     </tr>
   </table>
+  </div>
 </div>
 ]]></template>
     </sp_widget>

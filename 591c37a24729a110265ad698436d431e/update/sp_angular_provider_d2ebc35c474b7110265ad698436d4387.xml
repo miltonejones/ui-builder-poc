@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_angular_provider">
+    <sp_angular_provider action="INSERT_OR_UPDATE">
+        <name>uxCustomInput</name>
+        <script><![CDATA[function uxCustomInput() {
+  return {    
+	restrict: 'E',
+    scope: {
+      state: '=',
+      place: '=',
+      value: '=',
+      text: '='
+    },
+    template: '<div>' +
+                '<input ng-if="place === \'none\'"' +
+                       'ng-value="value"' +
+                       'ng-disabled="state === \'disabled\'"' +
+                       'placeholder="Label"' +
+                       'ng-class="{ focus: state === \'focus\', invalid: state === \'error\' }"' +
+                       'class="form-control" />' +
+                '<div ng-if="place !== \'none\'"' +
+                     'class="input-group"' +
+                     'ng-class="{ right: place === \'right\', left: place === \'left\', invalid: state === \'error\' }">' +
+                  '<span class="input-group-addon" ng-if="place === \'left\'">' +
+                    '<i class="glyphicon glyphicon-search"></i>' +
+                  '</span>' +
+                  '<input class="form-control"' +
+                         'placeholder="Label"' +
+                         'ng-disabled="state === \'disabled\'"' +
+                         'ng-class="{ focus: state === \'focus\', invalid: state === \'error\' }"' +
+                         'ng-value="value" />' +
+                  '<span class="input-group-addon" ng-if="place === \'right\'">' +
+                    '<i class="glyphicon glyphicon-search"></i>' +
+                  '</span>' +
+                '</div>' +
+                '<small ng-if="!!text"' +
+                       'ng-class="{ \'invalid-feedback\': state === \'error\', \'text-muted\': state !== \'error\' }">' +
+                  '{{text}}' +
+                '</small>' +
+              '</div>'
+  };  
+}]]></script>
+        <sys_class_name>sp_angular_provider</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-07 20:56:35</sys_created_on>
+        <sys_id>d2ebc35c474b7110265ad698436d4387</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>uxCustomInput</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_angular_provider_d2ebc35c474b7110265ad698436d4387</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-07 20:59:35</sys_updated_on>
+        <type>directive</type>
+    </sp_angular_provider>
+</record_update>

@@ -5,7 +5,7 @@
         <attributes/>
         <audit>false</audit>
         <calculation/>
-        <choice>0</choice>
+        <choice/>
         <choice_field/>
         <choice_table/>
         <column_label>Talent User</column_label>
@@ -33,7 +33,7 @@
         <name>x_ebh_voluntary_0_deduction_tickets</name>
         <next_element/>
         <primary>false</primary>
-        <read_only>true</read_only>
+        <read_only>false</read_only>
         <read_roles/>
         <reference display_value="" name="x_ebh_ccde_talent_core">x_ebh_ccde_talent_core</reference>
         <reference_cascade_rule/>
@@ -53,7 +53,7 @@
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_dictionary_x_ebh_voluntary_0_deduction_tickets_talent_user</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-10-06 17:02:37</sys_updated_on>
+        <sys_updated_on>2023-12-08 01:33:50</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

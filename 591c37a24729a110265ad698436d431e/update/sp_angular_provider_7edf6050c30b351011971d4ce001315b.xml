@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_angular_provider">
+    <sp_angular_provider action="INSERT_OR_UPDATE">
+        <name>projectHeader</name>
+        <script><![CDATA[function projectHeader() {
+  return {
+    restrict: 'E',
+    replace: true,
+    scope: {
+      machineId: '@'
+    },
+    template: '<h1>Stop Light State Machine<a href="https://bit.ly/stately-stoplight" target="_blank"><small class="text-muted">View the state machine diagram <i class="glyphicon glyphicon-new-window"></i></small></a></h1><hr /><p class="lead">Click the buttons to send messages to the "{{machineId}}" state machine instance.</p>'
+  };
+}]]></script>
+        <sys_class_name>sp_angular_provider</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-07 09:33:49</sys_created_on>
+        <sys_id>7edf6050c30b351011971d4ce001315b</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>projectHeader</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_angular_provider_7edf6050c30b351011971d4ce001315b</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-07 09:41:44</sys_updated_on>
+        <type>directive</type>
+    </sp_angular_provider>
+</record_update>

@@ -1197,23 +1197,23 @@ td, th {
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-23 05:29:58</sys_created_on>
         <sys_id>16127ba74766b110265ad698436d43f5</sys_id>
-        <sys_mod_count>1096</sys_mod_count>
+        <sys_mod_count>1099</sys_mod_count>
         <sys_name>Voluntary Deductions POC</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sp_widget_16127ba74766b110265ad698436d43f5</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-27 21:09:14</sys_updated_on>
+        <sys_updated_on>2023-12-08 13:14:04</sys_updated_on>
         <template><![CDATA[<div>
   
   <!-- breadcrumbs visible in all views -->
   <div class="deduction-flex start">
     <button
       ng-click="c.send('change setting')"
-      class="btn btn-secondary glyphicon glyphicon-menu-hamburger"
+      class="btn btn-secondary"
       ng-class="{'btn-primary': machine.context.debug}"
-    ></button>
+    ><i class="glyphicon glyphicon-menu-hamburger"></i></button>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="#">Apps</a></li>
       <li 
@@ -1276,7 +1276,7 @@ td, th {
       <span class="badge text-bg-success">{{machine.context.recordCount}} </span>
     </div>
 
-    <table class="table">
+    <table class="table ">
       <thead>
         <tr>
           <th scope="col">Deduction ID</th>
