@@ -344,9 +344,13 @@
           return item;
         });
 
-        var invalid = accountProps.some(function(prop)  {
+        var invalid = accountProps.find(function(prop)  {
 					 return Boolean(prop.required) && !prop.value
 				}); 
+				
+				console.log ({
+					invalid: invalid
+				})
 				
         // Return the updated account properties
         return { accountProps: accountProps, invalid: invalid };
@@ -367,14 +371,14 @@
         billingProps[event.field] = updatedProp;
 
         // Calculate the total if both qty and bill_rate are present
-        if (billingProps.qty && billingProps.bill_rate) {
-          billingProps.total = Number(
-            billingProps.qty * billingProps.bill_rate
+        if (billingProps.qty && billingProps.bill_rate_amount) {
+          billingProps.total_amount = Number(
+            billingProps.qty * billingProps.bill_rate_amount
           ).toFixed(2);
         }
 
         // Check if any required billing fields are missing
-        var invalidBilling = $scope.billing_fields.some(function (prop) {
+        var invalidBilling = $scope.billing_fields.find(function (prop) {
           return Boolean(prop.required) && !context.billingProps[prop.field];
         });
 
@@ -520,8 +524,8 @@
 
         // Initialize an object to store the dropdown options
         var dropdownMap = {
-          billing_location: [],
-          work_location: [],
+          billing_location_ref: [],
+          work_location_ref: [],
         };
         var uniqueLocations = [];
 				
@@ -529,7 +533,7 @@
         results.forEach(function (res)  {
           var locationType = res.location_type;
           var selectedLabel =
-            locationType === "Billing" ? "billing_location" : "work_location";
+            locationType === "Billing" ? "billing_location_ref" : "work_location_ref";
 
           if (!uniqueLocations.includes(res.location_name)) {
 						
@@ -1032,8 +1036,13 @@ td, th {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
-  padding: 1rem 0;
-  gap: 1rem;
+  padding: 0;
+  gap: 1rem; 
+}
+  
+.misc-form.single {
+  grid-template-columns: 1fr;
+  outline-offset: 2px; 
 }
   
 .distant {
@@ -1359,14 +1368,14 @@ td, th {
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-24 20:37:56</sys_created_on>
         <sys_id>cc8b8090c3beb51011971d4ce001318b</sys_id>
-        <sys_mod_count>808</sys_mod_count>
+        <sys_mod_count>826</sys_mod_count>
         <sys_name>Misc Billing POC</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sp_widget_cc8b8090c3beb51011971d4ce001318b</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-29 14:59:00</sys_updated_on>
+        <sys_updated_on>2023-12-14 17:49:11</sys_updated_on>
         <template><![CDATA[<div>
   
   
@@ -1534,9 +1543,6 @@ td, th {
 
   
   
-  
-  
-  
   <!-- STATE: editing new misc billing
     new misc billing form -->
   <div ng-if="c.matches('editing new misc billing')">
@@ -1552,32 +1558,40 @@ td, th {
         DELETE ITEM
       </button>
     </div>
-    <div class="misc-form">
-      <div ng-if="!item.hidden" ng-repeat="item in billing_fields">
-        <label class="form-label">{{item.label}}</label>
-        <input
-          ng-disabled="item.readonly"
-          ng-blur="c.send({type:'change item', field: item.field, value: machine.context.billingProps[item.field]})"
-          class="form-control"
-          placeholder="{{item.tooltip}}"
-          list="datalist{{item.field}}"
-          id="{{item.field}}DataList"
-          ng-model="machine.context.billingProps[item.field]"
-          type="{{item.date ? 'date' : 'text'}}"
-        />
+    
+    
+    <div> 
+      
+      <div ng-if="!item.hidden" ng-repeat="section in billing_fields" class="misc-form" ng-class="{ single: section.columns === 1 }">
+        
+        <div ng-if="!item.hidden" ng-repeat="item in section.fields">
+          <label class="form-label">{{item.label}}</label>
+          <input
+            ng-disabled="item.readonly"
+            ng-blur="c.send({type:'change item', field: item.field, value: machine.context.billingProps[item.field]})"
+            class="form-control"
+            placeholder="{{item.tooltip}}"
+            list="datalist{{item.field}}"
+            id="{{item.field}}DataList"
+            ng-model="machine.context.billingProps[item.field]"
+            type="{{item.date ? 'date' : 'text'}}"
+          />
 
-        <datalist
-          ng-if="machine.context.dropdownMap[item.field]"
-          id="datalist{{item.field}}"
-        >
-          <option
-            ng-repeat="node in machine.context.dropdownMap[item.field]"
-            value="{{node.label}}"
+          <datalist
+            ng-if="machine.context.dropdownMap[item.field]"
+            id="datalist{{item.field}}"
           >
-            {{node.sublabel}}
-          </option>
-        </datalist>
+            <option
+              ng-repeat="node in machine.context.dropdownMap[item.field]"
+              value="{{node.label}}"
+            >
+              {{node.sublabel}}
+            </option>
+          </datalist>
+        </div>
       </div>
+      
+      
     </div>
 
     <div class="misc-foot">
@@ -1603,6 +1617,8 @@ td, th {
     </div>
   </div>
 
+  
+  
   
   
   

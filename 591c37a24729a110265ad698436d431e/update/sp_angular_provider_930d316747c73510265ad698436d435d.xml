@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_angular_provider">
+    <sp_angular_provider action="INSERT_OR_UPDATE">
+        <name>miscBillingEditor</name>
+        <script><![CDATA[function miscBillingEditor() {
+  return {
+    restrict: 'E',
+    replace: true,
+	scope: {
+		c: '=',
+		config: '=',
+		machine: '=',
+	},
+    template: 
+      '<div>' +  
+        '<h3 style="margin: 1rem">' + 
+          'Edit Misc. Billing Item' +
+        '</h3>' +         
+        '<div class="account-grid">' +
+          '<div ng-repeat="column in config.selectedAccountColumns">' +              
+            '<div>' +
+              '<div>{{column.value}} <sup ng-if="!column.optional">*</sup></div>' +
+              
+              '<div ng-if="c.matches([\'editing selected item\'])">' +
+                '<select class="form-control"' +
+                       'ng-if="!!column.select"' +
+                       'ng-change="c.send({ type: \'change\', key: column.key })"' +  
+                       'ng-model="machine.context.selectedAccount[column.key]" >' +
+                  '<option value="">Select {{column.value}}</option>' +
+                  '<option ng-repeat="opt in machine.context[column.select]"' +
+                          'value="{{opt.value}}">{{opt.label}}</option>' +
+                '</select>' +
+                '<input class="form-control" ' +
+                       'ng-if="!column.select"' +
+                       'type="{{column.date ? \'date\' : \'text\'}}"' +
+                       'ng-disabled="column.disabled"' +
+                       'ng-blur="c.send({ type: \'change\', key: column.key })"' + 
+                       'ng-model="machine.context.selectedAccount[column.key]" />' +
+              '</div>' +               
+              '<div ng-if="c.matches([\'confirm item save\'])">' +
+                '{{machine.context.selectedAccount[column.key]}}' +
+              '</div>' +            
+            '</div>' +
+          '</div>' +
+        '</div> ' +
+        '<div class="flexible" style="margin: 0px 1rem">' +
+          '<div class="spacer">' +  
+            '<!-- spacer -->' +
+          '</div>' +
+          '<button class="btn btn-default btn-sm ux" ng-click="c.send(\'back\')">' +
+            'CANCEL' +
+          '</button>' +
+          '<button class="btn btn-primary btn-sm ux" ng-click="c.send(\'save\')">' +
+           '{{c.matches([\'editing selected item\']) ? "UPDATE" : "SAVE"}}  ' +
+          '</button>' +
+        '</div>' +  
+      '</div>'
+  };
+}]]></script>
+        <sys_class_name>sp_angular_provider</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-17 17:33:16</sys_created_on>
+        <sys_id>930d316747c73510265ad698436d435d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>miscBillingEditor</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_angular_provider_930d316747c73510265ad698436d435d</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-17 17:33:16</sys_updated_on>
+        <type>directive</type>
+    </sp_angular_provider>
+</record_update>

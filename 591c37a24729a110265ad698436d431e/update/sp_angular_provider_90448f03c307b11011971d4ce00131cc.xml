@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_angular_provider">
+    <sp_angular_provider action="INSERT_OR_UPDATE">
+        <name>searchTable</name>
+        <script><![CDATA[function searchTable() {
+
+  var template = 
+	'<div  class="viewspace">' +
+	'<input ng-if="!!placeholder" class="form-control" placeholder="{{placeholder}}" />' + 
+	'<h3>{{title}}</h3> <div><ng-transclude></ng-transclude></div>' +
+    '<div class="mui-card"><table class="table table-striped">' +
+      '<tr>' + 
+        '<th ng-if="showCheckboxes"><input type="checkbox" /></th>' +
+        '<th ng-if="showDetails">View Details</th>' +
+        '<th ng-repeat="column in columns">{{column.value}}</th>' +  
+      '</tr>' +
+      
+      '<tr ng-repeat="row in machine.context[rows]">' +
+        '<td ng-if="showCheckboxes">' +
+          '<input ' +
+            'ng-checked="(!!row.sys_id && !!machine.context.exportable[row.sys_id]) || !!machine.context.exportable[row.ID]"' +
+            'ng-click="c.send({type: \'select\', sys_id: row.sys_id, row: row})"' +  
+            'type="checkbox"' +
+          '/>' +
+        '</td>' +
+        '<td ng-if="showDetails" ' +
+          'class="linked"' +  
+          'ng-click="c.send({type: \'detail\', sys_id: row.sys_id, row: row})"' +
+        '>' +
+          'View Details' +  
+        '</td>' +
+        '<td ng-repeat="column in columns"' +
+          ' ng-click="c.send({type: \'detail\', sys_id: row.sys_id, row: row})"' +
+          ' ng-class="{linked: $index === 0 && !showDetails}" >' +
+          '{{row[column.key].table ? row[column.key].label : row[column.key]}}' +
+        '</td>' +
+      '</tr>' +
+    '</table> </div> </div>';
+
+  return {
+    restrict: 'E',
+	  transclude: true,
+    scope: {
+      machine: '=',
+      columns: '=' ,
+      title: '@' ,
+      placeholder: '@' ,
+      showDetails: '@' ,
+      showCheckboxes: '@' ,
+      rows: '@',
+      c: '='  
+    },  
+    template: template
+  };
+}]]></script>
+        <sys_class_name>sp_angular_provider</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-16 09:29:58</sys_created_on>
+        <sys_id>90448f03c307b11011971d4ce00131cc</sys_id>
+        <sys_mod_count>24</sys_mod_count>
+        <sys_name>searchTable</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_angular_provider_90448f03c307b11011971d4ce00131cc</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-18 00:31:15</sys_updated_on>
+        <type>directive</type>
+    </sp_angular_provider>
+</record_update>

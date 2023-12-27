@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="2b4532bac383711011971d4ce00131f0" label="Exported Misc Billing" max_length="40" name="x_ebh_voluntary_0_exported_misc_billing" type="collection">
+        <element label="Account" max_length="32" name="account" reference="x_ebh_ccde_accounts_data" type="reference"/>
+        <element display="true" label="Export ID" max_length="40" name="export_id" type="string"/>
+        <element label="File Content" max_length="64000" name="file_content" type="string"/>
+        <element label="File Name" max_length="255" name="file_name" type="string"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return 'View Details';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" default="View Details" label="View Details" max_length="15" name="view_details" type="string"/>
+        <index name="index">
+            <element name="account"/>
+        </index>
+    </element>
+</database>

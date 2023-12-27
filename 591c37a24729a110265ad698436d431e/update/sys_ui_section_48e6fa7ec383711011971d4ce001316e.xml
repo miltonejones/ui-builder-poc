@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="48e6fa7ec383711011971d4ce001316e" sys_domain="global" table="x_ebh_voluntary_0_exported_misc_billing" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>account</element>
+            <position>0</position>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-15 13:47:11</sys_created_on>
+            <sys_id>c4e6f2bec383711011971d4ce001317a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_ebh_voluntary_0_exported_misc_billing" sys_domain="global" view="Default view">48e6fa7ec383711011971d4ce001316e</sys_ui_section>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-15 13:47:11</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>file_name</element>
+            <position>1</position>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-15 13:47:11</sys_created_on>
+            <sys_id>00e6f2bec383711011971d4ce001317b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_ebh_voluntary_0_exported_misc_billing" sys_domain="global" view="Default view">48e6fa7ec383711011971d4ce001316e</sys_ui_section>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-15 13:47:11</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>file_content</element>
+            <position>2</position>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-16 12:29:07</sys_created_on>
+            <sys_id>d29e6bc747cbb110265ad698436d43de</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_ebh_voluntary_0_exported_misc_billing" sys_domain="global" view="Default view">48e6fa7ec383711011971d4ce001316e</sys_ui_section>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-16 12:29:07</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>export_id</element>
+            <position>3</position>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-16 16:02:15</sys_created_on>
+            <sys_id>9c6f581f478fb110265ad698436d4304</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_ebh_voluntary_0_exported_misc_billing" sys_domain="global" view="Default view">48e6fa7ec383711011971d4ce001316e</sys_ui_section>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-16 16:02:15</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>view_details</element>
+            <position>4</position>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-19 13:57:31</sys_created_on>
+            <sys_id>569f57c8c357b51011971d4ce00131c2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_ebh_voluntary_0_exported_misc_billing" sys_domain="global" view="Default view">48e6fa7ec383711011971d4ce001316e</sys_ui_section>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-19 13:57:31</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_ebh_voluntary_0_exported_misc_billing</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+            <sys_created_on>2023-12-15 13:47:11</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>48e6fa7ec383711011971d4ce001316e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_ebh_voluntary_0_exported_misc_billing</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+            <sys_update_name>sys_ui_section_48e6fa7ec383711011971d4ce001316e</sys_update_name>
+            <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+            <sys_updated_on>2023-12-15 13:47:11</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

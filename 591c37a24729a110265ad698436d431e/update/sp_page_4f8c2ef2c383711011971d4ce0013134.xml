@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
+    <sp_page action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <css>
+
+/* button definitions */
+
+.btn.ux,
+.btn.ux:focus,
+.btn.ux.btn-primary:focus {
+  color: #003071;
+  border-radius: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.btn.ux.btn-primary  {
+  color: #003071;
+  border-color: #00eebb;
+  background-color: #00eebb;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.btn.ux.btn-primary:disabled {
+  color: #444;
+  border-color: #ebebeb;
+  background-color: #ebebeb; 
+  box-shadow: none;
+}
+
+.btn.ux.btn-primary.hover,
+.btn.ux.btn-primary:hover {
+  background-color: #7AF1D7; 
+}
+
+.btn.ux.btn-secondary {
+  color: #003071;
+  border-color: #003071;
+  background-color: #fff;
+}
+
+.btn.ux.btn-secondary:disabled {
+  color: #444;
+  border-color: #444;
+  background-color: white; 
+  box-shadow: none;
+}
+
+.btn.ux.btn-secondary.hover,
+.btn.ux.btn-secondary:hover {
+  background-color: #ebebeb; 
+}
+
+.btn.ux.btn-link:disabled {
+  color: #444;
+  border-color: white;
+  background-color: white; 
+  box-shadow: none;
+}
+
+.btn.ux.btn-link.hover,
+.btn.ux.btn-link:hover {
+  background-color: #ebebeb; 
+  text-decoration: none;
+}
+</css>
+        <draft>false</draft>
+        <dynamic_title_structure/>
+        <human_readable_url_structure/>
+        <id>misc_billing_export</id>
+        <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
+        <public>false</public>
+        <roles/>
+        <seo_script/>
+        <short_description/>
+        <sys_class_name>sp_page</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-15 13:02:03</sys_created_on>
+        <sys_id>4f8c2ef2c383711011971d4ce0013134</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>misc_billing_export</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_page_4f8c2ef2c383711011971d4ce0013134</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-17 17:10:51</sys_updated_on>
+        <title>Misc Billing Export - Test Page</title>
+        <use_seo_script>false</use_seo_script>
+    </sp_page>
+    <sys_translated_text action="delete_multiple" query="documentkey=4f8c2ef2c383711011971d4ce0013134"/>
+</record_update>

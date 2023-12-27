@@ -486,7 +486,7 @@
                             "value": {
                                 "code": null,
                                 "comment": "",
-                                "message": "Search for Talent"
+                                "message": "Search by Talent Name or Talent Number"
                             }
                         },
                         "hideRequiredIndicator": {
@@ -501,7 +501,7 @@
                             "script": {
                                 "apiVersion": "2.0.0",
                                 "controllerElementId": null,
-                                "inlineScript": "/**\n * @param {params} params\n * @param {api} params.api\n * @param {TransformApiHelpers} params.helpers\n */\nfunction evaluateProperty({ api, helpers }) {\n  const { results } = api.data.get_talent;\n  const emptyNode = {\n    id: 'home',\n    label: 'Search for Talent',\n  };\n  if (!results) {\n  console.log ( 'NO RESULTS');\n    return JSON.stringify([emptyNode]);\n  }\n   console.log ({ results });\n  const options = results\n     .filter(result =&gt; !!result.full_name.value)\n     .map((result) =&gt; ({\n    id: result.sys_id.value,\n    label: result.full_name.value,// + ` (${result.enterprise_talent_id.value})` ,\n    sublabel: `EID: ${result.enterprise_talent_id.value}, Status: ${result.status_crm.value}`,\n    talent_id: result.enterprise_talent_id.value,\n    email: result.primary_email.value,\n    sys_id: result.sys_id.value\n  }));\n  // console.log ({ options });\n  return JSON.stringify([emptyNode, ...options]);\n}",
+                                "inlineScript": "/**\n * @param {params} params\n * @param {api} params.api\n * @param {TransformApiHelpers} params.helpers\n */\nfunction evaluateProperty({ api, helpers }) {\n  const { results } = api.data.get_talent;\n  const emptyNode = {\n    id: 'home',\n    label: 'Search by Talent Name or Talent Number',\n  };\n  if (!results) {\n  console.log ( 'NO RESULTS');\n    return JSON.stringify([emptyNode]);\n  }\n   console.log ({ results });\n  const options = results\n     .filter(result =&gt; !!result.full_name.value)\n     .map((result) =&gt; ({\n    id: result.sys_id.value,\n    label: result.full_name.value,// + ` (${result.enterprise_talent_id.value})` ,\n    sublabel: `EID: ${result.enterprise_talent_id.value}, Status: ${result.status_crm.value}`,\n    talent_id: result.enterprise_talent_id.value,\n    email: result.primary_email.value,\n    sys_id: result.sys_id.value\n  }));\n  // console.log ({ options });\n  return JSON.stringify([emptyNode, ...options]);\n}",
                                 "scriptSysId": "6696e2f1c3a2791011971d4ce0013153",
                                 "target": null
                             },
@@ -959,6 +959,60 @@
                                                             "type": "CLIENT_SCRIPT"
                                                         }
                                                     ]
+                                                },
+                                                {
+                                                    "eventMappingId": "clqeeaahhrahaabbvjddeeiiffhwcchhaawjm",
+                                                    "isConfiguration": false,
+                                                    "offRowStorageId": null,
+                                                    "sourceEventApiName": "sn_select.NOW_SELECT#INVALID_SET",
+                                                    "sourceEventCorrelationId": null,
+                                                    "sourceEventDefinition": {
+                                                        "apiName": "sn_select.NOW_SELECT#INVALID_SET",
+                                                        "id": null,
+                                                        "type": "UXEVENT"
+                                                    },
+                                                    "sourceEventSysId": null,
+                                                    "targets": [
+                                                        {
+                                                            "broker": null,
+                                                            "clientScript": null,
+                                                            "conditional": null,
+                                                            "declarativeAction": null,
+                                                            "event": {
+                                                                "apiName": "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+                                                                "payload": {
+                                                                    "script": {
+                                                                        "apiVersion": "1.0.0",
+                                                                        "controllerElementId": null,
+                                                                        "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\treturn {\n\t\tpropName: 'machineMessage',\n\t\tvalue: {\n\t\t\ttype: 'change deduction',\n\t\t\tindex: api.item.index,\n\t\t\tvalue: 'none',\n\t\t\tfield: 'deduction_type'\n\t\t}\n\t};\n}",
+                                                                        "scriptSysId": null,
+                                                                        "target": null
+                                                                    },
+                                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                                },
+                                                                "sysId": "32408b42ff7a10109046e490703bf176"
+                                                            },
+                                                            "operation": null,
+                                                            "targetId": "clqeeaahhrahaabbvkddeeiiffikyjggyll",
+                                                            "type": "EVENT"
+                                                        },
+                                                        {
+                                                            "broker": null,
+                                                            "clientScript": {
+                                                                "payload": {
+                                                                    "type": "JSON_LITERAL",
+                                                                    "value": {}
+                                                                },
+                                                                "sysId": "e296e2f1c3a2791011971d4ce0013153"
+                                                            },
+                                                            "conditional": null,
+                                                            "declarativeAction": null,
+                                                            "event": null,
+                                                            "operation": null,
+                                                            "targetId": "clqeeaaiikwcaabbwccddeeiiffjkjjhjjivy",
+                                                            "type": "CLIENT_SCRIPT"
+                                                        }
+                                                    ]
                                                 }
                                             ],
                                             "isHidden": {
@@ -1123,7 +1177,7 @@
                                                                     "script": {
                                                                         "apiVersion": "1.0.0",
                                                                         "controllerElementId": null,
-                                                                        "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\treturn {\n\t\tpropName: 'machineMessage',\n\t\tvalue: {\n\t\t\ttype: 'change deduction',\n\t\t\tindex: api.item.index,\n\t\t\tvalue: event.payload.value,\n\t\t\tfield: 'deduction_value'\n\t\t}\n\t};\n}",
+                                                                        "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\treturn {\n\t\tpropName: 'machineMessage',\n\t\tvalue: {\n\t\t\ttype: 'change deduction',\n\t\t\tindex: api.item.index,\n\t\t\tvalue: Number(event.payload.value),\n\t\t\tfield: 'deduction_value'\n\t\t}\n\t};\n}",
                                                                         "scriptSysId": null,
                                                                         "target": null
                                                                     },
@@ -1149,6 +1203,60 @@
                                                             "event": null,
                                                             "operation": null,
                                                             "targetId": "clpccqyuioaaenpddeehhrddtjyaayiib",
+                                                            "type": "CLIENT_SCRIPT"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "eventMappingId": "clqeeaajjvaeeaabbwhddeeiiffxggddmazddp",
+                                                    "isConfiguration": false,
+                                                    "offRowStorageId": null,
+                                                    "sourceEventApiName": "sn_input.NOW_INPUT#INVALID_SET",
+                                                    "sourceEventCorrelationId": null,
+                                                    "sourceEventDefinition": {
+                                                        "apiName": "sn_input.NOW_INPUT#INVALID_SET",
+                                                        "id": null,
+                                                        "type": "UXEVENT"
+                                                    },
+                                                    "sourceEventSysId": null,
+                                                    "targets": [
+                                                        {
+                                                            "broker": null,
+                                                            "clientScript": null,
+                                                            "conditional": null,
+                                                            "declarativeAction": null,
+                                                            "event": {
+                                                                "apiName": "sn_uxf.MACROPONENT_STATE_UPDATE_REQUESTED",
+                                                                "payload": {
+                                                                    "script": {
+                                                                        "apiVersion": "1.0.0",
+                                                                        "controllerElementId": null,
+                                                                        "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\tconsole.log ({ event })\n\treturn {\n\t\tpropName: 'machineMessage',\n\t\tvalue: {\n\t\t\ttype: 'change deduction',\n\t\t\tindex: api.item.index,\n\t\t\tvalue: Number(event.payload.fieldValue),\n\t\t\tfield: 'deduction_value'\n\t\t}\n\t};\n}",
+                                                                        "scriptSysId": null,
+                                                                        "target": null
+                                                                    },
+                                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                                },
+                                                                "sysId": "32408b42ff7a10109046e490703bf176"
+                                                            },
+                                                            "operation": null,
+                                                            "targetId": "clqeeaajjvaeeaabbwiddeeiifflacciijtdd",
+                                                            "type": "EVENT"
+                                                        },
+                                                        {
+                                                            "broker": null,
+                                                            "clientScript": {
+                                                                "payload": {
+                                                                    "type": "JSON_LITERAL",
+                                                                    "value": {}
+                                                                },
+                                                                "sysId": "e296e2f1c3a2791011971d4ce0013153"
+                                                            },
+                                                            "conditional": null,
+                                                            "declarativeAction": null,
+                                                            "event": null,
+                                                            "operation": null,
+                                                            "targetId": "clqeeaaabbkaabbxaaddeeiiffzjjozhjjmb",
                                                             "type": "CLIENT_SCRIPT"
                                                         }
                                                     ]
@@ -4966,7 +5074,7 @@
   "message" : "SUBMIT DEDUCTION",
   "comment" : ""
 }, {
-  "message" : "Search for Talent",
+  "message" : "Search by Talent Name or Talent Number",
   "comment" : ""
 }, {
   "message" : "Select Effective Date",
@@ -5241,14 +5349,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-17 13:30:41</sys_created_on>
         <sys_id>5996a635c3a2791011971d4ce00131a9</sys_id>
-        <sys_mod_count>504</sys_mod_count>
+        <sys_mod_count>520</sys_mod_count>
         <sys_name>Default</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_5996a635c3a2791011971d4ce00131a9</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-12-07 19:18:55</sys_updated_on>
+        <sys_updated_on>2023-12-19 15:23:20</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=5996a635c3a2791011971d4ce00131a9"/>
 </record_update>

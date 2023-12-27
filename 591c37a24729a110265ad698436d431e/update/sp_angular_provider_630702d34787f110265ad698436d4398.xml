@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_angular_provider">
+    <sp_angular_provider action="INSERT_OR_UPDATE">
+        <name>machineCrumb</name>
+        <script><![CDATA[function machineCrumb() {
+  return {
+    restrict: 'E', 
+    scope: { 
+      c: '=',
+      exportId: '=',
+      crumbs: '=',
+    },
+    template: '' + 
+	'<ol class="breadcrumb">' + 
+	'  <li class="breadcrumb-item" ng-click="c.send(\'back\')"><a href="#">Apps</a></li>' + 
+	'  <li ng-if="c.matches(crumb.state)" class="breadcrumb-item" ng-repeat="crumb in crumbs">' +  
+	'    <span ng-if="!crumb.active">{{crumb.label}}<span ng-if="!crumb.label">Export ID: {{exportId}}</span></span>' + 
+	'    <a ng-click="c.send(\'back\')" href="#" ng-if="!!crumb.active">{{crumb.label}}<span ng-if="!crumb.label">Export ID: {{exportId}}</span></a>' + 
+	'  </li>' + 
+	'</ol>' 
+  };
+}]]></script>
+        <sys_class_name>sp_angular_provider</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-16 23:41:57</sys_created_on>
+        <sys_id>630702d34787f110265ad698436d4398</sys_id>
+        <sys_mod_count>31</sys_mod_count>
+        <sys_name>machineCrumb</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_angular_provider_630702d34787f110265ad698436d4398</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-17 00:35:07</sys_updated_on>
+        <type>directive</type>
+    </sp_angular_provider>
+</record_update>

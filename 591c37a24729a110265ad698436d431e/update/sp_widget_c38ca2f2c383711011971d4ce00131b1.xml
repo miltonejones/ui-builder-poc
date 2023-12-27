@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[/* State Machine widget
+ */
+api.controller=function($scope) {
+
+  var c = this ;
+	  
+
+	// load and start the machine
+	invokeResource("loadJson", handleJsonLoaded); 
+
+	
+	// END MAIN SCRIPT
+  // ---------------------------------------------------------------------------------/
+	return;
+
+  /**
+   * ACTIONS/SERVICES/GUARDS
+   * ---------------------------------------------------------------------------------/
+   *  - Actions modify machine.context values
+   *  - Services invoke methods on external actors
+   *  - Guards control conditional transitions
+   */
+
+  function createActions() {
+		
+		/**
+		 * Selects an item and updates the exportable object and readyToExport flag.
+		 * @param {Object} context - The context object.
+		 * @param {Object} event - The event object.
+		 * @returns {Object} - The updated exportable object and readyToExport flag.
+		 */
+		function selectItem(context, event) {
+			// Initialize exportable object if it doesn't exist
+			var exportable = context.exportable || {};
+
+			// Get the sys_id from the event object or row ID
+			var sysId = event.sys_id || event.row.ID;
+
+			// Toggle the value of the sysId key in the exportable object
+			exportable[sysId] = !exportable[sysId];
+
+			// Check if any keys in the exportable object have a truthy value
+			var ok = Object.keys(exportable).some(function(key) {
+				return exportable[key];
+			});
+
+			// Return the updated exportable object and readyToExport flag
+			return {
+				exportable: exportable,
+				readyToExport: ok
+			};
+		}
+		
+		/**
+		 * Assigns an item based on the given event.
+		 * @param {Object} _ - The first parameter is ignored.
+		 * @param {Object} event - The event object containing the row and export_id.
+		 * @returns {Object} - The context object with sys_id, currentRow, and exportId (if export_id exists).
+		 */
+		function assignItem(_, event) {
+			// Extract export_id from event.row if it exists, otherwise set it to null
+			var exportId = event.row ? event.row['export_reference.number'].value : null;
+
+			// Create the context object with sys_id and currentRow
+			var context = {
+				sys_id: event.sys_id,
+				currentRow: event.row
+			};
+
+			// Add exportId to the context object if export_id exists
+			if (exportId) {
+				context.exportId = exportId;
+			}
+
+			return context;
+		}
+		
+		/**
+		 * Assigns export item detail and columns based on event value.
+		 * @param {Object} _ - Placeholder for unused parameter.
+		 * @param {Object} event - Event object containing value property.
+		 * @returns {Object} - Object containing export item detail and columns.
+		 */
+		function assignExportItemDetail(_, event) {
+			var record = event.value[0];
+			var content = record.file_content.split('\n');
+			var header = content.shift().split(',');
+
+			var rows = content.map(function(line) {
+				var row = line.split(',');
+				return header.reduce(function(out, key, index) {
+					out[key] = typeof row[index] !== 'string' ? row[index] : row[index].replace(/"/g, '');
+					return out;
+				}, {});
+			});
+
+			var columns = header.map(function(key) {
+				return {
+					key: key,
+					value: key
+				};
+			});
+
+			$scope.exportItemColumns = columns;
+
+			return {
+				exportItemDetail: rows,
+				exportItemColumns: columns,
+				exportItemRecord: record, 
+			};
+		}
+		
+		/**
+		 * Assigns the selected account based on the event value.
+		 * @param {Object} _ - Unused parameter.
+		 * @param {Object} event - The event object containing the selected account value.
+		 * @returns {Object} - An object containing the selected account.
+		 */
+		function assignSelectedAccount(_, event) {
+			var account = event.value[0];
+			var selectedAccount = $scope.config.selectedAccountColumns.reduce(function(out, column) {
+				if (account.hasOwnProperty(column.key) && !!account[column.key]) {
+					var value = account[column.key].label || account[column.key];
+					if (!!value && column.date) {
+						value = new Date(value);//.toLocaleDateString();
+					//	alert (value)
+					}
+					out[column.key] = value;
+				} else {
+					// dummy/empty data
+					out[column.key] = column.key;
+				}
+				return out;
+			}, {});
+			return {
+				selectedAccount: selectedAccount,
+				accountRecord: account,
+				updateProps: false
+			};
+		}
+		
+		/**
+		 * Changes the selected account item based on the given context and event.
+		 * If the selected account has a quantity and bill rate amount, it calculates the total amount.
+		 * @param {Object} context - The current context.
+		 * @param {Object} event - The event triggering the change.
+		 * @returns {Object} - The updated selected account.
+		 */
+		function changeItem(context, event) {
+			var selectedAccount = context.selectedAccount;
+			var accountRecord = context.accountRecord;
+
+			// Check if the selected account has a quantity and bill rate amount
+			if (selectedAccount.qty && selectedAccount.bill_rate_amount) {
+				// Calculate the total amount and round it to 2 decimal places
+				selectedAccount.total_amount = (selectedAccount.qty * selectedAccount.bill_rate_amount).toFixed(2);
+			}
+			
+			var updateProps = $scope.config.selectedAccountColumns
+				.filter(function (column) {
+					return !!column.db;
+				})
+				.reduce(function (out, column) {
+					out[column.key] = selectedAccount[column.key]
+					return out;
+				}, {});
+ 
+			accountRecord[event.key] = selectedAccount[event.key]
+			accountRecord.total_amount = selectedAccount.total_amount
+			var csv = transformCsv([accountRecord]); 
+			 
+	 
+			// Return the updated selected account
+			return {
+				selectedAccount: selectedAccount,
+				updateProps: updateProps,
+				accountRecord: accountRecord,
+				updatedLine: csv[0]
+			};
+		}
+		
+		
+		function updateLocalCsv(context) {
+			var updatedLine = context.updatedLine;
+			var number = context.accountRecord.number;
+			var exportItemRecord = context.exportItemRecord;
+			var file_content = exportItemRecord.file_content
+				.split("\n")
+				.map(function(line) {
+					if (line.indexOf(number) < 0) {
+						return line
+					}
+					return updatedLine
+				}).join("\n");
+			exportItemRecord.file_content = file_content;
+			return {
+				exportItemRecord: exportItemRecord, 
+			}
+		}
+		
+		
+    return { 
+			selectItem: selectItem, 
+			assignItem: assignItem, 
+			assignExportItemDetail: assignExportItemDetail, 
+			assignSelectedAccount: assignSelectedAccount, 
+			changeItem: changeItem, 
+			updateLocalCsv: updateLocalCsv,
+			
+      assignPayCodeFilter: function (context) {
+        var bill_pay_filter;
+
+        // Check the brand name in the context and assign the appropriate pay code filter
+        switch (context.selecteditem['account_number.brand_name']) {
+          case "ProDrivers":
+            bill_pay_filter = 'u_prodrivers_only=yes';
+            break;
+          case "Decca Energy":
+          case "Decca Consulting Inc.":
+            bill_pay_filter = 'u_energy_division_only=yes'; 
+            break;
+          default:
+            bill_pay_filter = 'u_energy_division_only=no^u_energy_division_only=no'; 
+        }
+
+        return { bill_pay_filter: bill_pay_filter };
+      },
+
+			
+			assignMiscBillings: function (_, event) { 
+				return {
+					 previousBillings: event.value
+				};
+			}, 
+			
+			clearCsv: function () {
+				return {
+					csv: null,
+					readyToExport: false,
+					exportable: {}
+				}
+			},
+			
+			assignBillingExports: function (_, event) { 
+				return {
+					 billingExports: event.value
+				};
+			},
+			
+			assignUnexported: function (_, event) { 
+				return {
+					 readyExports: event.value
+				};
+			},  
+			
+			assignSelecteditem: function (_, event) {   
+				return {
+					 selecteditem: event.value
+				};
+			},
+			assignDetail: function (_, event) {  
+				return {
+					 itemDetail: event.value
+				};
+			}, 
+			
+			assignAccountingUnits: function (_, event) {  
+				var accountingUnits = event.value.map(function (unit) {
+					return {
+						label: unit.accounting_unit + " - " + unit.branch_name,
+						value: unit.accounting_unit + " - " + unit.branch_name
+					}
+				});
+				return {
+					 accountingUnits: accountingUnits
+				};
+			}, 
+			
+			assignPayCodes: function (_, event) {  
+				var payCodes = event.value.map(function (code) {
+					return {
+						label: code.u_code + " - " + code.u_name,
+						value: code.u_code 
+					}
+				});
+				return {
+					 payCodes: payCodes
+				};
+			},
+			
+			iterateIndex: function (context) {  
+				return {
+					branch_index: context.branch_index + 1, 
+				};
+			},
+			
+			
+			
+			initIndex: function (_, event) {   
+				return {
+					branch_index: 0,
+					csv: createHeader()
+				};
+			},
+			
+			assignCsv: function (context, event) {   
+				var csv = transformCsv(event.value); 
+				return { 
+					csv: context.csv.concat(csv)
+				};
+			},
+			 
+		}; 
+  }
+	
+
+
+  function createGuards() {
+    return {
+			'no unsaved changes': function (context) {
+				return !context.updateProps
+			},
+			'more branches': function (context) {
+				return context.branch_index < Object.keys(context.exportable).length
+			}
+ 		};
+  }
+
+  function createServices() {
+		return {
+			
+			getExistingAccounts: function () {
+				invokeResource('getExistingAccounts', handleDataLoaded)
+			},
+			
+			getMiscBillingExports: function () {
+				invokeResource('getMiscBillingExports', handleDataLoaded)
+			},
+			
+			getUnexported: function () {
+				invokeResource('getUnexported', handleDataLoaded)
+			},
+			
+			getBillingItemDetail: function (context) {
+				invokeResource('getBillingItemDetail', handleDataLoaded, {
+					id: context.sys_id
+				});  
+			}, 
+			
+			getAccountByNumber: function (context) { 
+				invokeResource('getBillingItemDetail', handleDataLoaded, {
+					number: context.currentRow.ID
+				});  
+			},
+			
+			getSelectedItem: function (context) {   
+				invokeResource('getSelectedItem', handleDataLoaded, {
+					id: context.currentRow['Billing Number']
+				});  
+			}, 
+			
+			getExportItem: function (context) {  
+				alert (context.exportId)
+				invokeResource('getExportItem', handleDataLoaded, {
+					id: context.exportId
+				});  
+			}, 
+			
+			itemCommit: function (context) { 
+				var csv = createHeader().concat (transformCsv(context.itemDetail));  
+				invokeResource('commitCsv', handleDataLoaded, {
+					csv: csv.join('\n')
+				}) 
+			},
+			
+			fetchUnit: function (context) { 
+				invokeResource('fetchUnit', handleDataLoaded, {
+					account_id: context.selecteditem['account_number.account_id']
+				}) 
+			},
+			
+			 
+			
+			
+			saveSelectedItem: function (context) {
+				invokeResource('updateBillingItem', handleDataLoaded, {
+					sysId: context.accountRecord.sys_id,
+					fields: context.updateProps
+				}) 
+			},
+			
+			updateCsv:  function (context) { 
+				invokeResource('updateCsv', handleDataLoaded, {
+					sysId: context.exportItemRecord.sys_id,
+					fields: {
+						file_content: context.exportItemRecord.file_content
+					}
+				}) 
+			},
+			
+			fetchPayCodes: function (context) {
+				invokeResource('fetchPayCodes', handleDataLoaded, {
+					filter: context.bill_pay_filter
+				}) 
+			},
+			
+			commitCsv: function (context) {
+				var keys = Object.keys(context.exportable)
+				invokeResource('commitCsv', handleDataLoaded, {
+					csv: context.csv.join('\n'),
+					keys: keys
+				}) 
+			},
+			
+			transformBranchRecords: function (context) {
+				var keys = Object.keys(context.exportable)
+				var id = keys[context.branch_index]; 
+				invokeResource('getBillingItemDetail', handleDataLoaded, {
+					id: id
+				})
+			},
+			
+		} 
+	}
+
+
+	// HELPERS
+  // ---------------------------------------------------------------------------------/
+
+	function handleDataLoaded (response) {
+		c.send({
+			type: 'data loaded',
+			value: response.data.message
+		})
+	}
+	
+	function createHeader() {
+		return [$scope.config.commaDelimColumns.map(function(column) {
+			return column.value;
+		}).join(',')];
+	}
+	
+	/**
+	 * Transforms a CSV file into a more legible and efficient format.
+	 * @param {Array} rows - The rows of the CSV file.
+	 * @returns {Array} - The transformed CSV file.
+	 */
+	function transformCsv(rows) {
+		return rows.map(function(row) {
+			return $scope.config.commaDelimColumns.map(function(column) {
+				var datum = row[column.key];
+
+				if (!!datum && column.date) {
+					console.log({
+						datum: datum,
+						row: row,
+						key: column.key
+					});
+					return '"' + new Date(datum).toLocaleDateString() + '"';
+				}
+				if (!datum) return;
+				if (datum.label) {
+					return '"' + datum.label + '"';
+				}
+				if (typeof datum !== 'object') {
+					return isNaN(datum) ? ('"' + datum.toString() + '"') : datum.toString();
+				}
+			}).join(",");
+		});
+	}
+	
+  /**
+   * Function to handle loading of the app JSON.
+   * @param {Object} response - The API response object.
+   */
+  function handleJsonLoaded(response) { 
+		// assign state machine definition to scope
+		$scope.machine = response.data.message.misc_billing_export_machine; 
+		$scope.config = response.data.message.misc_billing_config; 
+		
+		// create State Machine workflow using the JSON definition
+		createMachine({
+			
+			// pass in the scope and controller
+			controller: c,
+			$scope: $scope,
+			
+			// supply actions/guards/services to the machine
+			actions: createActions(),
+			guards: createGuards(),
+			services: createServices(),
+		});
+		
+		// start the machine
+		c.send('next'); // first event in the machine/optional
+  }
+
+  /**
+   * Invokes a resource action with the given action name and options.
+   * Calls the callback function with the response from the server.
+   * @param {string} action - The name of the action to invoke.
+   * @param {function} callback - The callback function to call with the server response.
+   * @param {object} options - The options to pass to the action.
+   */
+  function invokeResource(action, callback, options) {
+    var payload = { actionName: action };
+
+    // If options are provided, add them to the payload object
+    if (options) {
+      Object.keys(options).forEach(function (key) {
+        payload[key] = options[key];
+      });
+    }
+		
+		function updateComplete () {
+      c.server.get(payload).then(callback);
+    }
+ 
+    c.server.update().then(updateComplete);
+  }
+	
+	
+	/**
+	  DO NOT MODIFY BELOW THIS LINE
+	  State machine framework
+	*/
+  function createMachine(t){var n,e=t.actions,a=t.guards,c=t.services,r=t.controller;function i(t,e){var c=$scope.machine;Array.isArray(t)?o(t.find(function(t){var e=a[t.cond],r=!!e&&Boolean(e(c.context,n));return!t.cond||r}),e):o(t,e)}function o(t,a){var r=$scope.machine,o="object"==typeof n?n:{},u=f(o,{data:a}),h={context:r.context};function m(t){if(Array.isArray(t))t.forEach(function(t){var n=(0,e[t.type])(h.context,u);h.context=f(h.context,n)}),s(h.context);else{var n=(0,e[t.type])(h.context,u);h.context=f(h.context,n),s(h.context)}}r.states[r.state].exit&&m(r.states[r.state].exit),Boolean(t.target)&&($scope.machineState=t.target,r.state=t.target,localStorage.setItem("machine-state",t.target)),t.actions&&m(t.actions);var v=r.states[t.target];v&&(v.entry&&m(v.entry),v.invoke&&function t(e,a){var r=c[e.src];if(r)try{var o=r(a,n);if(e.onDone)return i(e.onDone,o)}catch(s){if(e.onError)return i(e.onError,s)}}(v.invoke,h.context),v.always&&i(v.always))}function s(t){var n=$scope.machine,e=f(n.context,t);n.context=e,$scope.machine=n}function f(t,n){for(var e in n)t[e]=n[e];return t}return r.matches=function(t){return Array.isArray(t)?t.some(function(t){return $scope.machineState===t}):$scope.machineState===t},r.can=function(t){var n=$scope.machine.states[$scope.machineState];if(n.on)return Boolean(n.on[t])},r.send=function(t){var e=t.type||t;$scope.machine.state=$scope.machineState,function t(e,a){var c=$scope.machine,r=c.states[$scope.machineState];if(n=a,r){var o=r.on[e]||c.on[e];o&&i(o)}}(e,t)},$scope.machineState=$scope.machine.initial,$scope.machine.state=$scope.machineState,r}	
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.btn {
+  margin: .25rem;
+}
+
+sup {
+  color: red; 
+}
+
+.banner {
+  background-color: #001166;
+  padding: .5rem;
+}
+
+.workspace {
+  margin: 1rem;
+}
+
+.flexible {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.billing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  background-color: #ebebeb;
+  padding: 1rem;
+  margin: 2rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  background-color: #fff;
+  padding: 1rem;
+}
+
+.billing-grid b {
+  font-size: 1em;
+  font-family: Roboto;
+}
+
+.spacer {
+  flex-grow: 1
+}
+
+td.linked {
+  color: #001166;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.breadcrumb {
+  background-color: white;
+  margin-bottom: 0px;
+}
+
+.viewspace {
+  margin-top: 3rem;
+}
+
+.busy .workspace {
+  opacity: 0.4; 
+}
+
+
+.mui-card {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+.mui-card.with-space {
+  margin: 1rem;
+  width: fit-content;
+  transition: all 0.3s linear;
+}
+
+.mui-card.with-space.bottom {
+  position: fixed;
+  top: 4px;
+  right: 120px;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>misc_billing_export</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Misc Billing Export</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[/* Base Server Script 
+ * ----------------------------------------------------------------------------------/
+ *   - requestMethods: Object contains available server methods
+ *   - createResource: Class implements table query functionality
+ *   - loadJson: Function uses createResource to load any application JSON
+ */
+(function () { 
+	
+	
+	function getFilename(suffix) {
+		var prefix = 'MISC';
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+		var filename = prefix + '_' + year + '-' + month + '-' + day + '-' + suffix + '.csv';
+		return filename;
+	}
+
+
+	
+	function getBillingItemDetail() { 
+		var resource = createResource('x_ebh_billing_pa_0_branch_account_billing', [
+			'week_ending_date',
+			'bill_type',
+			'start_date',
+			'number',
+			'qty',
+			'bill_rate_amount',
+			'total_amount',
+			'sys_created_by',
+			'billing_parent.number',
+			'sys_id',
+			'invoice_note',
+			'accounting_unit',
+		]);
+		
+		var filter = !input.number ? ('billing_parent=' + input.id) : ('number=' + input.number)
+		data.message = resource.execute(filter);
+	}
+	
+	
+	function getSelectedItem() {
+		var resource = createResource('x_ebh_billing_pa_0_billing_entry', [
+			'account_number.account_name',
+			'account_number.account_id',
+			'account_number.brand_name',
+			'account_number.branch_name',
+			'account_number.branch_number',
+			'billing_location_ref.location_name',
+			'work_location_ref.location_name',
+			'job_order',
+			'talent_user.full_name'
+		]);
+		var record = resource.execute('number=' + input.id);
+		data.message = record[0];
+	}
+	
+	
+	function updateCsv() { 
+		var resource = createResource('x_ebh_billing_pa_0_exported_miscellaneous_billing'); 
+		data.message = resource.update(input.sysId, input.fields);
+	}
+	
+	function updateBillingItem() { 
+		var resource = createResource('x_ebh_billing_pa_0_branch_account_billing'); 
+		data.message = resource.update(input.sysId, input.fields);
+	}
+	
+	function addKeysToBillingEntries(keys, export_id) {
+		var now_GR = new GlideRecord('x_ebh_billing_pa_0_billing_entry');
+		now_GR.addEncodedQuery(keys.map(function (key) {
+			return "sys_id=" + key;
+		}).join("^OR"), true);
+		now_GR.setValue('export_id_ref',  export_id);
+		now_GR.updateMultiple();
+	}
+	
+	
+	function commitCsv() { 
+		var resource = createResource('x_ebh_billing_pa_0_exported_miscellaneous_billing'); 
+		var exportId = ('000' + Math.floor(Math.random() * 10000)).slice(-4);
+		var sysId = resource.insert([
+			{
+				field: 'file_name',
+				value: getFilename(exportId)
+			},
+			{
+				field: 'export_id',
+				value: exportId
+			},
+			{
+				field: 'file_content',
+				value: input.csv
+			}
+		]);
+		
+		addKeysToBillingEntries(input.keys, sysId);
+		
+		data.message = sysId;
+	}
+	
+	function getExportItem() {
+		var resource = createResource('x_ebh_billing_pa_0_exported_miscellaneous_billing', 
+       ['file_name', 'file_content', 'number', 'sys_id']); 
+		data.message = resource.execute('number=' + input.id);
+	}
+	
+	function getUnexported() {
+		var resource = createResource('x_ebh_billing_pa_0_billing_entry', [
+			'account_number.brand_name',
+			'account_number.branch_name',
+			'account_number.branch_number',
+			'child_count',
+			'file_name',
+			'number',
+			'sys_id'
+		]);
+		data.message = resource
+			.execute('account_number.branch_nameISNOTEMPTY^export_referenceISEMPTY',1,100)
+		  .filter(function(row) {
+				return row.child_count > 0  
+			});
+	}
+	
+	function getMiscBillingExports() {
+		var resource = createResource('x_ebh_billing_pa_0_billing_entry', [
+			'account_number.account_name',
+			'account_number.account_id',
+			'account_number.brand_name',
+			'account_number.branch_name',
+			'account_number.branch_number',
+			'export_reference.number',
+			'export_reference.file_name',
+			'sys_created_on',
+			'sys_id' ,
+		]);
+		data.message = resource.execute('export_referenceISNOTEMPTY',1,500) 
+	}
+	
+	function getExistingAccounts() {
+		var resource = createResource('x_ebh_billing_pa_0_billing_entry', [
+			'account_number.account_name',
+			'account_number.account_id',
+			'account_number.brand_name',
+			'account_number.branch_name',
+			'account_number.branch_number'
+		]);
+		data.message = resource.execute();
+	}
+	
+  /**
+   * Fetches the unit data from the 'x_ebh_ccde_accounts_data' resource.
+   */
+  function fetchUnit() {
+    // Create a resource object for 'x_ebh_ccde_accounts_data' with the specified fields.
+    var resource = createResource("x_ebh_ccde_accounts_data", [
+      "accounting_unit",
+      "branch_name",
+			"account_id"
+    ]);
+
+    // Execute the resource with the specified field values.
+    data.message = resource.execute('accounting_unitISNOTEMPTY');
+  }
+
+	
+  /**
+   * Fetches pay codes from a resource and assigns the result to the data.message variable.
+   */
+  function fetchPayCodes() {
+    // Create a resource object for the 'u_bill_pay_types' resource with the specified fields.
+    var resource = createResource("u_bill_pay_types", ["u_code", "u_name"]);
+
+    // Execute the resource with the provided filter and assign the result to data.message.
+    data.message = resource.execute(input.filter);
+  }
+
+	// implement request methods here
+  var requestMethods = { 
+    loadJson: loadJson, 
+		getExistingAccounts: getExistingAccounts,
+		getMiscBillingExports: getMiscBillingExports,
+		getUnexported: getUnexported,
+		getBillingItemDetail: getBillingItemDetail,
+		commitCsv: commitCsv,
+		getExportItem: getExportItem,
+		getSelectedItem: getSelectedItem,
+		fetchPayCodes: fetchPayCodes,
+		fetchUnit: fetchUnit,
+		updateBillingItem: updateBillingItem,
+		updateCsv: updateCsv,
+  }; 
+	
+	
+  // execute the requested method if there is one
+  if (input) { 
+    var requestMethod = requestMethods[input.actionName];
+    if (requestMethod) {
+      return requestMethod();
+    }
+  }
+  
+	// END MAIN SCRIPT
+  // ---------------------------------------------------------------------------------/
+	return;
+
+	
+	// HELPERS
+  // ---------------------------------------------------------------------------------/
+
+  function loadJson() {
+    // Create a resource object with the specified table and fields
+    var resource = createResource("x_ebh_ccde_application_json", [
+      "title",
+      "content",
+    ]);
+
+    // Execute the resource with the application filter
+    var response = resource.execute("title=misc_billing_export_machine^ORtitle=misc_billing_config");
+
+    var object = {};
+    // Iterate over the response rows and parse the content as JSON
+    response.forEach(function (row) {
+      object[row.title] = JSON.parse(row.content);
+    });
+
+    // Return the object containing the JSON data
+    data.message = object;
+  }
+	  
+
+/**
+ * createResource method
+ * ----------------------------------------------------------------------------------------------- *
+ * Creates a resource object that provides a CRUD interface for a ServiceNow table.
+ * This simplifies common operations by encapsulating the GlideRecord API.
+ * 
+ * @param {string} table - The ServiceNow table name 
+ * @param {Array} fields - List of fields to select. Can include dot notation for reference fields.
+ * @returns {Object} resource - The resource object with CRUD methods  
+ * 
+ * @property {Function} insert - Inserts a new record. Pass in an object with keys/values.
+ * @property {Function} update - Updates a record by sys_id. Pass sys_id and fields to update. 
+ * @property {Function} describe - Describes the table schema, including field datatypes.  
+ * @property {Function} count - Counts records matching the encodedQuery.  
+ * @property {Function} execute - Runs a query and returns the rows of data.  
+ * 
+ * @example
+ * const taskResource = createResource('task');
+ * 
+ * taskResource.insert({
+ *   number: 'TASK00001',
+ *   short_description: 'Create documentation' 
+ * });
+ */ 
+	 
+  function createResource(e,t){return{fields:t,insert:function(t){var r=new GlideRecord(e);return t.forEach(function(e){r[e.alias||e.field]=e.value}),r.insert()},update:function(t,r){var n=new GlideRecord(e);return n.get(t),Object.keys(r).forEach(function(e){n.setValue(e,r[e])}),n.update()},describe:function(){var t=new GlideRecord(e);t.setLimit(1),t.query(),t.next();for(var r=t.getElements(),n=[],a=0;a<r.length;a++){var u=r[a],l=u.getED(),c=u.getName().toString(),o=l.getLabel().toString(),i=l.getInternalType().toString(),s=u.canWrite(),d=u.getRefRecord();u.getChoices();var f=null,g=null,v=c;d&&(f=u.getReferenceTable())!==e&&(g=createResource(f).describe(),v=f+"."+c),n.push({name:c,type:i,label:o,writable:s,choices:u.getChoices(),reference:f===e?null:f,children:g,fullName:v})}return n.sort(function(e,t){return e.name>t.name?1:-1})},count:function(t){var r=new GlideRecord(e);return t&&r.addEncodedQuery(t),r.query(),r.getRowCount()},execute:function(t,r,n,a,u){var l=new GlideRecord(e),c=n||10;t&&l.addEncodedQuery(t),u&&a?"DESC"===u?l.orderByDesc(a):l.orderBy(a):l.orderByDesc("sys_created_on");var o=c*((r||1)-1);l.chooseWindow(o,o+c),l.query();for(var i=[];l.next();){var s={_row_data:{sysId:l.getValue("sys_id")}};this.fields.forEach(function(e){if(e.indexOf(".")>0){var t=e.split("."),r=l[t[0]].getRefRecord();r.isValidRecord()&&(s[e]={label:r.getDisplayValue(t[1]),value:r.getValue(t[1]),table:l[t[0]].getReferenceTable()});return}var n=l.getElement(e);n.getRefRecord()?s[e]={label:l.getDisplayValue(e),value:l.getValue(e),table:n.getReferenceTable()}:s[e]=l.getValue(e)}),i.push(s)}return i}}}
+	
+	
+	
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-15 13:02:03</sys_created_on>
+        <sys_id>c38ca2f2c383711011971d4ce00131b1</sys_id>
+        <sys_mod_count>513</sys_mod_count>
+        <sys_name>Misc Billing Export</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_widget_c38ca2f2c383711011971d4ce00131b1</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-23 18:32:50</sys_updated_on>
+        <template><![CDATA[<div ng-class="{busy: c.can('data loaded')}">
+  <!-- toggle buttons -->
+  <div class="banner">
+    <button
+      class="btn"
+      ng-click="c.send('back')"
+      ng-class="{
+        'btn-default': c.matches('view misc billings'),
+        'btn-primary':  c.matches(config.exportStates) }"
+    >
+      Misc Billing
+    </button>
+    <button
+      class="btn"
+      ng-click="c.send('export')"
+      ng-class="{
+        'btn-primary': c.matches('view misc billings'),
+        'btn-default': c.matches(config.exportStates) }"
+    >
+      Misc Billing Exports
+    </button>
+  </div>
+
+  <div class="workspace">
+    <!-- toolbar -->
+    <div class="flexible">
+      <!-- breadcrumbs -->
+      <machine-crumb
+        c="c"
+        crumbs="config.breadcrumbs"
+        export-id="machine.context.exportId"
+      ></machine-crumb>
+
+      <div class="spacer"></div>
+
+      <!-- appropriate action button for current context -->
+      <button
+        ng-repeat="btn in config.toolbarButtons"
+        ng-disabled="!machine.context.readyToExport && btn.enable"
+        class="btn btn-primary ux"
+        ng-if="c.matches(btn.state)"
+        ng-click="c.send('export')"
+      >
+        {{btn.label}}
+      </button>
+    </div>
+
+    <!-- WORKSPACES -->
+
+    <search-table
+      ng-if="c.matches('view misc billings')"
+      c="c"
+      machine="machine"
+      columns="config.existingAccountColumns"
+      title="Accounts"
+      placeholder="Search for an Account or Account Number"
+      rows="previousBillings"
+    ></search-table>
+
+    <search-table
+      ng-if="c.matches('view misc billing exports')"
+      c="c"
+      machine="machine"
+      columns="config.miscBillingExportColumns"
+      title="Previous Misc Billing Exports"
+      placeholder="Search for an Account, Account Number, Brand, Branch Name, Branch Number or Export ID"
+      rows="billingExports"
+    ></search-table>
+
+    <search-table
+      ng-if="c.matches('ready for export')"
+      c="c"
+      machine="machine"
+      columns="config.readyExportColumns"
+      title="Records Ready for Export"
+      placeholder="Search for an Brand, Branch Name or Branch Number"
+      show-checkboxes="true"
+      show-details="true"
+      rows="readyExports"
+      >These branches have records ready for export for
+      <b>a week ending date on or before 05/08/2023</b>. Select View Details to
+      export specific items. To export a branch, check the appropriate box(es)
+      and click Export Selected Branches.</search-table
+    >
+
+    <search-table
+      ng-if="c.matches('viewing item detail')"
+      c="c"
+      machine="machine"
+      columns="config.itemDetailColumns"
+      show-checkboxes="true"
+      rows="itemDetail"
+      >The items below are ready for export for week ending date
+      <b>05/01/23</b>. Check the appropriate boxes, then click Export Selected
+      Items.</search-table
+    >
+
+    <search-table
+      ng-if="c.matches('Viewing export item detail')"
+      c="c"
+      machine="machine"
+      show-checkboxes="true"
+      title="Export ID: {{machine.context.exportId}}"
+      columns="exportItemColumns"
+      rows="exportItemDetail"
+    ></search-table>
+
+    <div ng-if="c.matches(['confirm item save', 'editing selected item'])">
+      <div class="billing-grid">
+        <div ng-repeat="column in config.miscBillingColumns">
+          <div>
+            <div>{{column.value}}</div>
+            <b>{{machine.context.selecteditem.hasOwnProperty(column.key) ?
+              (machine.context.selecteditem[column.key].label ||
+              machine.context.selecteditem[column.key]) : column.key}}</b>
+          </div>
+        </div>
+      </div>
+
+      <misc-billing-editor
+        c="c"
+        machine="machine"
+        config="config"
+      ></misc-billing-editor>
+    </div>
+
+    <!-- shows when CSV is being generated -->
+    <pre ng-if="!!machine.context.csv">
+Writing CSV: {{machine.state}}
+{{machine.context.csv.join('\n')}}
+   </pre>
+    
+  </div>
+
+  <!-- Confirm exit "modal" -->
+  <div ng-if="c.can('okay')" class="mui-card with-space">
+    <h4>Confirm exit</h4>
+    <div>
+      You have unsaved changes. Are you sure you want to close the form?
+    </div>
+    <div class="flexible">
+      <button class="btn btn-danger btn-sm ux" ng-click="c.send('okay')">
+        Close anyway
+      </button>
+      <button class="btn btn-primary btn-sm ux" ng-click="c.send('cancel')">
+        Return to form
+      </button>
+    </div>
+  </div>
+
+  <!-- Info card -->
+  <div class="mui-card with-space" ng-class="{bottom: c.can('data loaded')}">
+    <small>Machine State:</small>
+    <copy-text>{{machine.state || 'Please stand by...'}}</copy-text>
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

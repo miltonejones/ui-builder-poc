@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget">
+    <m2m_sp_ng_pro_sp_widget action="INSERT_OR_UPDATE">
+        <sp_angular_provider display_value="copyText">519d70df4703f110265ad698436d4335</sp_angular_provider>
+        <sp_widget display_value="Misc Billing Export">c38ca2f2c383711011971d4ce00131b1</sp_widget>
+        <sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2023-12-16 18:17:56</sys_created_on>
+        <sys_id>bf6e785f4703f110265ad698436d43b2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>copyText.Misc Billing Export</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>m2m_sp_ng_pro_sp_widget_bf6e785f4703f110265ad698436d43b2</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2023-12-16 18:17:56</sys_updated_on>
+    </m2m_sp_ng_pro_sp_widget>
+</record_update>

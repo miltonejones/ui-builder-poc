@@ -23,7 +23,7 @@
 			$scope: $scope,
 		});
 		
-		c.send('begin');
+		c.send('start');
 	});
 
 
@@ -31,40 +31,13 @@
 	
   function createActions() {
     return { 
-			iterateIndex: function (context) {
+			iterate: function (context) {
 				return {
 					index: context.index + 1
 				}
 			},
-			
-			assignBillingSysId: function (context, event) {
-				var record = context.record;
-				record.billing_location_ref = event.value;
-				return {
-					record: record
-				};
-			},
-			
-			assignWorksiteSysId: function (context, event) { 
-				var record = context.record;
-				record.work_location_ref = event.value; 
-				return {
-					record: record
-				};
-			},
-			
-			
-			assignBlankRecord: function (context) {
-				return {
-					record: {
-						sys_id: context.billings[context.index].sys_id
-					}, 
-					current: context.billings[context.index]
-				};
-			},
-			
-			
-			assignLegacyBillings: function (_, event) {
+			 
+			assignList: function (_, event) {
 				return {
 					billings: event.value,
 					index: 0
@@ -77,37 +50,27 @@
 
   function createGuards() {
     return { 
-		'more records': function (context) {
+		'more items': function (context) {
 				return context.index < context.billings.length;
 			}
 		};
   }
 
   function createServices() {
-		return {
-			getLocation: function (context) {
-				var filters = {
-					worksite: 'location_name=' + context.current.work_location + '^location_type=Worksite' ,
-					billing: 'location_name=' + context.current.billing_location + '^location_type=Billing'  
-				}
-				var filter = !context.record.work_location_ref ? filters.worksite : filters.billing;
-	 
-				invokeResource('getLocation', onComplete, {
-					filter: filter
-				})
-			},
+		return { 
 			modifyRecord: function(context) {
+				var record = context.billings[context.index];
 				invokeResource('modifyRecord', onComplete, {
-					sysId: context.record.sys_id,
+					sysId: record.sys_id,
 					fields: {
-						work_location_ref: context.record.work_location_ref,
-						billing_location_ref: context.record.billing_location_ref
+						bill_rate_amount: record.bill_rate,
+						total_amount: record.total
 					}
 				})
 				return true;
 			},
-			getLegacyBillings: function() {
-				invokeResource('getLegacyBillings', onComplete)
+			loadList: function() {
+				invokeResource('loadList', onComplete)
 			}
 		}
 	}
@@ -223,21 +186,20 @@
 		data.message = -1;
 	}
 
-	function getLegacyBillings() {
-		var resource = createResource('x_ebh_billing_pa_0_billing_entry', ['sys_id', 'billing_location', 'work_location'])
-		data.message = resource.execute('work_location_refISEMPTY');
-		console.log ({m: data.message})
+	
+	function loadList() {
+		var resource = createResource('x_ebh_billing_pa_0_branch_account_billing', ['sys_id', 'bill_rate', 'total'])
+		data.message = resource.execute(); 
 	}
 
 	function modifyRecord() {
-		var resource = createResource('x_ebh_billing_pa_0_billing_entry')
-		data.message = resource.update(input.sysId, input.fields);
-		console.log ({m: data.message})
+		var resource = createResource('x_ebh_billing_pa_0_branch_account_billing')
+		data.message = resource.update(input.sysId, input.fields);  
 	}
 
   var requestMethods = { 
     loadJson: loadJson,
-		getLegacyBillings: getLegacyBillings,
+		loadList: loadList,
 		getLocation: getLocation,
 		modifyRecord: modifyRecord
   };
@@ -426,22 +388,20 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-06 09:04:38</sys_created_on>
         <sys_id>1def9b77c3b2f11011971d4ce0013119</sys_id>
-        <sys_mod_count>49</sys_mod_count>
+        <sys_mod_count>59</sys_mod_count>
         <sys_name>Storybook</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sp_widget_1def9b77c3b2f11011971d4ce0013119</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-12-06 14:50:54</sys_updated_on>
+        <sys_updated_on>2023-12-09 19:04:46</sys_updated_on>
         <template><![CDATA[<div>
- {{ machineState }}
-  <hr />	
-  {{machine.context.current}}
-  <hr />
+ {{ machine.state }}
+  <hr />	 
   {{machine.context.index}}
   <hr />
-  {{machine.context.record}}
+  {{machine.context.billings[machine.context.index]}}
 </div>]]></template>
     </sp_widget>
 </record_update>
