@@ -501,7 +501,7 @@
                             "script": {
                                 "apiVersion": "2.0.0",
                                 "controllerElementId": null,
-                                "inlineScript": "/**\n * @param {params} params\n * @param {api} params.api\n * @param {TransformApiHelpers} params.helpers\n */\nfunction evaluateProperty({ api, helpers }) {\n  const { results } = api.data.get_talent;\n  const emptyNode = {\n    id: 'home',\n    label: 'Search by Talent Name or Talent Number',\n  };\n  if (!results) {\n  console.log ( 'NO RESULTS');\n    return JSON.stringify([emptyNode]);\n  }\n   console.log ({ results });\n  const options = results\n     .filter(result =&gt; !!result.full_name.value)\n     .map((result) =&gt; ({\n    id: result.sys_id.value,\n    label: result.full_name.value,// + ` (${result.enterprise_talent_id.value})` ,\n    sublabel: `EID: ${result.enterprise_talent_id.value}, Status: ${result.status_crm.value}`,\n    talent_id: result.enterprise_talent_id.value,\n    email: result.primary_email.value,\n    sys_id: result.sys_id.value\n  }));\n  // console.log ({ options });\n  return JSON.stringify([emptyNode, ...options]);\n}",
+                                "inlineScript": "/**\n * @param {params} params\n * @param {api} params.api\n * @param {TransformApiHelpers} params.helpers\n */\nfunction evaluateProperty({ api, helpers }) {\n  const { results } = api.data.get_talent;\n  const emptyNode = {\n    id: 'home',\n    label: 'Search by Talent Name or Talent Number',\n  };\n  if (!results) {\n  console.log ( 'NO RESULTS');\n    return JSON.stringify([emptyNode]);\n  }\n   console.log ({ results });\n  const options = results\n     .filter(result =&gt; !!result.full_name.value)\n     .map((result) =&gt; ({\n    id: result.sys_id.value,\n    label: result.full_name.value,// + ` (${result.enterprise_talent_id.value})` ,\n    sublabel: `EID: ${result.enterprise_talent_id.value}, Branch: ${result.branch_name.value} Status: ${result.status_crm.value}`,\n    talent_id: result.enterprise_talent_id.value,\n    email: result.primary_email.value,\n    sys_id: result.sys_id.value\n  }));\n  // console.log ({ options });\n  return JSON.stringify([emptyNode, ...options]);\n}",
                                 "scriptSysId": "6696e2f1c3a2791011971d4ce0013153",
                                 "target": null
                             },
@@ -868,6 +868,154 @@
             "composition": [
                 {
                     "definition": {
+                        "id": "d356d14b6e293a3020a244b63d278d8f",
+                        "type": "MACROPONENT"
+                    },
+                    "elementId": "container_11",
+                    "elementLabel": "Container 11",
+                    "eventMappings": [
+                        
+                    ],
+                    "isHidden": {
+                        "type": "JSON_LITERAL",
+                        "value": null
+                    },
+                    "overrides": {
+                        "composition": [
+                            {
+                                "definition": {
+                                    "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "rich_text_1",
+                                "elementLabel": "Rich text 1",
+                                "eventMappings": [
+                                    
+                                ],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "html": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": "&lt;p&gt;Deduction Type&lt;span style=\"color: #e03e2d;\"&gt;*&lt;/span&gt;&lt;/p&gt;"
+                                        }
+                                    }
+                                },
+                                "slot": null,
+                                "styles": null
+                            },
+                            {
+                                "definition": {
+                                    "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "rich_text_2",
+                                "elementLabel": "Rich text 2",
+                                "eventMappings": [
+                                    
+                                ],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "html": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": "&lt;p&gt;Deduction Value&lt;span style=\"color: #e03e2d;\"&gt;*&lt;/span&gt;&lt;/p&gt;"
+                                        }
+                                    }
+                                },
+                                "slot": null,
+                                "styles": null
+                            }
+                        ],
+                        "layout": {
+                            "default": {
+                                "children": null,
+                                "items": [
+                                    {
+                                        "element_id": "rich_text_1",
+                                        "styles": {
+                                            "margin": "0",
+                                            "padding": "0"
+                                        }
+                                    },
+                                    {
+                                        "element_id": "rich_text_2",
+                                        "styles": {
+                                            "margin": "0",
+                                            "padding-left": "0.5rem"
+                                        }
+                                    }
+                                ],
+                                "root": null,
+                                "rules": null,
+                                "styles": {
+                                    "display": "grid",
+                                    "flex-direction": "column",
+                                    "gap": "var(--now-scalable-space--sm)",
+                                    "grid-auto-columns": "1fr",
+                                    "grid-auto-rows": "1fr",
+                                    "grid-template-columns": "1fr 1fr",
+                                    "grid-template-rows": "1fr",
+                                    "margin-left": "var(--now-scalable-space--lg)"
+                                },
+                                "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                "type": "grid"
+                            },
+                            "version": "3.0.0"
+                        }
+                    },
+                    "preset": null,
+                    "propertyValues": {
+                        "ariaRegionHeadingLevel": {
+                            "type": "JSON_LITERAL",
+                            "value": "1"
+                        },
+                        "ariaRegionName": {
+                            "type": "TRANSLATION_LITERAL",
+                            "value": {
+                                "code": null,
+                                "comment": "",
+                                "message": ""
+                            }
+                        },
+                        "ariaRole": {
+                            "type": "JSON_LITERAL",
+                            "value": ""
+                        },
+                        "hideEmptyStateUi": {
+                            "type": "JSON_LITERAL",
+                            "value": true
+                        },
+                        "includeAriaHeading": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "slotWrapperBehavior": {
+                            "type": "JSON_LITERAL",
+                            "value": "fullheight"
+                        },
+                        "type": {
+                            "type": "JSON_LITERAL",
+                            "value": "section"
+                        }
+                    },
+                    "slot": null,
+                    "styles": null
+                },
+                {
+                    "definition": {
                         "id": "REPEATER",
                         "type": "REPEATER"
                     },
@@ -961,7 +1109,7 @@
                                                     ]
                                                 },
                                                 {
-                                                    "eventMappingId": "clqeeaahhrahaabbvjddeeiiffhwcchhaawjm",
+                                                    "eventMappingId": "clrdjddllqaaccmuddeeiieeztdiifzffm",
                                                     "isConfiguration": false,
                                                     "offRowStorageId": null,
                                                     "sourceEventApiName": "sn_select.NOW_SELECT#INVALID_SET",
@@ -984,7 +1132,7 @@
                                                                     "script": {
                                                                         "apiVersion": "1.0.0",
                                                                         "controllerElementId": null,
-                                                                        "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\treturn {\n\t\tpropName: 'machineMessage',\n\t\tvalue: {\n\t\t\ttype: 'change deduction',\n\t\t\tindex: api.item.index,\n\t\t\tvalue: 'none',\n\t\t\tfield: 'deduction_type'\n\t\t}\n\t};\n}",
+                                                                        "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\treturn {\n\t\tpropName: 'machineMessage',\n\t\tvalue: {\n\t\t\ttype: 'dirty deduction',\n\t\t\tindex: api.item.index,\n\t\t\tfield: 'deduction_type'\n\t\t}\n\t};\n}",
                                                                         "scriptSysId": null,
                                                                         "target": null
                                                                     },
@@ -993,7 +1141,7 @@
                                                                 "sysId": "32408b42ff7a10109046e490703bf176"
                                                             },
                                                             "operation": null,
-                                                            "targetId": "clqeeaahhrahaabbvkddeeiiffikyjggyll",
+                                                            "targetId": "clrdjddllqaaccmvddeeiieehieejjhrccaa",
                                                             "type": "EVENT"
                                                         },
                                                         {
@@ -1009,7 +1157,7 @@
                                                             "declarativeAction": null,
                                                             "event": null,
                                                             "operation": null,
-                                                            "targetId": "clqeeaaiikwcaabbwccddeeiiffjkjjhjjivy",
+                                                            "targetId": "clrdjddwpoaaccnxddeeiieerdsneexddz",
                                                             "type": "CLIENT_SCRIPT"
                                                         }
                                                     ]
@@ -1099,7 +1247,7 @@
                                                     "value": {
                                                         "code": null,
                                                         "comment": "",
-                                                        "message": "Deduction Type"
+                                                        "message": ""
                                                     }
                                                 },
                                                 "messages": {
@@ -1122,20 +1270,34 @@
                                                 },
                                                 "required": {
                                                     "type": "JSON_LITERAL",
-                                                    "value": true
+                                                    "value": false
                                                 },
                                                 "search": {
                                                     "type": "JSON_LITERAL",
                                                     "value": "none"
                                                 },
                                                 "selectedItem": {
-                                                    "binding": {
-                                                        "address": [
-                                                            "deduction_type"
-                                                        ],
-                                                        "category": "value"
+                                                    "operation": {
+                                                        "left": {
+                                                            "binding": {
+                                                                "address": [
+                                                                    "deduction_type"
+                                                                ],
+                                                                "category": "value"
+                                                            },
+                                                            "type": "REPEATER_ITEM_BINDING"
+                                                        },
+                                                        "operator": "OR",
+                                                        "right": {
+                                                            "binding": {
+                                                                "address": [
+                                                                    "emptyId"
+                                                                ]
+                                                            },
+                                                            "type": "STATE_BINDING"
+                                                        }
                                                     },
-                                                    "type": "REPEATER_ITEM_BINDING"
+                                                    "type": "BINARY"
                                                 },
                                                 "size": {
                                                     "type": "JSON_LITERAL",
@@ -1177,7 +1339,7 @@
                                                                     "script": {
                                                                         "apiVersion": "1.0.0",
                                                                         "controllerElementId": null,
-                                                                        "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\treturn {\n\t\tpropName: 'machineMessage',\n\t\tvalue: {\n\t\t\ttype: 'change deduction',\n\t\t\tindex: api.item.index,\n\t\t\tvalue: Number(event.payload.value),\n\t\t\tfield: 'deduction_value'\n\t\t}\n\t};\n}",
+                                                                        "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\treturn {\n\t\tpropName: 'machineMessage',\n\t\tvalue: {\n\t\t\ttype: 'change deduction',\n\t\t\tindex: api.item.index,\n\t\t\tvalue: event.payload.value,\n\t\t\tfield: 'deduction_value'\n\t\t}\n\t};\n}",
                                                                         "scriptSysId": null,
                                                                         "target": null
                                                                     },
@@ -1208,7 +1370,7 @@
                                                     ]
                                                 },
                                                 {
-                                                    "eventMappingId": "clqeeaajjvaeeaabbwhddeeiiffxggddmazddp",
+                                                    "eventMappingId": "clrdiplksaabbzfddeeiieegjtthcsjj",
                                                     "isConfiguration": false,
                                                     "offRowStorageId": null,
                                                     "sourceEventApiName": "sn_input.NOW_INPUT#INVALID_SET",
@@ -1231,7 +1393,7 @@
                                                                     "script": {
                                                                         "apiVersion": "1.0.0",
                                                                         "controllerElementId": null,
-                                                                        "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\tconsole.log ({ event })\n\treturn {\n\t\tpropName: 'machineMessage',\n\t\tvalue: {\n\t\t\ttype: 'change deduction',\n\t\t\tindex: api.item.index,\n\t\t\tvalue: Number(event.payload.fieldValue),\n\t\t\tfield: 'deduction_value'\n\t\t}\n\t};\n}",
+                                                                        "inlineScript": "/**\n* @param {params} params\n* @param {api} params.api\n* @param {any} params.event\n*/\nfunction evaluateEvent({api, event}) {\n\treturn {\n\t\tpropName: 'machineMessage',\n\t\tvalue: {\n\t\t\ttype: 'dirty deduction',\n\t\t\tindex: api.item.index,\n\t\t\tfield: 'deduction_value'\n\t\t}\n\t};\n}",
                                                                         "scriptSysId": null,
                                                                         "target": null
                                                                     },
@@ -1240,7 +1402,7 @@
                                                                 "sysId": "32408b42ff7a10109046e490703bf176"
                                                             },
                                                             "operation": null,
-                                                            "targetId": "clqeeaajjvaeeaabbwiddeeiifflacciijtdd",
+                                                            "targetId": "clrdiplksaabbzgddeeiieeaawaareelqh",
                                                             "type": "EVENT"
                                                         },
                                                         {
@@ -1256,7 +1418,7 @@
                                                             "declarativeAction": null,
                                                             "event": null,
                                                             "operation": null,
-                                                            "targetId": "clqeeaaabbkaabbxaaddeeiiffzjjozhjjmb",
+                                                            "targetId": "clrdiqffiiuaabbzwddeeiieeefsggzet",
                                                             "type": "CLIENT_SCRIPT"
                                                         }
                                                     ]
@@ -1485,7 +1647,7 @@
                                                     "script": {
                                                         "apiVersion": "2.0.0",
                                                         "controllerElementId": null,
-                                                        "inlineScript": "/**\n  * @param {params} params\n  * @param {api} params.api\n  * @param {TransformApiHelpers} params.helpers\n  */\nfunction evaluateProperty({api, helpers}) { \n\treturn Boolean(api.item.value.validation.deduction_value.length) || \n      !(Number(api.item.value.deduction_value) &gt; 0);\n}",
+                                                        "inlineScript": "/**\n  * @param {params} params\n  * @param {api} params.api\n  * @param {TransformApiHelpers} params.helpers\n  */\nfunction evaluateProperty({api, helpers}) { \n\treturn Boolean(api.item.value.validation.deduction_value.length);\n}",
                                                         "scriptSysId": "6a65680ac3aa791011971d4ce0013139",
                                                         "target": null
                                                     },
@@ -1496,7 +1658,7 @@
                                                     "value": {
                                                         "code": null,
                                                         "comment": "",
-                                                        "message": "Deduction Amount"
+                                                        "message": ""
                                                     }
                                                 },
                                                 "max": {
@@ -1555,7 +1717,7 @@
                                                 },
                                                 "required": {
                                                     "type": "JSON_LITERAL",
-                                                    "value": true
+                                                    "value": false
                                                 },
                                                 "size": {
                                                     "type": "JSON_LITERAL",
@@ -1660,6 +1822,7 @@
                                     {
                                         "element_id": "container_3",
                                         "styles": {
+                                            "height": "",
                                             "min-width": "",
                                             "width": "50vw"
                                         }
@@ -1673,7 +1836,7 @@
                                     "margin-bottom": "var(--now-scalable-space--lg)",
                                     "margin-left": "var(--now-scalable-space--lg)",
                                     "margin-right": "var(--now-scalable-space--lg)",
-                                    "margin-top": "var(--now-scalable-space--lg)"
+                                    "margin-top": "0"
                                 },
                                 "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
                                 "type": "flex"
@@ -1685,12 +1848,12 @@
                     "repeatWith": {
                         "binding": {
                             "address": [
-                                "machine",
-                                "context",
+                                "deduction_form_broker_1",
+                                "output",
                                 "deductions"
                             ]
                         },
-                        "type": "STATE_BINDING"
+                        "type": "DATA_OUTPUT_BINDING"
                     },
                     "slot": null,
                     "styles": null
@@ -1782,14 +1945,20 @@
                                         "value": {}
                                     },
                                     "disabled": {
-                                        "script": {
-                                            "apiVersion": "2.0.0",
-                                            "controllerElementId": null,
-                                            "inlineScript": "/**\n  * @param {params} params\n  * @param {api} params.api\n  * @param {TransformApiHelpers} params.helpers\n  */\nfunction evaluateProperty({api, helpers}) {\n\treturn Boolean(api.state.machine.context.deductionsNotValid);\n}",
-                                            "scriptSysId": "2a65680ac3aa791011971d4ce0013139",
-                                            "target": null
+                                        "operation": {
+                                            "operand": {
+                                                "binding": {
+                                                    "address": [
+                                                        "deduction_form_broker_1",
+                                                        "output",
+                                                        "formIsValid"
+                                                    ]
+                                                },
+                                                "type": "DATA_OUTPUT_BINDING"
+                                            },
+                                            "operator": "NOT"
                                         },
-                                        "type": "CLIENT_TRANSFORM_SCRIPT"
+                                        "type": "UNARY"
                                     },
                                     "icon": {
                                         "type": "JSON_LITERAL",
@@ -2172,6 +2341,12 @@
                 "default": {
                     "children": null,
                     "items": [
+                        {
+                            "element_id": "container_11",
+                            "styles": {
+                                "width": "50vw"
+                            }
+                        },
                         {
                             "element_id": "repeater_1",
                             "styles": {}
@@ -3881,7 +4056,7 @@
                             "script": {
                                 "apiVersion": "2.0.0",
                                 "controllerElementId": null,
-                                "inlineScript": "function evaluateProperty({api, helpers}) {\n  const disabled = Boolean(api.state.machine.context.deductionsNotValid);\n  return disabled || !can('save');\n\n  /**\n   * Checks if a specific message can be triggered in the current machine state.\n   * @param {string} message - The message to check.\n   * @returns {boolean} - Whether the message can be triggered.\n   */\n  function can(message) {\n    const { machineState, machine } = api.state; \n    return Boolean(machine.states[machineState].on[message]);\n  }\n}",
+                                "inlineScript": "function evaluateProperty({api, helpers}) {\n  const disabled = !Boolean(api.data.deduction_form_broker_1.output.formIsValid);\n  return disabled || !can('save');\n\n  /**\n   * Checks if a specific message can be triggered in the current machine state.\n   * @param {string} message - The message to check.\n   * @returns {boolean} - Whether the message can be triggered.\n   */\n  function can(message) {\n    const { machineState, machine } = api.state; \n    return Boolean(machine.states[machineState].on[message]);\n  }\n}",
                                 "scriptSysId": "9c99c779c326791011971d4ce0013176",
                                 "target": null
                             },
@@ -4550,68 +4725,7 @@
         "elementId": "get_talent",
         "elementLabel": "Talent Lookup",
         "eventMappings": [
-            {
-                "eventMappingId": "clpinbbjdraabbabbddeehhscqccbqkcd",
-                "isConfiguration": false,
-                "offRowStorageId": null,
-                "sourceEventApiName": "sn_uxf.DATA_FETCH_INITIATED",
-                "sourceEventCorrelationId": null,
-                "sourceEventDefinition": {
-                    "apiName": "sn_uxf.DATA_FETCH_INITIATED",
-                    "id": null,
-                    "type": "UXEVENT"
-                },
-                "sourceEventSysId": null,
-                "targets": [
-                    {
-                        "broker": null,
-                        "clientScript": {
-                            "payload": {
-                                "type": "JSON_LITERAL",
-                                "value": {}
-                            },
-                            "sysId": "e2ac0f47c3aab11011971d4ce0013113"
-                        },
-                        "conditional": null,
-                        "declarativeAction": null,
-                        "event": null,
-                        "operation": null,
-                        "targetId": "clpinbbjdraabbaccddeehhsvccddcccmto",
-                        "type": "CLIENT_SCRIPT"
-                    }
-                ]
-            },
-            {
-                "eventMappingId": "clpinbbpnqaabbacddeehhsknxmapou",
-                "isConfiguration": false,
-                "offRowStorageId": null,
-                "sourceEventApiName": "sn_uxf.DATA_FETCH_SUCCEEDED",
-                "sourceEventCorrelationId": null,
-                "sourceEventDefinition": {
-                    "apiName": "sn_uxf.DATA_FETCH_SUCCEEDED",
-                    "id": null,
-                    "type": "UXEVENT"
-                },
-                "sourceEventSysId": null,
-                "targets": [
-                    {
-                        "broker": null,
-                        "clientScript": {
-                            "payload": {
-                                "type": "JSON_LITERAL",
-                                "value": {}
-                            },
-                            "sysId": "e2ac0f47c3aab11011971d4ce0013113"
-                        },
-                        "conditional": null,
-                        "declarativeAction": null,
-                        "event": null,
-                        "operation": null,
-                        "targetId": "clpinbbpnqaabbadddeehhsccjnfflugcc",
-                        "type": "CLIENT_SCRIPT"
-                    }
-                ]
-            }
+            
         ],
         "inputValues": {
             "encodedQuery": {
@@ -4645,6 +4759,20 @@
                                     ]
                                 },
                                 "type": "STATE_BINDING"
+                            },
+                            {
+                                "type": "JSON_LITERAL",
+                                "value": "^ORbranch_nameLIKE"
+                            },
+                            {
+                                "binding": {
+                                    "address": [
+                                        "machine",
+                                        "context",
+                                        "searchParam"
+                                    ]
+                                },
+                                "type": "STATE_BINDING"
                             }
                         ],
                         "type": "LIST_CONTAINER"
@@ -4655,7 +4783,7 @@
             },
             "limit": {
                 "type": "JSON_LITERAL",
-                "value": "1000"
+                "value": "10"
             },
             "offset": {
                 "type": "JSON_LITERAL",
@@ -4675,7 +4803,7 @@
             },
             "returnFields": {
                 "type": "JSON_LITERAL",
-                "value": "full_name,sys_id,status_crm,enterprise_talent_id,primary_email"
+                "value": "full_name,sys_id,status_crm,enterprise_talent_id,primary_email,branch_name"
             },
             "sortType": {
                 "type": "JSON_LITERAL",
@@ -4686,7 +4814,7 @@
                 "value": "x_ebh_ccde_talent_core"
             }
         },
-        "readEvaluationMode": "EAGER"
+        "readEvaluationMode": "EXPLICIT"
     },
     {
         "definition": {
@@ -4697,7 +4825,43 @@
         "elementId": "get_deduction_types",
         "elementLabel": "Bill Pay Codes",
         "eventMappings": [
-            
+            {
+                "eventMappingId": "clrcjcciihyaaffkyddeehhqykbbddxibbs",
+                "isConfiguration": false,
+                "offRowStorageId": null,
+                "sourceEventApiName": "sn_uxf.DATA_FETCH_SUCCEEDED",
+                "sourceEventCorrelationId": null,
+                "sourceEventDefinition": {
+                    "apiName": "sn_uxf.DATA_FETCH_SUCCEEDED",
+                    "id": null,
+                    "type": "UXEVENT"
+                },
+                "sourceEventSysId": null,
+                "targets": [
+                    {
+                        "broker": null,
+                        "clientScript": null,
+                        "conditional": null,
+                        "declarativeAction": null,
+                        "event": {
+                            "apiName": "sn_uxf_page.NOW_UXF_PAGE#SET_LOADING_STATE",
+                            "payload": {
+                                "type": "JSON_LITERAL",
+                                "value": {
+                                    "action": null,
+                                    "label": null,
+                                    "loading": false,
+                                    "nonBlocking": false
+                                }
+                            },
+                            "sysId": "0404f68486f1baab1dc7ef2a27a3de50"
+                        },
+                        "operation": null,
+                        "targetId": "clrcjcciihyaaffkzddeehhqddtjjjfciin",
+                        "type": "EVENT"
+                    }
+                ]
+            }
         ],
         "inputValues": {
             "encodedQuery": {
@@ -4706,7 +4870,7 @@
             },
             "limit": {
                 "type": "JSON_LITERAL",
-                "value": "1000"
+                "value": "10"
             },
             "offset": {
                 "type": "JSON_LITERAL",
@@ -4951,6 +5115,31 @@
             }
         },
         "readEvaluationMode": "EXPLICIT"
+    },
+    {
+        "definition": {
+            "id": "edb6611047bb3110265ad698436d43df",
+            "type": "TRANSFORM"
+        },
+        "dependencies": {},
+        "elementId": "deduction_form_broker_1",
+        "elementLabel": "Deduction Form broker 1",
+        "eventMappings": [
+            
+        ],
+        "inputValues": {
+            "deductions": {
+                "binding": {
+                    "address": [
+                        "machine",
+                        "context",
+                        "deductions"
+                    ]
+                },
+                "type": "STATE_BINDING"
+            }
+        },
+        "readEvaluationMode": "EXPLICIT"
     }
 ]</data>
         <description/>
@@ -4961,7 +5150,32 @@
         <handled_events/>
         <interactions/>
         <interfaces/>
-        <internal_event_mappings>{}</internal_event_mappings>
+        <internal_event_mappings>{
+    "MACROPONENT_READY": [
+        {
+            "broker": null,
+            "clientScript": null,
+            "conditional": null,
+            "declarativeAction": null,
+            "event": {
+                "apiName": "sn_uxf_page.NOW_UXF_PAGE#SET_LOADING_STATE",
+                "payload": {
+                    "type": "JSON_LITERAL",
+                    "value": {
+                        "action": null,
+                        "label": null,
+                        "loading": false,
+                        "nonBlocking": false
+                    }
+                },
+                "sysId": "0404f68486f1baab1dc7ef2a27a3de50"
+            },
+            "operation": null,
+            "targetId": "clrcjbbdrffaaffjdddeehhqftqeeobogg",
+            "type": "EVENT"
+        }
+    ]
+}</internal_event_mappings>
         <layout>{
     "default": {
         "children": null,
@@ -5026,6 +5240,12 @@
   "message" : "0.00",
   "comment" : ""
 }, {
+  "message" : "&lt;p&gt;Deduction Type&lt;span style=\"color: #e03e2d;\"&gt;*&lt;/span&gt;&lt;/p&gt;",
+  "comment" : ""
+}, {
+  "message" : "&lt;p&gt;Deduction Value&lt;span style=\"color: #e03e2d;\"&gt;*&lt;/span&gt;&lt;/p&gt;",
+  "comment" : ""
+}, {
   "message" : "ADD DEDUCTION",
   "comment" : ""
 }, {
@@ -5041,13 +5261,7 @@
   "message" : "Confirm Submission",
   "comment" : ""
 }, {
-  "message" : "Deduction Amount",
-  "comment" : ""
-}, {
   "message" : "Deduction Details",
-  "comment" : ""
-}, {
-  "message" : "Deduction Type",
   "comment" : ""
 }, {
   "message" : "Deductions\n",
@@ -5112,7 +5326,7 @@
                     "record": {},
                     "save_index": 0,
                     "searchParam": "",
-                    "sys_id": -1
+                    "sys_id": "-1"
                 },
                 "description": "Displays a form to create a new Voluntary deduction.",
                 "id": "New deduction",
@@ -5181,10 +5395,7 @@
                                         "type": "updateDeduction"
                                     },
                                     {
-                                        "type": "validateDeduction"
-                                    },
-                                    {
-                                        "type": "validateDeductions"
+                                        "type": "markDeductionAsDirty"
                                     }
                                 ],
                                 "description": "Changing a deduction in the deductions array.",
@@ -5195,6 +5406,14 @@
                                     "type": "updateRecord"
                                 },
                                 "description": "Change employee or start date.",
+                                "target": "adding deduction type"
+                            },
+                            "dirty deduction": {
+                                "actions": [
+                                    {
+                                        "type": "markDeductionAsDirty"
+                                    }
+                                ],
                                 "target": "adding deduction type"
                             },
                             "drop": {
@@ -5343,20 +5562,29 @@
         "name": "machineMessage",
         "shape": "",
         "valueType": "string"
+    },
+    {
+        "initialValue": {
+            "type": "JSON_LITERAL",
+            "value": "none"
+        },
+        "name": "emptyId",
+        "shape": "",
+        "valueType": "string"
     }
 ]</state_properties>
         <sys_class_name>sys_ux_macroponent</sys_class_name>
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-17 13:30:41</sys_created_on>
         <sys_id>5996a635c3a2791011971d4ce00131a9</sys_id>
-        <sys_mod_count>520</sys_mod_count>
+        <sys_mod_count>579</sys_mod_count>
         <sys_name>Default</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_5996a635c3a2791011971d4ce00131a9</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-12-19 15:23:20</sys_updated_on>
+        <sys_updated_on>2024-01-16 18:02:28</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=5996a635c3a2791011971d4ce00131a9"/>
 </record_update>

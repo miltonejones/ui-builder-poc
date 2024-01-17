@@ -29,7 +29,7 @@ function evaluateProperty({ api, helpers }) {
      .map((result) => ({
     id: result.sys_id.value,
     label: result.full_name.value,// + ` (${result.enterprise_talent_id.value})` ,
-    sublabel: `EID: ${result.enterprise_talent_id.value}, Status: ${result.status_crm.value}`,
+    sublabel: `EID: ${result.enterprise_talent_id.value}, Branch: ${result.branch_name.value} Status: ${result.status_crm.value}`,
     talent_id: result.enterprise_talent_id.value,
     email: result.primary_email.value,
     sys_id: result.sys_id.value
@@ -42,14 +42,14 @@ function evaluateProperty({ api, helpers }) {
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-17 13:44:40</sys_created_on>
         <sys_id>6696e2f1c3a2791011971d4ce0013153</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_name>select_1/items</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_client_script_6696e2f1c3a2791011971d4ce0013153</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-12-19 15:23:21</sys_updated_on>
+        <sys_updated_on>2024-01-12 15:32:38</sys_updated_on>
         <target>macroponent</target>
         <type>transform</type>
     </sys_ux_client_script>

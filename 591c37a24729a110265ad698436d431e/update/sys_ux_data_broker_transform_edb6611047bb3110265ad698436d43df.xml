@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>x_ebh_voluntary_0.Deduction Form broker</api_name>
+        <description>Validates a list of deductions in a voluntary deductions form</description>
+        <mutates_server_data>false</mutates_server_data>
+        <name>Deduction Form broker</name>
+        <output_schema/>
+        <private>false</private>
+        <props>[&#13;
+    {&#13;
+        "name": "deductions",&#13;
+        "label": "Deduction List",&#13;
+        "description": "List of deductions in the fom repeater",&#13;
+        "readOnly": false,&#13;
+        "fieldType": "json",&#13;
+        "valueType": "object",&#13;
+        "mandatory": true,&#13;
+        "defaultValue": ""&#13;
+    }&#13;
+]</props>
+        <required_translations>[ {
+  "message" : "Deduction List",
+  "comment" : ""
+}, {
+  "message" : "List of deductions in the fom repeater",
+  "comment" : ""
+} ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+
+    var deductions = input.deductions.map(validateDeduction);
+    var invalidProps = deductions.some(deductionIsNotValid);
+
+    return {
+        deductions: deductions,
+        formIsValid: !invalidProps
+    };
+
+    /**
+     * Checks if a field is not valid.
+     * @param {Object} deduction - The deduction object.
+     * @returns {boolean} - True if the field is not valid, false otherwise.
+     */
+    function deductionIsNotValid(deduction) {
+        return deduction.validation.deduction_type.length > 0 ||
+            deduction.validation.deduction_value.length > 0 ||
+            !deduction.deduction_value ||
+            !deduction.deduction_type;
+    }
+
+    /**
+     * Validates a deduction object and returns the updated deduction object with validation information.
+     * @param {Object} deduction - The deduction object to validate.
+     * @returns {Object} - The updated deduction object with validation information.
+     */
+    function validateDeduction(deduction) {
+        // Initialize validation object
+        deduction.validation = {
+            deduction_value: [],
+            deduction_type: []
+        };
+
+        // Get deduction value and deduction type from deduction object
+        var deduction_value = deduction.deduction_value;
+        var deduction_type = deduction.deduction_type;
+
+        // Check if deduction value is a number and convert it to a fixed 2 decimal places number
+        if (!!deduction_value && !isNaN(+deduction_value)) {
+            deduction.deduction_value = Number(deduction_value).toFixed(2);
+        }
+
+        // Check if deduction value has been changed
+        if (deduction.dirty) {
+
+            if (deduction.dirty.deduction_type) {
+                // Check if deduction type is not selected or set to 'none'
+                if (!deduction_type || deduction_type === 'none') {
+                    deduction.validation.deduction_type = exception("Select a Deduction Type.");
+                }
+            }
+            if (deduction.dirty.deduction_value) {
+                // Check if deduction value is not a number
+                if (isNaN(+deduction_value)) {
+                    deduction.validation.deduction_value = exception("Enter numbers for the Deduction Amount.");
+                }
+                // Check if deduction value is not a number
+                if (!deduction_value) {
+                    deduction.validation.deduction_value = exception("Enter a Deduction Amount.");
+                }
+            }
+        }
+
+        return deduction;
+    }
+
+
+    /**
+     * Creates an exception object with the given content.
+     * @param {string} content - The content of the exception.
+     * @returns {Array} - The array containing the exception object.
+     */
+    function exception(content) {
+        return [{
+            status: "critical",
+            content: content,
+            icon: "circle-exclamation-fill"
+        }];
+    }
+
+
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2024-01-13 20:21:18</sys_created_on>
+        <sys_id>edb6611047bb3110265ad698436d43df</sys_id>
+        <sys_mod_count>27</sys_mod_count>
+        <sys_name>Deduction Form broker</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_edb6611047bb3110265ad698436d43df</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-01-14 13:23:06</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=edb6611047bb3110265ad698436d43df"/>
+</record_update>
