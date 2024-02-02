@@ -183,6 +183,7 @@ api.controller = function ($scope) {
   };
 
   c.announce = function (col) {
+		alert (col)
     c.send({
       type: "choose",
       column: col,
@@ -755,10 +756,20 @@ api.controller = function ($scope) {
       },
 
       expandColumn: function (context, event) {
-        var expandedColumns = context.expandedColumns;
-        expandedColumns[event.column] = !expandedColumns[event.column];
+        var expandedColumns = {};// context.expandedColumns;
+        expandedColumns[event.column] = !context.expandedColumns[event.column];
+				var columnCount = Object.keys(expandedColumns)
+					.reduce(function(out, key) {
+						if (expandedColumns[key]) {
+							out ++;
+						}
+						return out;
+					}, 0)
         return {
           expandedColumns: expandedColumns,
+					expandedColumn: expandedColumns[event.column] ? event.column : null,
+					columnCount: columnCount,
+					visibleColumns: recurseColumns(context.columns, event.column) 
         };
       },
 
@@ -774,6 +785,33 @@ api.controller = function ($scope) {
       },
     };
   }
+	
+	function recurseColumns(columns, field) {
+		var keys = field.split(".");
+		var key = keys.shift();
+		var rest = keys.join(".");
+		var found = columns.filter(function(col) {
+			return col.name === key;
+		});
+		
+		
+		var column = found[0];
+		
+		
+		console.log ({
+			keys: keys,
+			key: key,
+			rest: rest,
+			column: column,
+		})
+		
+		if (!!rest.length) {
+		   return recurseColumns(column.children, rest);	
+		}
+		
+		return column.children;
+		
+	}
 
 	
   function createGuards() {
@@ -1092,6 +1130,43 @@ api.controller = function ($scope) {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.column-select {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem; 
+}
+
+.column-select div.panel { 
+  outline: dotted 1px green;
+  height: 360px;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.column-select div.panel .form-check {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+}
+
+.column-select div.panel .form-check.reference { 
+  grid-template-columns: 1fr; 
+}
+
+.column-select div.panel .child { 
+  margin-left: 1rem 
+}
+
+.reference {  
+  color: green;
+}
+
+.column-select div.panel .form-check div { 
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+ 
 
 .record-grid {
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -1616,14 +1691,14 @@ ul.row li.active {
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-29 18:16:51</sys_created_on>
         <sys_id>222bdd7947363110265ad698436d431b</sys_id>
-        <sys_mod_count>995</sys_mod_count>
+        <sys_mod_count>1037</sys_mod_count>
         <sys_name>Query Builder</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sp_widget_222bdd7947363110265ad698436d431b</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-12-06 13:00:53</sys_updated_on>
+        <sys_updated_on>2024-02-02 12:07:03</sys_updated_on>
         <template><![CDATA[<div class="query-wrapper">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -1736,7 +1811,7 @@ ul.row li.active {
             ></i>
           </th>
         </tr>
-        <tr>
+  <!--      <tr>
           <td>
           	&nbsp;
           </td>
@@ -1749,7 +1824,7 @@ ul.row li.active {
               placeholder="Filter {{machine.context.columnMap[column].label}}"
             />
           </td>
-        </tr>
+        </tr> -->
       </thead>
       <tbody>
         <tr ng-repeat="item in machine.context.rows">
@@ -1915,12 +1990,41 @@ ul.row li.active {
       </li>
     </ul>
   </div>
+  
+  
+  
+  <div class="column-panel open" ng-if="c.matches('select columns')">
+  <h4>
+    Select columns {{machine.context.expandedColumn}}
+    </h4>
+     <column-settings machine="machine" select="c.announce" 
+                      expand="c.expand"
+                      expanded-columns="machine.context.expandedColumns" ></column-settings> 
+      
+        
+    <div class="flexible" ng-if="!!machine.context.selectedTable.name">
+      <div class="spacer">
+        <!-- spacer -->
+      </div>
+      <button class="btn btn-sm" ng-click="c.send('cancel')">Cancel</button>
+
+      <button
+        class="btn btn-sm btn-primary"
+        ng-disabled="!machine.context.fields.length || !c.can('run')"
+        ng-click="c.send('run')"
+      >
+        Run Query
+      </button>
+    </div>
+
+    
+    </div>
 
   <!-- column selector panel -->
-  <div class="column-panel open" ng-if="c.matches('select columns')">
+  <div class="column-panel" ng-if="c.matches('select columns')">
 
     Select colums from <b>{{machine.context.selectedTable.label}}</b> to return
-    in your query. <a ng-click="c.selectAll()" href="#">Select all</a>.
+    in your query. <a ng-click="c.selectAll()" href="javascript:void(0)">Select all</a>.
 
     <table class="table">
       <thead>
@@ -1950,7 +2054,7 @@ ul.row li.active {
             <a
               ng-click="c.announce(item.name)"
               ng-class="{active: !!machine.context.selectedColumns[item.name]}"
-              href="#"
+              href="javascript:void(0)"
               >{{item.label}}</a
             >
 
@@ -2150,7 +2254,7 @@ ul.row li.active {
         <!-- spacer -->
       </div>
 
-      <a href="#" ng-click="c.send('cancel')">
+      <a href="javascript:void(0)" ng-click="c.send('cancel')">
         Close
         <i class="glyphicon glyphicon-remove"></i
       ></a>
@@ -2160,7 +2264,7 @@ ul.row li.active {
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item" ng-click="c.navigateRecord($index)" ng-repeat="crumb in machine.context.recordCrumbs"
-            ><a ng-if="!$last" href="#">{{crumb.label}}</a>
+            ><a ng-if="!$last" href="javascript:void(0)">{{crumb.label}}</a>
           <span ng-if="$last">{{crumb.label}}</span> 
         </li> 
       </ol>

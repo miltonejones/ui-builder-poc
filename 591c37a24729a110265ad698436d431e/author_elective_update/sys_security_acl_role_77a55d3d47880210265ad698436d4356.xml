@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+        <sys_created_on>2024-01-30 21:11:43</sys_created_on>
+        <sys_id>77a55d3d47880210265ad698436d4356</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>.x_ebh_voluntary_0.user</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_security_acl display_value="">cfa5553d47880210265ad698436d432b</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_77a55d3d47880210265ad698436d4356</sys_update_name>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-01-30 21:11:43</sys_updated_on>
+        <sys_user_role display_value="x_ebh_voluntary_0.user" name="x_ebh_voluntary_0.user">e11c37a24729a110265ad698436d4336</sys_user_role>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</application>
+        <file_path/>
+        <instance_id>83ce67badb169190b847ac44d4961903</instance_id>
+        <instance_name>employbridgedev</instance_name>
+        <name>sys_security_acl_role_77a55d3d47880210265ad698436d4356</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by><sys_created_on>2024-01-30 21:11:43</sys_created_on><sys_id>77a55d3d47880210265ad698436d4356</sys_id><sys_mod_count>0</sys_mod_count><sys_name>.x_ebh_voluntary_0.user</sys_name><sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package><sys_policy/><sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope><sys_security_acl display_value="">cfa5553d47880210265ad698436d432b</sys_security_acl><sys_update_name>sys_security_acl_role_77a55d3d47880210265ad698436d4356</sys_update_name><sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by><sys_updated_on>2024-01-30 21:11:43</sys_updated_on><sys_user_role display_value="x_ebh_voluntary_0.user" name="x_ebh_voluntary_0.user">e11c37a24729a110265ad698436d4336</sys_user_role></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>181446982</payload_hash>
+        <record_name>.x_ebh_voluntary_0.user</record_name>
+        <reverted_from/>
+        <source>3ccd813547880210265ad698436d4380</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+        <sys_created_on>2024-01-30 21:11:43</sys_created_on>
+        <sys_id>90c5dd3d47880210265ad698436d43e6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18d5c36aab40000001</sys_recorded_at>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-01-30 21:11:43</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>94c5dd3d348802102891b39f422d1ee5</update_guid>
+        <update_guid_history>94c5dd3d348802102891b39f422d1ee5:181446982</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value=".x_ebh_voluntary_0.user">0799a242470c0210265ad698436d43d4</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
+        <sys_created_on>2024-01-31 21:56:34</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>3c363e601cc34f4090e09f2465f06400</sys_id>
+        <sys_metadata>77a55d3d47880210265ad698436d4356</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>.x_ebh_voluntary_0.user</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_parent display_value="x_ebh_voluntary_0_deductions">cfa5553d47880210265ad698436d432b</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_scope_delete display_value="">9010b0fe4941481f931beec4cfddca89</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_77a55d3d47880210265ad698436d4356</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_77a55d3d47880210265ad698436d4356">90c5dd3d47880210265ad698436d43e6</sys_update_version>
+        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-01-31 21:56:34</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

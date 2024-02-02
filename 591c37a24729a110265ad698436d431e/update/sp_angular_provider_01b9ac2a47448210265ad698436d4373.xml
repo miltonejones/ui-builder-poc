@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_angular_provider">
+    <sp_angular_provider action="INSERT_OR_UPDATE">
+        <name>columnSettings</name>
+        <script><![CDATA[function columnSettings() {
+    return { // branch account
+        restrict: "E",
+        replace: true,
+        scope: {
+            machine: "=",
+            expandedColumns: "=",
+            select: "=",
+            expand: "="
+        },
+        template: '<div class="column-select"> ' +
+            '<div class="panel" ng-if="!!machine.context.columnCount">' +
+            '<div ng-repeat="(key, val) in expandedColumns"   >' +
+
+            ' {{key}} [{{machine.context.expandedColumn}}] ' +
+
+            ' <i ng-click="expand(key)" class="glyphicon glyphicon-minus" ></i>' +
+
+			// '{{locate(machine.context.columns, expandedColumns, key)}}' + 
+            '<div ' +
+            '  class="child"' + 
+            '  ng-repeat="column in locate(machine.context.columns, expandedColumns, key) track by $index"' +
+            '>' +
+            '' +
+            // '      <div ' +
+            // '         ng-class="{reference: !!kid.reference}"' +
+            // '         ng-repeat="kid in column.children track by $index" ' +
+            // '         ng-if="!machine.context.selectedColumns[column.name + \'.\' + kid.name]"' + 
+            // '      >' +
+            '        <input class="form-check-input" type="checkbox"' +
+            '         ng-click="select(machine.context.expandedColumn + \'.\' + column.name)"' +
+            '         >' +
+            '        <label class="form-check-label">' +
+            '	       {{column.label}}! ' +
+            '        </label>' +
+            '      <i ng-click="expand(machine.context.expandedColumn + \'.\' + column.name)" class="glyphicon glyphicon-plus" ng-if="!!column.reference"></i>' +
+            // '      </div>' +
+            '</div>' +
+
+
+
+            '</div>' +
+            '</div>' +
+
+
+            '<div class="panel" ng-if="!machine.context.columnCount">' +
+
+
+            '  <div ' +
+            '    ng-class="{reference: !!column.reference}"' +
+            '    class="form-check" ' +
+            '    ng-if="(!!column.reference || !machine.context.selectedColumns[column.name])" ' +
+            '    ng-repeat="column in machine.context.columns track by $index"' +
+            '  >' +
+            '    <div >' +
+            '      <input class="form-check-input" type="checkbox" value=""   ' +
+            '         ng-click="select(column.name)" >' +
+            '      <label class="form-check-label"  >' +
+            '	     {{column.label}}' +
+            '      </label>' +
+            '      <i ng-click="expand(column.name)" class="glyphicon glyphicon-plus" ng-if="!!column.reference"></i>' +
+            '   </div>' +
+
+            '    <div ng-if="!column.reference">{{column.fullName}}</div>' +
+
+            '  </div>' +
+
+
+
+            '' +
+            '</div>' +
+            // 'excluded columns<pre>{{machine.context.columns}}</pre></div>' + 
+            // '<div>btn</div>' +
+            '<div class="panel">' +
+
+            '  <div class="form-check" ng-if="machine.context.columnMap[column]"' +
+            '    ng-repeat="column in machine.context.tableColumns">' +
+            '    <div >' +
+            '      <input class="form-check-input" type="checkbox" value=""  checked ' +
+            '         ng-click="select(column)" >' +
+            '      <label class="form-check-label"  >' +
+            '	     {{machine.context.columnMap[column].label}}' +
+            '      </label>' +
+            '    </div>' +
+            '    <div>{{column}}</div>' +
+            '  </div>' +
+
+
+
+
+            ' </div>' +
+            '</div>',
+        link: function(scope, element) {
+
+			scope.locate = function (columns, expanded, field) {
+				var child, parts = field.split(".");
+				if (parts[1]) {
+					field = parts[0];
+					child = parts[1]
+				}
+				
+				var fields = columns.filter(function (col) {
+					return col.name === field;
+				});
+				if (!fields) return alert ('No fields'); 
+
+				var column = fields [0];
+				if (!child) {
+					return column.children;
+				}
+
+				return scope.locate(column.children, expanded, child); 
+			};
+
+            scope.visible = function(columns, expanded, chosen, field) {
+                var keys = Object.keys(expanded)
+                    .filter(function(key) {
+                        return !!expanded[key];
+                    });
+                if (!keys.length) {
+                    return !columns[field];
+                }
+
+				return !!expanded[field];
+
+            };
+            //	scope.json = scope.machine.context.columns;
+            // implement later maybe
+        },
+    };
+}]]></script>
+        <sys_class_name>sp_angular_provider</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2024-02-02 01:55:04</sys_created_on>
+        <sys_id>01b9ac2a47448210265ad698436d4373</sys_id>
+        <sys_mod_count>100</sys_mod_count>
+        <sys_name>columnSettings</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sp_angular_provider_01b9ac2a47448210265ad698436d4373</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-02 12:13:47</sys_updated_on>
+        <type>directive</type>
+    </sp_angular_provider>
+</record_update>

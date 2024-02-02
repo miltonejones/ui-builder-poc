@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget">
+    <m2m_sp_ng_pro_sp_widget action="DELETE">
+        <sp_angular_provider display_value="Column Picker Modal">cac7e0e647448210265ad698436d433d</sp_angular_provider>
+        <sp_widget display_value="Query Builder">222bdd7947363110265ad698436d431b</sp_widget>
+        <sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2024-02-02 01:46:36</sys_created_on>
+        <sys_id>a6d7e46647448210265ad698436d4306</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Column Picker Modal.Query Builder</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>m2m_sp_ng_pro_sp_widget_a6d7e46647448210265ad698436d4306</sys_update_name>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-02 01:46:36</sys_updated_on>
+    </m2m_sp_ng_pro_sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</application>
+        <file_path/>
+        <instance_id>83ce67badb169190b847ac44d4961903</instance_id>
+        <instance_name>employbridgedev</instance_name>
+        <name>m2m_sp_ng_pro_sp_widget_a6d7e46647448210265ad698436d4306</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget"><m2m_sp_ng_pro_sp_widget action="INSERT_OR_UPDATE"><sp_angular_provider display_value="Column Picker Modal">cac7e0e647448210265ad698436d433d</sp_angular_provider><sp_widget display_value="Query Builder">222bdd7947363110265ad698436d431b</sp_widget><sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name><sys_created_by>Milton.Jones@employbridge.com</sys_created_by><sys_created_on>2024-02-02 01:46:36</sys_created_on><sys_id>a6d7e46647448210265ad698436d4306</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Column Picker Modal.Query Builder</sys_name><sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package><sys_policy/><sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope><sys_update_name>m2m_sp_ng_pro_sp_widget_a6d7e46647448210265ad698436d4306</sys_update_name><sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by><sys_updated_on>2024-02-02 01:46:36</sys_updated_on></m2m_sp_ng_pro_sp_widget></record_update>]]></payload>
+        <payload_hash>-663275741</payload_hash>
+        <record_name>Column Picker Modal.Query Builder</record_name>
+        <reverted_from/>
+        <source>c63a387dc3c4021011971d4ce001313f</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2024-02-02 01:46:36</sys_created_on>
+        <sys_id>62d7e46647448210265ad698436d4309</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18d677f0e8b0000001</sys_recorded_at>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-02 01:46:36</sys_updated_on>
+        <type>Angular Providers</type>
+        <update_guid>66d7e4663a448210c8ad609539371608</update_guid>
+        <update_guid_history>66d7e4663a448210c8ad609539371608:-663275741</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Column Picker Modal.Query Builder">7a0aa86a47448210265ad698436d43a2</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
+        <sys_created_on>2024-02-02 01:56:11</sys_created_on>
+        <sys_db_object display_value="" name="m2m_sp_ng_pro_sp_widget">m2m_sp_ng_pro_sp_widget</sys_db_object>
+        <sys_id>3907e8effbe7420094afe068bd644000</sys_id>
+        <sys_metadata>a6d7e46647448210265ad698436d4306</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Column Picker Modal.Query Builder</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_scope_delete display_value="">9010b0fe4941481f931beec4cfddca89</sys_scope_delete>
+        <sys_update_name>m2m_sp_ng_pro_sp_widget_a6d7e46647448210265ad698436d4306</sys_update_name>
+        <sys_update_version display_value="m2m_sp_ng_pro_sp_widget_a6d7e46647448210265ad698436d4306">62d7e46647448210265ad698436d4309</sys_update_version>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-02 01:56:11</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

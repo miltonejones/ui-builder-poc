@@ -31,16 +31,16 @@
         <sys_created_by>Bryan.Rodriguez@employbridge.com</sys_created_by>
         <sys_created_on>2023-03-16 14:25:44</sys_created_on>
         <sys_id>591c37a24729a110265ad698436d431e</sys_id>
-        <sys_mod_count>44</sys_mod_count>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-25 20:37:31</sys_updated_on>
+        <sys_mod_count>45</sys_mod_count>
+        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-02 15:28:25</sys_updated_on>
         <template/>
         <trackable>true</trackable>
         <uninstall_blocked>false</uninstall_blocked>
         <user_role/>
         <vendor/>
         <vendor_prefix/>
-        <version>1.0.23</version>
+        <version>1.0.24</version>
     </sys_app>
     <sys_translated_text action="delete_multiple" query="documentkey=591c37a24729a110265ad698436d431e"/>
 </record_update>
