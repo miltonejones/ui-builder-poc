@@ -191,6 +191,7 @@ api.controller = function ($scope) {
   };
 
   c.expand = function (col) {
+		alert ('expand-'+col)
     c.send({
       type: "expand",
       column: col,
@@ -431,7 +432,7 @@ api.controller = function ($scope) {
         filter: lines.join(""),
       };
     }
-
+	
     /**
      * Updates the fields and tableColumns based on the selectedColumns in the context.
      * @param {Object} context - The context object containing the selectedColumns.
@@ -440,6 +441,7 @@ api.controller = function ($scope) {
     function updateFields(context) {
       // Get the keys of the selectedColumns object
       var keys = Object.keys(context.selectedColumns);
+			alert (JSON.stringify(keys,0,2))
 
       // Filter the keys to only include the ones with truthy values
       var filteredKeys = keys.filter(function (key) {
@@ -1553,7 +1555,7 @@ ul.row li.active {
        * Retrieves the columns of a GlideRecord table.
        * @returns {Array} - An array of objects containing field, label, and type properties.
        */
-      describe: function () {
+      describe: function (parentName) {
         var t = new GlideRecord(table); 
 				t.setLimit(1)
 				t.query();
@@ -1574,13 +1576,14 @@ ul.row li.active {
           var choices = glideElement.getChoices()
 					 
 						
-					var reference = null, children = null, fullName = fldName; 
+					var reference = null, children = null, fullName = [parentName,fldName]
+						.filter(Boolean).join("."); 
 					if (ref) {
 						reference = glideElement.getReferenceTable() ;  
 						if (reference !== table) {
 							var resource = createResource(reference);
-							children = resource.describe();
-							fullName = reference + '.' + fldName; 
+							children = resource.describe(fullName);
+					//		fullName = reference + '.' + fldName; 
 						}
 					} 
 
@@ -1691,14 +1694,14 @@ ul.row li.active {
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-11-29 18:16:51</sys_created_on>
         <sys_id>222bdd7947363110265ad698436d431b</sys_id>
-        <sys_mod_count>1037</sys_mod_count>
+        <sys_mod_count>1041</sys_mod_count>
         <sys_name>Query Builder</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sp_widget_222bdd7947363110265ad698436d431b</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-02-02 12:07:03</sys_updated_on>
+        <sys_updated_on>2024-02-05 18:05:18</sys_updated_on>
         <template><![CDATA[<div class="query-wrapper">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">

@@ -31,12 +31,12 @@
             // '         ng-if="!machine.context.selectedColumns[column.name + \'.\' + kid.name]"' + 
             // '      >' +
             '        <input class="form-check-input" type="checkbox"' +
-            '         ng-click="select(machine.context.expandedColumn + \'.\' + column.name)"' +
+            '         ng-click="select(column.fullName)"' +
             '         >' +
             '        <label class="form-check-label">' +
             '	       {{column.label}}! ' +
             '        </label>' +
-            '      <i ng-click="expand(machine.context.expandedColumn + \'.\' + column.name)" class="glyphicon glyphicon-plus" ng-if="!!column.reference"></i>' +
+            '      <i ng-click="expand(column.fullName)" class="glyphicon glyphicon-plus" ng-if="!!column.reference"></i>' +
             // '      </div>' +
             '</div>' +
 
@@ -136,14 +136,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2024-02-02 01:55:04</sys_created_on>
         <sys_id>01b9ac2a47448210265ad698436d4373</sys_id>
-        <sys_mod_count>100</sys_mod_count>
+        <sys_mod_count>101</sys_mod_count>
         <sys_name>columnSettings</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sp_angular_provider_01b9ac2a47448210265ad698436d4373</sys_update_name>
         <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-02-02 12:13:47</sys_updated_on>
+        <sys_updated_on>2024-02-05 18:01:24</sys_updated_on>
         <type>directive</type>
     </sp_angular_provider>
 </record_update>
