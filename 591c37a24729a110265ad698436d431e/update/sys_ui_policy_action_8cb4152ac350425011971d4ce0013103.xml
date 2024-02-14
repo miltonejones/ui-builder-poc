@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>false</cleared>
+        <disabled>true</disabled>
+        <field>talent_user.full_name</field>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>mohammad.raza@employbridge.com</sys_created_by>
+        <sys_created_on>2024-02-14 15:18:11</sys_created_on>
+        <sys_id>8cb4152ac350425011971d4ce0013103</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>talent_user.full_name</sys_name>
+        <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
+        <sys_update_name>sys_ui_policy_action_8cb4152ac350425011971d4ce0013103</sys_update_name>
+        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-14 15:18:11</sys_updated_on>
+        <table>x_ebh_voluntary_0_deduction_tickets</table>
+        <ui_policy display_value="make all fields read only">40b4d12ac350425011971d4ce00131ff</ui_policy>
+        <visible>ignore</visible>
+    </sys_ui_policy_action>
+</record_update>
