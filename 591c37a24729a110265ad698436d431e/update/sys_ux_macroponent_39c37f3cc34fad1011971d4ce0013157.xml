@@ -2551,7 +2551,7 @@
             },
             "returnFields": {
                 "type": "JSON_LITERAL",
-                "value": "talent_user.enterprise_talent_id,talent_user.full_name,talent_user.name,status,sys_created_by,sys_created_on"
+                "value": "talent_user.enterprise_talent_id,talent_user.full_name,effective_date,talent_user.name,status,sys_created_by,sys_created_on"
             },
             "returnTableMetadata": {
                 "type": "JSON_LITERAL",
@@ -2863,14 +2863,14 @@
         <sys_created_by>Milton.Jones@employbridge.com</sys_created_by>
         <sys_created_on>2023-05-24 16:54:16</sys_created_on>
         <sys_id>39c37f3cc34fad1011971d4ce0013157</sys_id>
-        <sys_mod_count>70</sys_mod_count>
+        <sys_mod_count>72</sys_mod_count>
         <sys_name>Preview default</sys_name>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_ux_macroponent_39c37f3cc34fad1011971d4ce0013157</sys_update_name>
-        <sys_updated_by>Milton.Jones@employbridge.com</sys_updated_by>
-        <sys_updated_on>2023-11-21 12:52:29</sys_updated_on>
+        <sys_updated_by>mohammad.raza@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-20 14:36:23</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=39c37f3cc34fad1011971d4ce0013157"/>
 </record_update>

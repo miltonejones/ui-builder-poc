@@ -27,15 +27,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>131d6b4dc397311011971d4ce001313f</sys_id>
-        <sys_mod_count>60</sys_mod_count>
+        <sys_mod_count>80</sys_mod_count>
         <sys_name>New Upload Voluntary Deduction topic</sys_name>
         <sys_overrides/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_131d6b4dc397311011971d4ce001313f</sys_update_name>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:24</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:13</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -892,10 +892,10 @@ outputs.instance_name=gs.getProperty("instance_name");
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 17:30:29</sys_created_on>
         <sys_id>ef1d6b4dc397311011971d4ce0013171</sys_id>
-        <sys_mod_count>13</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:34:16</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:52:39</sys_updated_on>
     </sys_hub_step_instance>
     <sys_variable_value action="delete_multiple" query="document_key=ef1d6b4dc397311011971d4ce0013171"/>
     <sys_variable_value action="INSERT_OR_UPDATE">
@@ -906,14 +906,15 @@ outputs.instance_name=gs.getProperty("instance_name");
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 17:30:30</sys_created_on>
         <sys_id>2f1d6b4dc397311011971d4ce0013194</sys_id>
-        <sys_mod_count>11</sys_mod_count>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:34:16</sys_updated_on>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:52:39</sys_updated_on>
         <value>(function execute(inputs, outputs) {
  
 var deduction =[];
 
-var effectiveDate=inputs.deductions.sys_created_on;
+var effectiveDate=inputs.deductions.effective_date;
+effectiveDate=(effectiveDate+' 00:00:00');
   var dt = effectiveDate.split(' ');
   var f = dt[0].split('-');
   var t = dt[1].split(':');
@@ -1368,15 +1369,15 @@ outputs.fct_payload=j;
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>6b1d6b4dc397311011971d4ce0013183</sys_id>
-        <sys_mod_count>24</sys_mod_count>
+        <sys_mod_count>32</sys_mod_count>
         <sys_name/>
         <sys_overrides/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:20</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:09</sys_updated_on>
         <type>complex_object_collection</type>
     </sys_complex_object>
     <sys_hub_step_ext_output action="INSERT_OR_UPDATE">
@@ -1474,15 +1475,15 @@ outputs.fct_payload=j;
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>af1d6b4dc397311011971d4ce0013180</sys_id>
-        <sys_mod_count>24</sys_mod_count>
+        <sys_mod_count>32</sys_mod_count>
         <sys_name/>
         <sys_overrides/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:20</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:09</sys_updated_on>
         <type>complex_object_collection</type>
     </sys_complex_object>
     <sys_hub_step_ext_output action="INSERT_OR_UPDATE">
@@ -1873,14 +1874,14 @@ outputs.fct_payload=j;
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 17:30:30</sys_created_on>
         <sys_id>2f1d6b4dc397311011971d4ce00131f4</sys_id>
-        <sys_mod_count>49</sys_mod_count>
+        <sys_mod_count>65</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:21</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:09</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -1907,15 +1908,15 @@ outputs.fct_payload=j;
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>671d6b4dc397311011971d4ce00131f2</sys_id>
-        <sys_mod_count>24</sys_mod_count>
+        <sys_mod_count>32</sys_mod_count>
         <sys_name/>
         <sys_overrides/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:20</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:09</sys_updated_on>
         <type>complex_object_schema</type>
     </sys_complex_object>
     <sys_hub_action_output action="INSERT_OR_UPDATE">
@@ -2070,14 +2071,14 @@ outputs.fct_payload=j;
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 17:30:30</sys_created_on>
         <sys_id>3b1dab4dc397311011971d4ce0013105</sys_id>
-        <sys_mod_count>49</sys_mod_count>
+        <sys_mod_count>65</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:20</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:09</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -2157,14 +2158,14 @@ outputs.fct_payload=j;
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 17:30:30</sys_created_on>
         <sys_id>7b1d6b4dc397311011971d4ce00131fd</sys_id>
-        <sys_mod_count>49</sys_mod_count>
+        <sys_mod_count>65</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:21</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:10</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -2244,14 +2245,14 @@ outputs.fct_payload=j;
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 17:30:30</sys_created_on>
         <sys_id>ab1d6b4dc397311011971d4ce00131f9</sys_id>
-        <sys_mod_count>49</sys_mod_count>
+        <sys_mod_count>65</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:21</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:09</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -2424,17 +2425,17 @@ outputs.fct_payload=j;
     <sys_hub_action_plan action="INSERT_OR_UPDATE">
         <action_id display_value="New Upload Voluntary Deduction topic">131d6b4dc397311011971d4ce001313f</action_id>
         <plan>{"persistor":{"@class":".ChunkingPlanPersistor","table":"sys_hub_action_plan","id":"e7b7ff09c3d7311011971d4ce0013196","name":"plan","plan_signature":null}}</plan>
-        <snapshot>7b52dd82c344021011971d4ce001319c</snapshot>
+        <snapshot>828b9784c360c65011971d4ce0013111</snapshot>
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 18:16:55</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>e7b7ff09c3d7311011971d4ce0013196</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_overrides/>
         <sys_scope/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:27</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:16</sys_updated_on>
     </sys_hub_action_plan>
     <sys_hub_action_type_snapshot action="INSERT_OR_UPDATE">
         <access>public</access>
@@ -3326,10 +3327,10 @@ outputs.instance_name=gs.getProperty("instance_name");
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 18:16:51</sys_created_on>
         <sys_id>e2b7bf09c3d7311011971d4ce001310a</sys_id>
-        <sys_mod_count>13</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:24</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:13</sys_updated_on>
     </sys_hub_step_instance>
     <sys_variable_value action="delete_multiple" query="document_key=e2b7bf09c3d7311011971d4ce001310a"/>
     <sys_variable_value action="INSERT_OR_UPDATE">
@@ -3340,14 +3341,15 @@ outputs.instance_name=gs.getProperty("instance_name");
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 18:16:52</sys_created_on>
         <sys_id>76b7bf09c3d7311011971d4ce0013136</sys_id>
-        <sys_mod_count>11</sys_mod_count>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:24</sys_updated_on>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:13</sys_updated_on>
         <value>(function execute(inputs, outputs) {
  
 var deduction =[];
 
-var effectiveDate=inputs.deductions.sys_created_on;
+var effectiveDate=inputs.deductions.effective_date;
+effectiveDate=(effectiveDate+' 00:00:00');
   var dt = effectiveDate.split(' ');
   var f = dt[0].split('-');
   var t = dt[1].split(':');
@@ -3802,15 +3804,15 @@ outputs.fct_payload=j;
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>32b7bf09c3d7311011971d4ce0013124</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_name/>
         <sys_overrides/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:24</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:13</sys_updated_on>
         <type>complex_object_collection</type>
     </sys_complex_object>
     <sys_hub_step_ext_output action="INSERT_OR_UPDATE">
@@ -3908,15 +3910,15 @@ outputs.fct_payload=j;
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>7eb7bf09c3d7311011971d4ce0013126</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_name/>
         <sys_overrides/>
         <sys_package display_value="Voluntary Deductions" source="x_ebh_voluntary_0">591c37a24729a110265ad698436d431e</sys_package>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:24</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:13</sys_updated_on>
         <type>complex_object_collection</type>
     </sys_complex_object>
     <sys_hub_step_ext_output action="INSERT_OR_UPDATE">
@@ -4307,14 +4309,14 @@ outputs.fct_payload=j;
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 18:16:52</sys_created_on>
         <sys_id>3ab7bf09c3d7311011971d4ce0013159</sys_id>
-        <sys_mod_count>23</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:24</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:13</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -4394,14 +4396,14 @@ outputs.fct_payload=j;
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 18:16:52</sys_created_on>
         <sys_id>3ab7bf09c3d7311011971d4ce0013163</sys_id>
-        <sys_mod_count>23</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:24</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:13</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -4481,14 +4483,14 @@ outputs.fct_payload=j;
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 18:16:52</sys_created_on>
         <sys_id>7eb7bf09c3d7311011971d4ce001315c</sys_id>
-        <sys_mod_count>23</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:24</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:13</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -4655,14 +4657,14 @@ outputs.fct_payload=j;
         <sys_created_by>Mailia.Bachleitner@employbridge.com</sys_created_by>
         <sys_created_on>2023-12-22 18:16:52</sys_created_on>
         <sys_id>f2b7bf09c3d7311011971d4ce0013155</sys_id>
-        <sys_mod_count>23</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Voluntary Deductions">591c37a24729a110265ad698436d431e</sys_scope>
         <sys_update_name/>
-        <sys_updated_by>Mailia.Bachleitner@employbridge.com</sys_updated_by>
-        <sys_updated_on>2024-01-31 15:35:24</sys_updated_on>
+        <sys_updated_by>khush.sultana@employbridge.com</sys_updated_by>
+        <sys_updated_on>2024-02-19 16:58:13</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
